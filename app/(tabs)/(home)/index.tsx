@@ -1,6 +1,7 @@
+import { Link } from 'expo-router';
 import { Text, View } from 'react-native';
 
-export default function Index() {
+export default function HomeScreen() {
   return (
     <View
       style={{
@@ -10,6 +11,7 @@ export default function Index() {
       }}
     >
       <Text>Edit app/index.tsx to edit this screen.</Text>
+      <Link href="/details">Click here to go to the details page</Link>
     </View>
   );
 }
