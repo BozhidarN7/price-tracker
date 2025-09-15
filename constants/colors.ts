@@ -1,6 +1,9 @@
 export const LIGHT_THEME = {
   white: '#ffffff',
   black: '#000000',
+
+  background: '#ffffff',
+
   homeBackground: '#f8f9fa',
 
   primaryFont: '#000000',
@@ -21,6 +24,9 @@ export const LIGHT_THEME = {
 export const DARK_THEME = {
   white: '#ffffff',
   black: '#000000',
+
+  background: '#000000',
+
   homeBackground: '#000000',
 
   primaryFont: '#ffffff',
