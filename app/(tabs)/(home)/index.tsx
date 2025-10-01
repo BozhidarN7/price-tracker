@@ -1,12 +1,15 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useState } from 'react';
 import { Plus, ScanLine } from 'lucide-react-native';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
 import ProductsList from '@/components/ProductsList';
+import AdddProductModal from '@/components/AddProductModal';
 
 export default function HomeScreen() {
   const { theme, isDark } = useTheme();
+  const [showAddModal, setShowAddModal] = useState(false);
 
   const styles = createStyles(theme, isDark);
 
@@ -31,11 +34,16 @@ export default function HomeScreen() {
             size={20}
             color={theme.primaryButtonBackground}
             strokeWidth={2}
+            onPress={() => setShowAddModal(true)}
           />
         </TouchableOpacity>
       </View>
 
       <ProductsList />
+      <AdddProductModal
+        visible={showAddModal}
+        onClose={() => setShowAddModal(false)}
+      />
     </SafeAreaView>
   );
 }

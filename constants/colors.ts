@@ -9,11 +9,14 @@ export const LIGHT_THEME = {
   primaryFont: '#000000',
   secondaryFont: '#666666',
   tertiaryFont: '#888888',
+  quaternaryFont: '#999999',
 
   primaryButtonBackground: '#007AFF',
   secondaryButtonBackground: '#FFFFFF',
   tertiaryButtonBackground: '#f0f0f0',
   quaternaryButtonBackground: '#8E8E93',
+  quinaryButtonBackground: '#f8f8f8',
+  senaryButtonBackground: '#e0e0e0',
 
   primaryShadow: '#007AFF',
 
@@ -32,11 +35,14 @@ export const DARK_THEME = {
   primaryFont: '#ffffff',
   secondaryFont: '#888888',
   tertiaryFont: '#666666',
+  quaternaryFont: '',
 
   primaryButtonBackground: '#00d4ff',
   secondaryButtonBackground: '#1a1a1a',
   tertiaryButtonBackground: '#333333',
   quaternaryButtonBackground: '',
+  quinaryButtonBackground: '#f8f8f8',
+  senaryButtonBackground: '#e0e0e0',
 
   primaryShadow: '#00d4ff',
 

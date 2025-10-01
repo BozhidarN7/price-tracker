@@ -11,10 +11,10 @@ const mockProducts: Product[] = [
     imageUrl:
       'https://images.pexels.com/photos/50593/coca-cola-cold-drink-soft-drink-coke-50593.jpeg?auto=compress&cs=tinysrgb&w=400',
     latestPrice: 1.89,
-    latestCurrency: 'EURO',
+    latestCurrency: 'EUR',
     priceHistory: [
-      { date: '2024-01-15', store: 'Walmart', price: 1.89, currency: 'EURO' },
-      { date: '2024-01-10', store: 'Target', price: 1.99, currency: 'EURO' },
+      { date: '2024-01-15', store: 'Walmart', price: 1.89, currency: 'EUR' },
+      { date: '2024-01-10', store: 'Target', price: 1.99, currency: 'EUR' },
     ],
     trend: TRENDS.DOWN,
     createdAt: '2024-01-01',
@@ -29,10 +29,10 @@ const mockProducts: Product[] = [
     imageUrl:
       'https://images.pexels.com/photos/4110256/pexels-photo-4110256.jpeg?auto=compress&cs=tinysrgb&w=400',
     latestPrice: 4.99,
-    latestCurrency: 'EURO',
+    latestCurrency: 'EUR',
     priceHistory: [
-      { date: '2024-01-14', store: 'Target', price: 4.99, currency: 'EURO' },
-      { date: '2024-01-08', store: 'Kroger', price: 4.49, currency: 'EURO' },
+      { date: '2024-01-14', store: 'Target', price: 4.99, currency: 'EUR' },
+      { date: '2024-01-08', store: 'Kroger', price: 4.49, currency: 'EUR' },
     ],
     trend: TRENDS.UP,
     createdAt: '2024-01-01',
@@ -45,14 +45,14 @@ const mockProducts: Product[] = [
     brand: 'Apple',
     category: 'Electronics',
     latestPrice: 999.0,
-    latestCurrency: 'EURO',
+    latestCurrency: 'EUR',
     priceHistory: [
-      { date: '2024-01-13', store: 'Best Buy', price: 999.0, currency: 'EURO' },
+      { date: '2024-01-13', store: 'Best Buy', price: 999.0, currency: 'EUR' },
       {
         date: '2024-01-05',
         store: 'Apple Store',
         price: 999.0,
-        currency: 'EURO',
+        currency: 'EUR',
       },
     ],
     trend: TRENDS.STABLE,
@@ -68,19 +68,19 @@ const mockProducts: Product[] = [
     imageUrl:
       'https://images.pexels.com/photos/2872755/pexels-photo-2872755.jpeg?auto=compress&cs=tinysrgb&w=400',
     latestPrice: 2.49,
-    latestCurrency: 'EURO',
+    latestCurrency: 'EUR',
     priceHistory: [
       {
         date: '2024-01-12',
         store: 'Whole Foods',
         price: 2.49,
-        currency: 'EURO',
+        currency: 'EUR',
       },
       {
         date: '2024-01-07',
         store: 'Whole Foods',
         price: 2.79,
-        currency: 'EURO',
+        currency: 'EUR',
       },
     ],
     trend: TRENDS.DOWN,
