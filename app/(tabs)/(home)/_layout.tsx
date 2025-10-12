@@ -1,8 +1,12 @@
-import { Stack } from 'expo-router';
+import { Redirect, Stack } from 'expo-router';
 import { useTheme } from '@/contexts/ThemeContext';
 
 export default function HomeLayout() {
   const { theme } = useTheme();
+
+  if (true) {
+    return <Redirect href="/sign-in" />;
+  }
 
   return (
     <Stack>
@@ -14,7 +18,6 @@ export default function HomeLayout() {
           headerTintColor: theme.primaryFont,
         }}
       />
-      <Stack.Screen name="details" options={{ title: 'Details' }} />
     </Stack>
   );
 }
