@@ -10,6 +10,7 @@ import {
 import { Eye, EyeOff, Lock, Mail } from 'lucide-react-native';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
+import { useAuth } from '@/contexts/AuthContext';
 
 type SignInFormProps = {
   isSignUp: boolean;
@@ -18,6 +19,8 @@ type SignInFormProps = {
 
 export default function SignInForm({ isSignUp, setIsSignUp }: SignInFormProps) {
   const { theme, isDark } = useTheme();
+  const { login } = useAuth();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -42,9 +45,9 @@ export default function SignInForm({ isSignUp, setIsSignUp }: SignInFormProps) {
       if (isSignUp) {
         // await signUp(email.trim(), password, name.trim());
       } else {
-        // await signIn(email.trim(), password);
+        await login(email.trim(), password);
       }
-    } catch (error) {
+    } catch (_error) {
       Alert.alert(
         'Error',
         isSignUp ? 'Failed to create account' : 'Failed to sign in',

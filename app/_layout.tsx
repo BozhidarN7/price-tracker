@@ -1,37 +1,36 @@
-import { useEffect } from 'react';
+import { QueryClient } from '@tanstack/query-core';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import {
-  Inter_400Regular,
-  Inter_600SemiBold,
-  Inter_700Bold,
-  useFonts,
-} from '@expo-google-fonts/inter';
-import { ThemeProvider } from '@/contexts';
+import { AuthProvider, ThemeProvider } from '@/contexts';
+import SplashScreenController from '@/components/SplashScreenController';
+import { useAuth } from '@/contexts/AuthContext';
+
+const queryClient = new QueryClient();
 
 export default function RootLayout() {
-  const [loaded, error] = useFonts({
-    Inter_400Regular,
-    Inter_600SemiBold,
-    Inter_700Bold,
-  });
+  return (
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <SplashScreenController />
+        <ThemeProvider>
+          <RootNavigator />
+        </ThemeProvider>
+      </AuthProvider>
+    </QueryClientProvider>
+  );
+}
 
-  useEffect(() => {
-    if (loaded || error) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded, error]);
-
-  if (!loaded && !error) {
-    return null;
-  }
+function RootNavigator() {
+  const { isAuthenticated } = useAuth();
 
   return (
-    <ThemeProvider>
-      <Stack>
+    <Stack>
+      <Stack.Protected guard={!isAuthenticated}>
         <Stack.Screen name="sign-in" />
+      </Stack.Protected>
+      <Stack.Protected guard={isAuthenticated}>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      </Stack>
-    </ThemeProvider>
+      </Stack.Protected>
+    </Stack>
   );
 }

@@ -1,12 +1,8 @@
-import { Redirect, Stack } from 'expo-router';
+import { Stack } from 'expo-router';
 import { useTheme } from '@/contexts/ThemeContext';
 
 export default function HomeLayout() {
   const { theme } = useTheme();
-
-  if (true) {
-    return <Redirect href="/sign-in" />;
-  }
 
   return (
     <Stack>

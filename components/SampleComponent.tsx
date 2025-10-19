@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
