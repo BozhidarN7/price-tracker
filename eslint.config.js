@@ -5,10 +5,12 @@ const eslintPluginPrettierRecommended = require('eslint-plugin-prettier/recommen
 const tseslint = require('@typescript-eslint/eslint-plugin');
 const tsParser = require('@typescript-eslint/parser');
 const pluginQuery = require('@tanstack/eslint-plugin-query');
+const reactCompiler = require('eslint-plugin-react-compiler');
 
 module.exports = defineConfig([
   expoConfig,
   eslintPluginPrettierRecommended,
+  reactCompiler.configs.recommended,
   ...pluginQuery.configs['flat/recommended'],
   {
     ignores: ['dist/*'],

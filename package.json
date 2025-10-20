@@ -61,10 +61,14 @@
     "eslint-config-expo": "~10.0.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-react-compiler": "^19.1.0-rc.2",
     "globals": "^16.4.0",
     "husky": "^9.1.7",
     "prettier": "^3.6.2",
     "typescript": "~5.9.2"
+  },
+  "resolutions": {
+    "eslint-plugin-react-hooks": "^7.0.0"
   },
   "private": true
 }
