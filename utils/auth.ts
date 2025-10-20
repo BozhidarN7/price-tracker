@@ -1,26 +1,42 @@
-// token-storage.ts
-import * as SecureStore from 'expo-secure-store';
+import base64 from 'react-native-base64';
+import { getStoredTokens, storeTokens } from './manage-tokens';
+import { refreshTokens } from '@/api/auth-api';
 
-const ACCESS_TOKEN_KEY = 'accessToken';
-const ID_TOKEN_KEY = 'idToken';
-const REFRESH_TOKEN_KEY = 'refreshToken';
+export async function isAuthenticated() {
+  const tokens = await getStoredTokens();
+  if (!tokens) {
+    return false;
+  }
 
-export async function storeTokens(data: {
-  accessToken: string;
-  idToken: string;
-  refreshToken: string;
-}) {
-  await SecureStore.setItemAsync(ACCESS_TOKEN_KEY, data.accessToken);
-  await SecureStore.setItemAsync(ID_TOKEN_KEY, data.idToken);
-  await SecureStore.setItemAsync(REFRESH_TOKEN_KEY, data.refreshToken);
-}
+  const { accessToken, refreshToken } = tokens;
+  if (!accessToken) {
+    return false;
+  }
 
-export async function getStoredToken() {
-  return await SecureStore.getItemAsync(ACCESS_TOKEN_KEY);
-}
+  try {
+    // Check if access token is expired
+    const payload = JSON.parse(base64.decode(accessToken.split('.')[1]));
+    const currentTime = Math.floor(Date.now() / 1000);
 
-export async function clearTokens() {
-  await SecureStore.deleteItemAsync(ACCESS_TOKEN_KEY);
-  await SecureStore.deleteItemAsync(ID_TOKEN_KEY);
-  await SecureStore.deleteItemAsync(REFRESH_TOKEN_KEY);
+    if (payload.exp > currentTime) {
+      return true;
+    }
+
+    if (!refreshToken) {
+      return false;
+    }
+
+    // Try to refresh tokens if access token is expired
+    const data = await refreshTokens(refreshToken);
+    const { tokens } = data || {};
+
+    if (!tokens || !tokens.accessToken) {
+      return false;
+    }
+    await storeTokens(tokens);
+    return true;
+  } catch (error) {
+    console.error('Auth check error:', error);
+    return false;
+  }
 }

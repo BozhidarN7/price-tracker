@@ -1,9 +1,16 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import { useQueryClient } from '@tanstack/react-query';
-import { clearTokens, getStoredToken } from '@/utils/auth';
 import { useLogin, useUser } from '@/hooks';
 import { UserInfo } from '@/types/user';
 import { USER_QUERY_KEYS } from '@/constants';
+import { isAuthenticated } from '@/utils/auth';
+import { clearTokens } from '@/utils/manage-tokens';
 
 interface AuthContextType {
   user?: UserInfo;
@@ -34,25 +41,32 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   const { mutateAsync: loginMutation } = useLogin();
   const { data: user, isLoading } = useUser();
 
-  useEffect(() => {
-    (async () => {
-      const token = await getStoredToken();
-      setHasToken(!!token);
-    })();
-  }, [user]);
+  const login = useCallback(
+    async (username: string, password: string) => {
+      await loginMutation({ username, password });
+    },
+    [loginMutation],
+  );
 
-  const login = async (username: string, password: string) => {
-    await loginMutation({ username, password });
-  };
-
-  const logout = async () => {
+  const logout = useCallback(async () => {
     await clearTokens();
     await queryClient.resetQueries({ queryKey: USER_QUERY_KEYS });
-  };
+  }, [queryClient]);
+
+  useEffect(() => {
+    (async () => {
+      const isSignedIn = await isAuthenticated();
+      if (isSignedIn) {
+        setHasToken(isSignedIn);
+      } else {
+        await logout();
+      }
+    })();
+  }, [user, logout]);
 
   const value = {
     user,
-    isAuthenticated: !!user,
+    isAuthenticated: !!user && hasToken,
     isLoading,
     hasToken,
     login,
