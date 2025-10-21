@@ -32,6 +32,14 @@ export async function getStoredTokens() {
   }
 }
 
+export const getAccessToken = async () => {
+  return SecureStore.getItemAsync(ACCESS_TOKEN_KEY);
+};
+
+export const getIdToken = async () => {
+  return SecureStore.getItemAsync(ID_TOKEN_KEY);
+};
+
 export async function clearTokens() {
   await SecureStore.deleteItemAsync(ACCESS_TOKEN_KEY);
   await SecureStore.deleteItemAsync(ID_TOKEN_KEY);

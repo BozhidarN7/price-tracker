@@ -1,20 +1,31 @@
 import {
   FlatList,
   Image,
+  RefreshControl,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
 import { Minus, TrendingDown, TrendingUp } from 'lucide-react-native';
+import ProductsSkeleton from '../ProductsSkeleton';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
 import mockProducts from '@/mock-data/products';
 import { Product } from '@/types/product';
 import { CURRENCIES_SYMBOLS_MAP, TRENDS } from '@/constants';
+import { useGetProducts } from '@/hooks';
 
 export default function ProductsList() {
   const { theme, isDark } = useTheme();
+  const {
+    data: productsData,
+    isLoading: areProductsLoading,
+    error: productsError,
+    refetch: refetchProducts,
+    isRefetching: isRefetchingProducts,
+  } = useGetProducts();
+  console.log(productsData);
 
   const styles = createStyles(theme, isDark);
 
@@ -135,12 +146,43 @@ export default function ProductsList() {
     );
   };
 
+  if (areProductsLoading) {
+    return (
+      <View style={styles.productsList}>
+        <ProductsSkeleton count={6} />
+      </View>
+    );
+  }
+
+  if (productsError) {
+    return (
+      <View style={styles.errorContainer}>
+        <Text style={styles.errorText}>Failed to load products</Text>
+        <TouchableOpacity
+          style={styles.retryButton}
+          onPress={() => refetchProducts()}
+        >
+          <Text style={styles.retryButtonText}>Retry</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
   return (
     <FlatList
-      data={mockProducts}
+      data={productsData}
       renderItem={renderItem}
       keyExtractor={(item) => item.id}
-      contentContainerStyle={styles.productList}
+      contentContainerStyle={styles.productsList}
+      refreshControl={
+        <RefreshControl
+          refreshing={isRefetchingProducts}
+          onRefresh={refetchProducts}
+        />
+      }
+      ListEmptyComponent={
+        <Text style={styles.productsListEmptyText}>No items found</Text>
+      }
       showsVerticalScrollIndicator={false}
     />
   );
@@ -148,9 +190,14 @@ export default function ProductsList() {
 
 function createStyles(theme: Theme, isDark: boolean) {
   return StyleSheet.create({
-    productList: {
+    productsList: {
       paddingHorizontal: 20,
       paddingBottom: 20,
+    },
+    productsListEmptyText: {
+      fontSize: 16,
+      textAlign: 'center',
+      marginTop: 20,
     },
     productCard: {
       backgroundColor: theme.secondaryButtonBackground,
@@ -228,6 +275,30 @@ function createStyles(theme: Theme, isDark: boolean) {
       fontFamily: 'Inter_600SemiBold',
       color: theme.white,
       marginLeft: 4,
+    },
+    errorContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingHorizontal: 40,
+    },
+    errorText: {
+      fontSize: 16,
+      fontFamily: 'Inter_600SemiBold',
+      color: isDark ? '#ff4757' : '#FF3B30',
+      textAlign: 'center',
+      marginBottom: 16,
+    },
+    retryButton: {
+      backgroundColor: theme.primaryButtonBackground,
+      paddingHorizontal: 24,
+      paddingVertical: 12,
+      borderRadius: 20,
+    },
+    retryButtonText: {
+      fontSize: 14,
+      fontFamily: 'Inter_600SemiBold',
+      color: theme.white,
     },
   });
 }
