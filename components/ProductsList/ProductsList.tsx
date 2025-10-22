@@ -11,7 +11,6 @@ import { Minus, TrendingDown, TrendingUp } from 'lucide-react-native';
 import ProductsSkeleton from '../ProductsSkeleton';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
-import mockProducts from '@/mock-data/products';
 import { Product } from '@/types/product';
 import { CURRENCIES_SYMBOLS_MAP, TRENDS } from '@/constants';
 import { useGetProducts } from '@/hooks';
@@ -25,7 +24,6 @@ export default function ProductsList() {
     refetch: refetchProducts,
     isRefetching: isRefetchingProducts,
   } = useGetProducts();
-  console.log(productsData);
 
   const styles = createStyles(theme, isDark);
 

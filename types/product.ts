@@ -37,3 +37,8 @@ export type Product = {
   updatedAt: string;
   ocrRawText?: string; // Raw OCR output for debugging
 };
+
+export type NewProduct = Omit<
+  Product,
+  'id' | 'userId' | 'createdAt' | 'updatedAt'
+>;

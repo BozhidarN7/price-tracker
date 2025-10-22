@@ -12,15 +12,15 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ChevronDown, ChevronUp, Package, X } from 'lucide-react-native';
 
 import AdvancedFields from './AdvancedFields';
-import { handleAddProduct } from './utils';
 import PriceFields from './PriceFields';
 import RequiredFields from './RequiredFields/RequiredFields';
 
 import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
 import { CURRENCIES_SYMBOLS_MAP, TRENDS } from '@/constants';
-import { Product } from '@/types/product';
+import { NewProduct } from '@/types/product';
 import { CURRENCiES } from '@/constants/currencies';
+import useAddProduct from '@/hooks/use-add-product';
 
 type AddProductModalProps = {
   visible: boolean;
@@ -60,10 +60,12 @@ export default function AdddProductModal({
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
   const [showCurrencyDropdown, setShowCurrencyDropdown] = useState(false);
+  const { mutateAsync: addProductAsync, isPending: isAddingProduct } =
+    useAddProduct();
 
   const styles = createStyles(theme, isDark);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // Validation
 
     if (!formData.name.trim()) {
@@ -86,10 +88,7 @@ export default function AdddProductModal({
       price: Number(formData.price),
     };
 
-    const newProduct: Omit<
-      Product,
-      'id' | 'userId' | 'createdAt' | 'updatedAt'
-    > = {
+    const newProduct: NewProduct = {
       name: formData.name.trim(),
       brand: formData.brand || undefined,
       category: formData.category,
@@ -102,23 +101,27 @@ export default function AdddProductModal({
       trend: TRENDS.STABLE,
     };
 
-    handleAddProduct(newProduct);
+    try {
+      await addProductAsync(newProduct);
 
-    // Reset form
-    setFormData({
-      name: '',
-      brand: '',
-      category: '',
-      price: '',
-      currency: 'USD',
-      store: '',
-      date: new Date().toISOString().split('T')[0],
-      description: '',
-      imageUrl: '',
-      tags: [],
-    });
-    setShowAdvanced(false);
-    onClose();
+      // Reset form
+      if (!isAddingProduct) {
+        setFormData({
+          name: '',
+          brand: '',
+          category: '',
+          price: '',
+          currency: 'USD',
+          store: '',
+          date: new Date().toISOString().split('T')[0],
+          description: '',
+          imageUrl: '',
+          tags: [],
+        });
+        setShowAdvanced(false);
+      }
+      onClose();
+    } catch (_error) {}
   };
 
   return (
@@ -190,8 +193,16 @@ export default function AdddProductModal({
           <TouchableOpacity style={styles.cancelButton} onPress={onClose}>
             <Text style={styles.cancelButtonText}>Cancel</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
-            <Text style={styles.submitButtonText}>Add Product</Text>
+          <TouchableOpacity
+            style={[
+              styles.submitButton,
+              isAddingProduct && styles.submitButtonDisabled,
+            ]}
+            onPress={handleSubmit}
+          >
+            <Text style={styles.submitButtonText}>
+              {isAddingProduct ? 'Adding...' : 'Add Product'}
+            </Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -293,6 +304,9 @@ const createStyles = (theme: Theme, isDark: boolean) => {
       borderRadius: 12,
       paddingVertical: 16,
       alignItems: 'center',
+    },
+    submitButtonDisabled: {
+      opacity: 0.6,
     },
     submitButtonText: {
       fontSize: 16,

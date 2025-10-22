@@ -8,3 +8,4 @@ export const REFRESH_TOKEN_URL = `${BASE_PRICE_TRACKER_API_URL}/refresh-token`;
 
 // PRODUTS URLS
 export const GET_PRODUCTS_URL = `${BASE_PRICE_TRACKER_API_URL}/products`;
+export const ADD_PRODUCT_URL = `${BASE_PRICE_TRACKER_API_URL}/prouts`;

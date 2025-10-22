@@ -1,6 +1,7 @@
 import { QueryClient } from '@tanstack/query-core';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { Stack } from 'expo-router';
+import Toast from 'react-native-toast-message';
 import { AuthProvider, ThemeProvider } from '@/contexts';
 import SplashScreenController from '@/components/SplashScreenController';
 import { useAuth } from '@/contexts/AuthContext';
@@ -14,6 +15,7 @@ export default function RootLayout() {
         <SplashScreenController />
         <ThemeProvider>
           <RootNavigator />
+          <Toast />
         </ThemeProvider>
       </AuthProvider>
     </QueryClientProvider>
