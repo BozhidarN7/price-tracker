@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 import {
   Inter_400Regular,
+  Inter_500Medium,
   Inter_600SemiBold,
   Inter_700Bold,
   useFonts,
@@ -20,6 +21,7 @@ export default function SplashScreenController() {
 
   const [loaded, error] = useFonts({
     Inter_400Regular,
+    Inter_500Medium,
     Inter_600SemiBold,
     Inter_700Bold,
   });

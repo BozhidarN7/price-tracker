@@ -8,8 +8,9 @@ export default function TabsLayout() {
   return (
     <Tabs>
       <Tabs.Screen
-        name="(home)"
+        name="(products)"
         options={{
+          title: 'Home',
           tabBarStyle: {
             backgroundColor: theme.homeBackground,
             borderTopColor: isDark

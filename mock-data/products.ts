@@ -13,8 +13,20 @@ const mockProducts: Product[] = [
     latestPrice: 1.89,
     latestCurrency: 'EUR',
     priceHistory: [
-      { date: '2024-01-15', store: 'Walmart', price: 1.89, currency: 'EUR' },
-      { date: '2024-01-10', store: 'Target', price: 1.99, currency: 'EUR' },
+      {
+        priceEntryId: '1',
+        date: '2024-01-15',
+        store: 'Walmart',
+        price: 1.89,
+        currency: 'EUR',
+      },
+      {
+        priceEntryId: '2',
+        date: '2024-01-10',
+        store: 'Target',
+        price: 1.99,
+        currency: 'EUR',
+      },
     ],
     trend: TRENDS.DOWN,
     createdAt: '2024-01-01',
@@ -31,8 +43,20 @@ const mockProducts: Product[] = [
     latestPrice: 4.99,
     latestCurrency: 'EUR',
     priceHistory: [
-      { date: '2024-01-14', store: 'Target', price: 4.99, currency: 'EUR' },
-      { date: '2024-01-08', store: 'Kroger', price: 4.49, currency: 'EUR' },
+      {
+        priceEntryId: '1',
+        date: '2024-01-14',
+        store: 'Target',
+        price: 4.99,
+        currency: 'EUR',
+      },
+      {
+        priceEntryId: '2',
+        date: '2024-01-08',
+        store: 'Kroger',
+        price: 4.49,
+        currency: 'EUR',
+      },
     ],
     trend: TRENDS.UP,
     createdAt: '2024-01-01',
@@ -47,8 +71,15 @@ const mockProducts: Product[] = [
     latestPrice: 999.0,
     latestCurrency: 'EUR',
     priceHistory: [
-      { date: '2024-01-13', store: 'Best Buy', price: 999.0, currency: 'EUR' },
       {
+        priceEntryId: '1',
+        date: '2024-01-13',
+        store: 'Best Buy',
+        price: 999.0,
+        currency: 'EUR',
+      },
+      {
+        priceEntryId: '2',
         date: '2024-01-05',
         store: 'Apple Store',
         price: 999.0,
@@ -71,12 +102,14 @@ const mockProducts: Product[] = [
     latestCurrency: 'EUR',
     priceHistory: [
       {
+        priceEntryId: '1',
         date: '2024-01-12',
         store: 'Whole Foods',
         price: 2.49,
         currency: 'EUR',
       },
       {
+        priceEntryId: '2',
         date: '2024-01-07',
         store: 'Whole Foods',
         price: 2.79,

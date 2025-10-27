@@ -18,7 +18,7 @@ import RequiredFields from './RequiredFields/RequiredFields';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
 import { CURRENCIES_SYMBOLS_MAP, TRENDS } from '@/constants';
-import { NewProduct } from '@/types/product';
+import { NewPriceEntry, NewProduct } from '@/types/product';
 import { CURRENCiES } from '@/constants/currencies';
 import useAddProduct from '@/hooks/use-add-product';
 
@@ -81,7 +81,7 @@ export default function AdddProductModal({
       return;
     }
 
-    const priceEntry = {
+    const priceEntry: NewPriceEntry = {
       date: formData.date,
       store: formData.store || undefined,
       currency: formData.currency,

@@ -1,6 +1,7 @@
 import { CURRENCIES_SYMBOLS_MAP, TRENDS } from '@/constants';
 
 export type PriceEntry = {
+  priceEntryId: string;
   date: string;
   store?: string;
   location?: {
@@ -16,7 +17,7 @@ export type Product = {
   userId: string;
   name: string;
   brand?: string;
-  category?: string;
+  category: string;
   description?: string;
   imageUrl?: string;
 
@@ -40,5 +41,7 @@ export type Product = {
 
 export type NewProduct = Omit<
   Product,
-  'id' | 'userId' | 'createdAt' | 'updatedAt'
->;
+  'id' | 'userId' | 'createdAt' | 'updatedAt' | 'priceHistory'
+> & { priceHistory?: NewPriceEntry[] };
+
+export type NewPriceEntry = Omit<PriceEntry, 'priceEntryId'>;

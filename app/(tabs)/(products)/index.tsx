@@ -7,7 +7,7 @@ import { Theme } from '@/types';
 import ProductsList from '@/components/ProductsList';
 import AdddProductModal from '@/components/AddProductModal';
 
-export default function HomeScreen() {
+export default function ProductsScreen() {
   const { theme, isDark } = useTheme();
   const [showAddModal, setShowAddModal] = useState(false);
 

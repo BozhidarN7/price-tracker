@@ -1,4 +1,8 @@
-import { ADD_PRODUCT_URL, GET_PRODUCTS_URL } from '@/constants/urls';
+import {
+  ADD_PRODUCT_URL,
+  GET_PRODUCTS_URL,
+  getProductByIdUrl,
+} from '@/constants/urls';
 import { NewProduct, Product } from '@/types/product';
 import { getIdToken } from '@/utils/manage-tokens';
 
@@ -40,6 +44,27 @@ export const addProduct = async (newProduct: NewProduct): Promise<Product> => {
 
   if (!res.ok) {
     throw new Error('Failed to add producct');
+  }
+
+  return res.json();
+};
+
+export const getProductById = async (productId: string): Promise<Product> => {
+  const idToken = await getIdToken();
+
+  if (!idToken) {
+    throw new Error('No access token found');
+  }
+
+  const res = await fetch(getProductByIdUrl(productId), {
+    method: 'GET',
+    headers: {
+      Authorization: idToken,
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch product');
   }
 
   return res.json();

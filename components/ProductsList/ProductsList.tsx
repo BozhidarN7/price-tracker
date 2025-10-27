@@ -7,13 +7,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Minus, TrendingDown, TrendingUp } from 'lucide-react-native';
+import { router } from 'expo-router';
 import ProductsSkeleton from '../ProductsSkeleton';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
 import { Product } from '@/types/product';
-import { CURRENCIES_SYMBOLS_MAP, TRENDS } from '@/constants';
+import { CURRENCIES_SYMBOLS_MAP } from '@/constants';
 import { useGetProducts } from '@/hooks';
+import TrendBadge from '@/components/TrendBadge';
 
 export default function ProductsList() {
   const { theme, isDark } = useTheme();
@@ -26,28 +27,6 @@ export default function ProductsList() {
   } = useGetProducts();
 
   const styles = createStyles(theme, isDark);
-
-  const getPriceChangeInfo = (product: Product) => {
-    if (product.priceHistory.length < 2) {
-      return { change: 0, percentage: 0, trend: 'stable' as const };
-    }
-
-    const latest = product.priceHistory[0].price;
-    const previous = product.priceHistory[1].price;
-    const change = latest - previous;
-    const percentage = (change / previous) * 100;
-
-    return {
-      change,
-      percentage: Math.abs(percentage),
-      trend:
-        change > 0
-          ? ('up' as const)
-          : change < 0
-            ? ('down' as const)
-            : ('stable' as const),
-    };
-  };
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -62,10 +41,11 @@ export default function ProductsList() {
   };
 
   const renderItem = ({ item }: { item: Product }) => {
-    const priceInfo = getPriceChangeInfo(item);
-
     return (
-      <TouchableOpacity style={styles.productCard}>
+      <TouchableOpacity
+        style={styles.productCard}
+        onPress={() => router.navigate(`/products/${item.id}`)}
+      >
         <View style={styles.productImageContainer}>
           {item.imageUrl ? (
             <Image
@@ -100,45 +80,7 @@ export default function ProductsList() {
             {CURRENCIES_SYMBOLS_MAP[item.latestCurrency]}
             {item.latestPrice.toFixed(2)}
           </Text>
-
-          {priceInfo.trend !== TRENDS.STABLE && (
-            <View
-              style={[
-                styles.trendBadge,
-                {
-                  backgroundColor:
-                    priceInfo.trend === TRENDS.UP
-                      ? theme.upTrendRed
-                      : theme.downTrendGreen,
-                },
-              ]}
-            >
-              {priceInfo.trend === TRENDS.UP ? (
-                <TrendingUp size={12} color={theme.white} strokeWidth={2} />
-              ) : (
-                <TrendingDown size={12} color={theme.white} strokeWidth={2} />
-              )}
-              <Text style={styles.trendText}>
-                {priceInfo.percentage.toFixed(1)}%
-              </Text>
-            </View>
-          )}
-
-          {priceInfo.trend === TRENDS.STABLE && (
-            <View
-              style={[
-                styles.trendBadge,
-                {
-                  backgroundColor: isDark
-                    ? theme.tertiaryButtonBackground
-                    : theme.quaternaryButtonBackground,
-                },
-              ]}
-            >
-              <Minus size={12} color={theme.white} strokeWidth={2} />
-              <Text style={styles.trendText}>Stable</Text>
-            </View>
-          )}
+          <TrendBadge priceHistory={item.priceHistory} />
         </View>
       </TouchableOpacity>
     );
@@ -260,19 +202,6 @@ function createStyles(theme: Theme, isDark: boolean) {
       fontFamily: 'Inter_700Bold',
       color: theme.primaryFont,
       marginBottom: 4,
-    },
-    trendBadge: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      paddingHorizontal: 8,
-      paddingVertical: 4,
-      borderRadius: 12,
-    },
-    trendText: {
-      fontSize: 12,
-      fontFamily: 'Inter_600SemiBold',
-      color: theme.white,
-      marginLeft: 4,
     },
     errorContainer: {
       flex: 1,

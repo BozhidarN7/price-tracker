@@ -14,6 +14,14 @@ export default function HomeLayout() {
           headerTintColor: theme.primaryFont,
         }}
       />
+      <Stack.Screen
+        name="products/[productId]"
+        options={{
+          title: 'Product Info',
+          headerStyle: { backgroundColor: theme.background },
+          headerTintColor: theme.primaryFont,
+        }}
+      />
     </Stack>
   );
 }
