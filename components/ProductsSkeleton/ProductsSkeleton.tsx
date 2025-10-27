@@ -1,7 +1,7 @@
-import { useEffect, useRef } from 'react';
 import { Animated, StyleSheet, View } from 'react-native';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
+import { useSkeleton } from '@/hooks';
 
 type ProductsSkeletonProps = {
   count: number;
@@ -9,34 +9,9 @@ type ProductsSkeletonProps = {
 
 export default function ProductsSkeleton({ count }: ProductsSkeletonProps) {
   const { theme, isDark } = useTheme();
-  const animatedValue = useRef(new Animated.Value(0)).current;
-
   const styles = createStyles(theme, isDark);
 
-  useEffect(() => {
-    const animation = Animated.loop(
-      Animated.sequence([
-        Animated.timing(animatedValue, {
-          toValue: 1,
-          duration: 1000,
-          useNativeDriver: true,
-        }),
-        Animated.timing(animatedValue, {
-          toValue: 0,
-          duration: 1000,
-          useNativeDriver: true,
-        }),
-      ]),
-    );
-    animation.start();
-
-    return () => animation.stop();
-  }, [animatedValue]);
-
-  const opacity = animatedValue.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0.3, 0.7],
-  });
+  const opacity = useSkeleton();
 
   const SkeletonItem = () => (
     <View style={styles.skeletonCard}>
@@ -75,7 +50,7 @@ const createStyles = (theme: Theme, isDark: boolean) => {
       marginBottom: 12,
       flexDirection: 'row',
       alignItems: 'center',
-      shadowColor: isDark ? '#000000' : '#000000',
+      shadowColor: theme.black,
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: isDark ? 0.3 : 0.1,
       shadowRadius: 8,

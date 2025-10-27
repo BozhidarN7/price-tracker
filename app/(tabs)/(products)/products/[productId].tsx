@@ -5,6 +5,7 @@ import { Theme } from '@/types';
 import { useGetProductById } from '@/hooks';
 import { Product } from '@/types/product';
 import { ProductDetails } from '@/components/ProductDetails';
+import ProductDetailsSkeleton from '@/components/ProductDetails/ProductDetailsSkeleton';
 
 export default function ProductInfoScreen() {
   const { productId } = useLocalSearchParams();
@@ -18,7 +19,7 @@ export default function ProductInfoScreen() {
   const styles = createStyles(theme, isDark);
 
   if (isProductInfoLoading) {
-    return null;
+    return <ProductDetailsSkeleton />;
   }
 
   if (productInfoError) {
