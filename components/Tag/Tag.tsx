@@ -38,7 +38,9 @@ const createStyles = (theme: Theme, isDark: boolean) => {
       padding: 6,
       borderRadius: 16,
       borderWidth: 1,
-      borderColor: theme.senaryButtonBackground,
+      borderColor: isDark
+        ? theme.tertiaryButtonBackground
+        : theme.senaryButtonBackground,
       shadowColor: theme.primaryShadow,
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: isDark ? 0.3 : 0.1,

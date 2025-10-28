@@ -64,7 +64,7 @@ export const getProductById = async (productId: string): Promise<Product> => {
   });
 
   if (!res.ok) {
-    throw new Error('Failed to fetch product');
+    throw new Error('Failed to fetch product details');
   }
 
   return res.json();
