@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ChevronDown, ChevronUp, Package, X } from 'lucide-react-native';
+import * as Crypto from 'expo-crypto';
 
 import AdvancedFields from './AdvancedFields';
 import PriceFields from './PriceFields';
@@ -18,7 +19,7 @@ import RequiredFields from './RequiredFields/RequiredFields';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
 import { CURRENCIES_SYMBOLS_MAP, TRENDS } from '@/constants';
-import { NewPriceEntry, NewProduct } from '@/types/product';
+import { NewProduct } from '@/types/product';
 import { CURRENCiES } from '@/constants/currencies';
 import useAddProduct from '@/hooks/use-add-product';
 
@@ -81,7 +82,8 @@ export default function AdddProductModal({
       return;
     }
 
-    const priceEntry: NewPriceEntry = {
+    const priceEntry = {
+      priceEntryId: Crypto.randomUUID(),
       date: formData.date,
       store: formData.store || undefined,
       currency: formData.currency,

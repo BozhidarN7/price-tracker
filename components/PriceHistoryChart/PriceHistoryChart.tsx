@@ -37,7 +37,7 @@ export default function PriceHistoryChart({
         axisOptions={{
           font,
           formatXLabel: (value) =>
-            `${formatDate(value.toString(), { short: true })}`,
+            `${formatDate((value || '').toString(), { short: true })}`,
           formatYLabel: (value) => `€${value.toFixed(2)}`,
           labelColor: theme.primaryFont,
         }}

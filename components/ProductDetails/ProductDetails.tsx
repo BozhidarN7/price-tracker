@@ -1,6 +1,6 @@
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Calendar, ChartColumn, Store } from 'lucide-react-native';
+import { Calendar, ChartColumn, ImageIcon, Store } from 'lucide-react-native';
 import PriceEntries from './PriceEntries';
 import PriceHistoryChart from '@/components/PriceHistoryChart';
 import TrendBadge from '@/components/TrendBadge';
@@ -24,17 +24,37 @@ export default function ProductDetails({ productInfo }: ProductDetailsProps) {
     <>
       {/* Hero Section */}
       <View style={styles.heroContainer}>
-        <Image
-          source={{ uri: productInfo.imageUrl, height: 300 }}
-          style={styles.heroImage}
-        />
+        {productInfo.imageUrl ? (
+          <>
+            <Image
+              source={{ uri: productInfo.imageUrl, height: 300 }}
+              style={styles.heroImage}
+            />
 
-        <LinearGradient
-          colors={['rgba(0,0,0,0.5)', 'transparent']} // from black/50 to transparent
-          start={{ x: 0.5, y: 1 }} // gradient starts from bottom
-          end={{ x: 0.5, y: 0 }} // to top
-          style={StyleSheet.absoluteFill} // equivalent to absolute inset-0
-        />
+            <LinearGradient
+              colors={['rgba(0,0,0,0.5)', 'transparent']} // from black/50 to transparent
+              start={{ x: 0.5, y: 1 }} // gradient starts from bottom
+              end={{ x: 0.5, y: 0 }} // to top
+              style={StyleSheet.absoluteFill} // equivalent to absolute inset-0
+            />
+          </>
+        ) : (
+          <>
+            <LinearGradient
+              colors={isDark ? ['#0f172a', '#1e293b'] : ['#8685ef', '#e3e0f3']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              style={StyleSheet.absoluteFill}
+            />
+            <View style={styles.heroImageFallback}>
+              <ImageIcon
+                size={48}
+                strokeWidth={2}
+                color={isDark ? theme.tertiaryFont : theme.quaternaryFont}
+              />
+            </View>
+          </>
+        )}
 
         <View style={styles.heroInfo}>
           <Text style={styles.priceLabelText}>Current price</Text>
@@ -52,21 +72,26 @@ export default function ProductDetails({ productInfo }: ProductDetailsProps) {
         <Text style={styles.brandText}>{productInfo.brand}</Text>
         <Text style={styles.nameText}>{productInfo.name}</Text>
         <Tag text={productInfo.category} />
-        <Text style={styles.descriptionText}>
-          {productInfo.description}
-          {productInfo.description}
-        </Text>
+        {productInfo.description ? (
+          <Text style={styles.descriptionText}>{productInfo.description}</Text>
+        ) : (
+          <Text style={styles.descriptionTextFallback}>
+            No description available
+          </Text>
+        )}
         {/* Tags */}
-        <View style={styles.tagsContainer}>
-          {productInfo.tags?.map((tag) => (
-            <Tag
-              key={tag}
-              text={tag}
-              customStylesContainer={styles.tagContainerCustomStyles}
-              customStylesText={styles.tagCustomStyles}
-            />
-          ))}
-        </View>
+        {productInfo.tags && (
+          <View style={styles.tagsContainer}>
+            {productInfo.tags.map((tag) => (
+              <Tag
+                key={tag}
+                text={tag}
+                customStylesContainer={styles.tagContainerCustomStyles}
+                customStylesText={styles.tagCustomStyles}
+              />
+            ))}
+          </View>
+        )}
       </View>
       {/* Price Analytics Card */}
       <View style={styles.cardContainer}>
@@ -155,6 +180,13 @@ const createStyles = (theme: Theme, isDark: boolean) => {
       position: 'absolute',
       width: '100%',
     },
+    heroImageFallback: {
+      position: 'absolute',
+      width: '100%',
+      height: '100%',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
     heroInfo: {
       marginTop: 'auto',
       paddingHorizontal: 20,
@@ -205,12 +237,19 @@ const createStyles = (theme: Theme, isDark: boolean) => {
       fontSize: 16,
       fontFamily: 'Inter_400Regular',
       color: theme.secondaryFont,
-      marginBottom: 6,
+      marginTop: 10,
+    },
+    descriptionTextFallback: {
+      fontSize: 14,
+      fontFamily: 'Inter_400Regular_Italic',
+      color: theme.tertiaryFont,
+      marginTop: 10,
     },
     tagsContainer: {
       flexDirection: 'row',
       flexWrap: 'wrap',
       gap: 8,
+      marginTop: 16,
     },
     tagContainerCustomStyles: {
       backgroundColor: isDark

@@ -41,7 +41,5 @@ export type Product = {
 
 export type NewProduct = Omit<
   Product,
-  'id' | 'userId' | 'createdAt' | 'updatedAt' | 'priceHistory'
-> & { priceHistory?: NewPriceEntry[] };
-
-export type NewPriceEntry = Omit<PriceEntry, 'priceEntryId'>;
+  'id' | 'userId' | 'createdAt' | 'updatedAt'
+>;
