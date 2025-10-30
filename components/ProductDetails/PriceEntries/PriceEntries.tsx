@@ -4,6 +4,7 @@ import { Theme } from '@/types';
 import { PriceEntry } from '@/types/product';
 import { CURRENCIES_SYMBOLS_MAP } from '@/constants';
 import { formatDate } from '@/utils/convert-dates';
+import MoreOptionsMenu from '@/components/MoreOptionsMenu';
 
 type PriceEntriesProps = {
   item: PriceEntry;
@@ -28,10 +29,13 @@ export default function PriceEntries({
           {item.store || 'No store specified'}
         </Text>
       </View>
-      <Text style={styles.entryPriceText}>
-        {CURRENCIES_SYMBOLS_MAP[latestCurrency]}
-        {item.price}
-      </Text>
+      <View style={styles.entryRightContainer}>
+        <Text style={styles.entryPriceText}>
+          {CURRENCIES_SYMBOLS_MAP[latestCurrency]}
+          {item.price}
+        </Text>
+        <MoreOptionsMenu />
+      </View>
     </View>
   );
 }
@@ -59,6 +63,11 @@ const createStyles = (theme: Theme, _isDark: boolean) => {
       fontSize: 18,
       fontFamily: 'Inter_500Medium',
       color: theme.primaryFont,
+    },
+    entryRightContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      columnGap: 12,
     },
   });
 };
