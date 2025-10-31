@@ -1,8 +1,4 @@
-import {
-  ADD_PRODUCT_URL,
-  GET_PRODUCTS_URL,
-  getProductByIdUrl,
-} from '@/constants/urls';
+import { PRODUCTS_URL, getProductByIdUrl } from '@/constants/urls';
 import { NewProduct, Product } from '@/types/product';
 import { getIdToken } from '@/utils/manage-tokens';
 
@@ -13,7 +9,7 @@ export const getProducts = async (): Promise<Product[]> => {
     throw new Error('No access token found');
   }
 
-  const res = await fetch(GET_PRODUCTS_URL, {
+  const res = await fetch(PRODUCTS_URL, {
     headers: {
       Authorization: idToken,
     },
@@ -33,7 +29,7 @@ export const addProduct = async (newProduct: NewProduct): Promise<Product> => {
     throw new Error('No access token found');
   }
 
-  const res = await fetch(ADD_PRODUCT_URL, {
+  const res = await fetch(PRODUCTS_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -65,6 +61,29 @@ export const getProductById = async (productId: string): Promise<Product> => {
 
   if (!res.ok) {
     throw new Error('Failed to fetch product details');
+  }
+
+  return res.json();
+};
+
+export const deleteProductById = async (
+  productId: string,
+): Promise<{ message: string }> => {
+  const idToken = await getIdToken();
+
+  if (!idToken) {
+    throw new Error('No access token found');
+  }
+
+  const res = await fetch(getProductByIdUrl(productId), {
+    method: 'DELETE',
+    headers: {
+      Authorization: idToken,
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to delete product');
   }
 
   return res.json();

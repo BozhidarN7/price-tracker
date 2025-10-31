@@ -1,15 +1,18 @@
-import { router, useLocalSearchParams } from 'expo-router';
+import { useCallback, useLayoutEffect } from 'react';
+import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import { ScrollView, StyleSheet } from 'react-native';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
-import { useGetProductById } from '@/hooks';
+import { useDeleteProduct, useGetProductById } from '@/hooks';
 import { Product } from '@/types/product';
 import { ProductDetails } from '@/components/ProductDetails';
 import ProductDetailsSkeleton from '@/components/ProductDetails/ProductDetailsSkeleton';
 import ProductDetailsError from '@/components/ProductDetails/ProductDetailsError';
+import MoreOptionsMenu from '@/components/MoreOptionsMenu';
 
 export default function ProductInfoScreen() {
   const { productId } = useLocalSearchParams();
+  const navigation = useNavigation();
   const { theme, isDark } = useTheme();
   const {
     data: productInfo = {} as Product,
@@ -17,6 +20,7 @@ export default function ProductInfoScreen() {
     error: productInfoError,
     refetch: refetchProductInfo,
   } = useGetProductById(productId as string);
+  const { mutateAsync: deleteProductAsync } = useDeleteProduct();
 
   const styles = createStyles(theme, isDark);
 
@@ -27,6 +31,21 @@ export default function ProductInfoScreen() {
   const onGoHome = () => {
     router.navigate('/');
   };
+
+  const onDelete = useCallback(async () => {
+    try {
+      const res = await deleteProductAsync(productId as string);
+      if (res.message === 'Deleted') {
+        router.navigate('/');
+      }
+    } catch (_err) {}
+  }, [productId, deleteProductAsync]);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => <MoreOptionsMenu onDelete={onDelete} />,
+    });
+  }, [navigation, onDelete]);
 
   if (isProductInfoLoading) {
     return <ProductDetailsSkeleton />;
