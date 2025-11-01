@@ -2,7 +2,7 @@ import { Alert } from 'react-native';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Toast from 'react-native-toast-message';
 import { addProduct } from '@/api/products-api';
-import { NewProduct, Product } from '@/types/product';
+import { NewProduct } from '@/types/product';
 import { PRODUCTS_KEYS } from '@/constants/query-keys';
 
 export default function useAddProduct() {

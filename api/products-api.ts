@@ -1,5 +1,5 @@
 import { PRODUCTS_URL, getProductByIdUrl } from '@/constants/urls';
-import { NewProduct, Product } from '@/types/product';
+import { ModifiedProduct, NewProduct, Product } from '@/types/product';
 import { getIdToken } from '@/utils/manage-tokens';
 
 export const getProducts = async (): Promise<Product[]> => {
@@ -61,6 +61,31 @@ export const getProductById = async (productId: string): Promise<Product> => {
 
   if (!res.ok) {
     throw new Error('Failed to fetch product details');
+  }
+
+  return res.json();
+};
+
+export const editProductById = async (
+  productId: string,
+  modifiedProduct: ModifiedProduct,
+): Promise<Product> => {
+  const idToken = await getIdToken();
+
+  if (!idToken) {
+    throw new Error('No access token found');
+  }
+
+  const res = await fetch(getProductByIdUrl(productId), {
+    method: 'PATCH',
+    headers: {
+      Authorization: idToken,
+    },
+    body: JSON.stringify(modifiedProduct),
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to edit product');
   }
 
   return res.json();

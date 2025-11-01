@@ -131,8 +131,12 @@ export default function MoreOptionsMenu({
                 <TouchableOpacity
                   style={styles.menuItem}
                   onPress={() => {
-                    closeMenu();
-                    onEdit?.();
+                    animateOut(() => {
+                      setVisible(false);
+                      requestIdleCallback(() => {
+                        onEdit?.();
+                      });
+                    });
                   }}
                 >
                   <Edit size={18} color={theme.primaryFont} />

@@ -1,56 +1,47 @@
 import { useState } from 'react';
-import {
-  Alert,
-  Modal,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
+import { Alert, Modal, ScrollView, StyleSheet } from 'react-native';
+import { useLocalSearchParams } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ChevronDown, ChevronUp } from 'lucide-react-native';
-import * as Crypto from 'expo-crypto';
 
 import ModalHeader from '../ModalHeader';
-import AdvancedFields from './AdvancedFields';
-import ModalFooter from './ModalFooter';
-import PriceFields from './PriceFields';
-import RequiredFields from './RequiredFields/RequiredFields';
+import ModalFooter from '../AddProductModal/ModalFooter';
+import AdvancedFields from '@/components/AddProductModal/AdvancedFields';
+import RequiredFields from '@/components/AddProductModal/RequiredFields/RequiredFields';
 
 import { useTheme } from '@/contexts/ThemeContext';
 import { ProductModalFormData, Theme } from '@/types';
-import { TRENDS } from '@/constants';
-import { NewProduct } from '@/types/product';
+import { ModifiedProduct } from '@/types/product';
+import { useEditProduct, useGetProductById } from '@/hooks';
 import { CURRENCiES } from '@/constants/currencies';
-import useAddProduct from '@/hooks/use-add-product';
 
-type AddProductModalProps = {
+type EditProductModalProps = {
   visible: boolean;
   onClose: () => void;
 };
 
-export default function AddProductModal({
+export default function EditProductModal({
   visible,
   onClose,
-}: AddProductModalProps) {
+}: EditProductModalProps) {
   const { theme, isDark } = useTheme();
+  const { productId } = useLocalSearchParams();
+  const { data: productInfo } = useGetProductById(productId as string);
   const [formData, setFormData] = useState<ProductModalFormData>({
-    name: '',
-    brand: '',
-    category: '',
-    price: '',
+    name: productInfo?.name || '',
+    brand: productInfo?.brand || '',
+    category: productInfo?.category || '',
+    description: productInfo?.description || '',
+    imageUrl: productInfo?.imageUrl || '',
+    tags: productInfo?.tags || [],
     currency: CURRENCiES.EUR,
     store: '',
-    date: new Date().toISOString().split('T')[0],
-    description: '',
-    imageUrl: '',
-    tags: [],
+    price: '',
+    date: '',
   });
-  const [showAdvanced, setShowAdvanced] = useState(false);
   const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
-  const [showCurrencyDropdown, setShowCurrencyDropdown] = useState(false);
-  const { mutateAsync: addProductAsync, isPending: isAddingProduct } =
-    useAddProduct();
+
+  const { mutateAsync: editProductAsync, isPending: isEdditingProduct } =
+    useEditProduct();
 
   const styles = createStyles(theme, isDark);
 
@@ -61,41 +52,31 @@ export default function AddProductModal({
       Alert.alert('Error', 'Product name is required.');
       return;
     }
-    if (!formData.price.trim() || isNaN(Number(formData.price))) {
-      Alert.alert('Error', 'Valid price is required.');
-      return;
-    }
+
     if (!formData.category.trim()) {
       Alert.alert('Error', 'Category is required.');
       return;
     }
 
-    const priceEntry = {
-      priceEntryId: Crypto.randomUUID(),
-      date: formData.date,
-      store: formData.store || undefined,
-      currency: formData.currency,
-      price: Number(formData.price),
-    };
-
-    const newProduct: NewProduct = {
+    const modifiedProduct: ModifiedProduct = {
       name: formData.name.trim(),
       brand: formData.brand || undefined,
       category: formData.category,
       description: formData.description.trim() || undefined,
       imageUrl: formData.imageUrl.trim() || undefined,
-      latestPrice: Number(formData.price),
-      latestCurrency: formData.currency,
-      priceHistory: [priceEntry],
       tags: formData.tags.length > 0 ? formData.tags : undefined,
-      trend: TRENDS.STABLE,
     };
 
     try {
-      await addProductAsync(newProduct);
+      try {
+        await editProductAsync({
+          productId: productId as string,
+          modifiedProduct,
+        });
+      } catch (_error) {}
 
       // Reset form
-      if (!isAddingProduct) {
+      if (!isEdditingProduct) {
         setFormData({
           name: '',
           brand: '',
@@ -108,7 +89,6 @@ export default function AddProductModal({
           imageUrl: '',
           tags: [],
         });
-        setShowAdvanced(false);
       }
       onClose();
     } catch (_error) {}
@@ -122,7 +102,7 @@ export default function AddProductModal({
       onRequestClose={onClose}
     >
       <SafeAreaView style={styles.container}>
-        <ModalHeader onClose={onClose} text="Add Product" />
+        <ModalHeader onClose={onClose} text="Edit Product" />
 
         <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
           <RequiredFields
@@ -132,46 +112,18 @@ export default function AddProductModal({
             setShowCategoryDropdown={setShowCategoryDropdown}
           />
 
-          {/* Price Section */}
-          <PriceFields
+          <AdvancedFields
             formData={formData}
             setFormData={setFormData}
-            showCurrencyDropdown={showCurrencyDropdown}
-            setShowCurrencyDropdown={setShowCurrencyDropdown}
+            sectionTitleText="Advanced Fields"
           />
-
-          {/* Advanced Fields Toggle */}
-
-          <TouchableOpacity
-            style={styles.advancedToggle}
-            onPress={() => setShowAdvanced(!showAdvanced)}
-          >
-            <Text style={styles.advancedToggleText}>More Details</Text>
-            {showAdvanced ? (
-              <ChevronUp
-                size={20}
-                color={theme.primaryButtonBackground}
-                strokeWidth={2}
-              />
-            ) : (
-              <ChevronDown
-                color={theme.primaryButtonBackground}
-                size={20}
-                strokeWidth={2}
-              />
-            )}
-          </TouchableOpacity>
-
-          {showAdvanced && (
-            <AdvancedFields formData={formData} setFormData={setFormData} />
-          )}
         </ScrollView>
         <ModalFooter
-          text="Add Product"
-          textProcessing="Adding..."
-          isProcessing={isAddingProduct}
-          handleSubmit={handleSubmit}
           onClose={onClose}
+          handleSubmit={handleSubmit}
+          isProcessing={isEdditingProduct}
+          text="Edit"
+          textProcessing="Editting..."
         />
       </SafeAreaView>
     </Modal>
@@ -184,6 +136,7 @@ const createStyles = (theme: Theme, _isDark: boolean) => {
       flex: 1,
       backgroundColor: theme.background,
     },
+
     content: {
       flex: 1,
       paddingHorizontal: 20,

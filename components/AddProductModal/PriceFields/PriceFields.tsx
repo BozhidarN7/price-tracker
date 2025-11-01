@@ -1,16 +1,15 @@
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { Calendar, DollarSign, Store } from 'lucide-react-native';
 
-import type { FormData } from '../AddProductModal';
 import { useTheme } from '@/contexts/ThemeContext';
-import { Theme } from '@/types';
+import { ProductModalFormData, Theme } from '@/types';
 import FormField from '@/components/FormField';
 import Dropdown from '@/components/Dropdown';
 import { CURRENCIES_SYMBOLS_MAP } from '@/constants';
 
 type PriceFieldsProps = {
-  formData: FormData;
-  setFormData: React.Dispatch<React.SetStateAction<FormData>>;
+  formData: ProductModalFormData;
+  setFormData: React.Dispatch<React.SetStateAction<ProductModalFormData>>;
   showCurrencyDropdown: boolean;
   setShowCurrencyDropdown: React.Dispatch<React.SetStateAction<boolean>>;
 };

@@ -1,6 +1,7 @@
-import { useCallback, useLayoutEffect } from 'react';
+import { useCallback, useLayoutEffect, useState } from 'react';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import { ScrollView, StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
 import { useDeleteProduct, useGetProductById } from '@/hooks';
@@ -9,8 +10,10 @@ import { ProductDetails } from '@/components/ProductDetails';
 import ProductDetailsSkeleton from '@/components/ProductDetails/ProductDetailsSkeleton';
 import ProductDetailsError from '@/components/ProductDetails/ProductDetailsError';
 import MoreOptionsMenu from '@/components/MoreOptionsMenu';
+import EditProductModal from '@/components/EditProductModal';
 
 export default function ProductInfoScreen() {
+  const [showEditModal, setShowEditModal] = useState(false);
   const { productId } = useLocalSearchParams();
   const navigation = useNavigation();
   const { theme, isDark } = useTheme();
@@ -41,11 +44,17 @@ export default function ProductInfoScreen() {
     } catch (_err) {}
   }, [productId, deleteProductAsync]);
 
+  const onEdit = useCallback(() => {
+    setShowEditModal(true);
+  }, []);
+
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: () => <MoreOptionsMenu onDelete={onDelete} />,
+      headerRight: () => (
+        <MoreOptionsMenu onDelete={onDelete} onEdit={onEdit} />
+      ),
     });
-  }, [navigation, onDelete]);
+  }, [navigation, onDelete, onEdit]);
 
   if (isProductInfoLoading) {
     return <ProductDetailsSkeleton />;
@@ -62,9 +71,15 @@ export default function ProductInfoScreen() {
   }
 
   return (
-    <ScrollView style={styles.container}>
-      <ProductDetails productInfo={productInfo} />
-    </ScrollView>
+    <SafeAreaView style={styles.container} edges={['right', 'left', 'bottom']}>
+      <ScrollView style={{ flex: 1 }}>
+        <ProductDetails productInfo={productInfo} />
+      </ScrollView>
+      <EditProductModal
+        visible={showEditModal}
+        onClose={() => setShowEditModal(false)}
+      />
+    </SafeAreaView>
   );
 }
 

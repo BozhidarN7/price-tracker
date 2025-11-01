@@ -43,3 +43,14 @@ export type NewProduct = Omit<
   Product,
   'id' | 'userId' | 'createdAt' | 'updatedAt'
 >;
+
+export type ModifiedProduct = Omit<
+  Product,
+  | 'id'
+  | 'userId'
+  | 'createdAt'
+  | 'updatedAt'
+  | 'priceHistory'
+  | 'latestPrice'
+  | 'latestCurrency'
+>;

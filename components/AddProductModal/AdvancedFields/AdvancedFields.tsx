@@ -1,24 +1,28 @@
-import { StyleSheet, TextInput, View } from 'react-native';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { FileText, ImageIcon } from 'lucide-react-native';
-import type { FormData } from '../AddProductModal';
 import FormField from '@/components/FormField';
 import { useTheme } from '@/contexts/ThemeContext';
-import { Theme } from '@/types';
+import { ProductModalFormData, Theme } from '@/types';
 
 type AdvancedFieldsProps = {
-  formData: FormData;
-  setFormData: React.Dispatch<React.SetStateAction<FormData>>;
+  formData: ProductModalFormData;
+  setFormData: React.Dispatch<React.SetStateAction<ProductModalFormData>>;
+  sectionTitleText?: string;
 };
 
 export default function AdvancedFields({
   formData,
   setFormData,
+  sectionTitleText = '',
 }: AdvancedFieldsProps) {
   const { theme, isDark } = useTheme();
   const styles = createStyles(theme, isDark);
 
   return (
     <View style={styles.section}>
+      {sectionTitleText ? (
+        <Text style={styles.sectionTitle}>{sectionTitleText}</Text>
+      ) : null}
       <FormField
         label="Description"
         icon={
@@ -75,6 +79,12 @@ const createStyles = (theme: Theme, isDark: boolean) => {
   return StyleSheet.create({
     section: {
       marginVertical: 16,
+    },
+    sectionTitle: {
+      fontSize: 18,
+      fontFamily: 'Inter_600SemiBold',
+      color: theme.primaryFont,
+      marginBottom: 16,
     },
     textInput: {
       backgroundColor: isDark
