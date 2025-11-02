@@ -1,8 +1,9 @@
 import { StyleSheet, Text, TextInput, View } from 'react-native';
-import { FileText, ImageIcon } from 'lucide-react-native';
+import { FileText, ImageIcon, Tags } from 'lucide-react-native';
 import FormField from '@/components/FormField';
 import { useTheme } from '@/contexts/ThemeContext';
 import { ProductModalFormData, Theme } from '@/types';
+import TagInput from '@/components/TagInput';
 
 type AdvancedFieldsProps = {
   formData: ProductModalFormData;
@@ -18,6 +19,7 @@ export default function AdvancedFields({
   const { theme, isDark } = useTheme();
   const styles = createStyles(theme, isDark);
 
+  console.log(formData);
   return (
     <View style={styles.section}>
       {sectionTitleText ? (
@@ -69,6 +71,21 @@ export default function AdvancedFields({
             isDark ? theme.tertiaryFont : theme.quaternaryFont
           }
           autoCapitalize="none"
+        />
+      </FormField>
+      <FormField
+        label="Tags"
+        icon={
+          <Tags
+            size={18}
+            color={theme.primaryButtonBackground}
+            strokeWidth={2}
+          />
+        }
+      >
+        <TagInput
+          value={formData.tags}
+          onChange={(tags) => setFormData((prev) => ({ ...prev, tags }))}
         />
       </FormField>
     </View>
