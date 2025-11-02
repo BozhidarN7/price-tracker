@@ -19,7 +19,6 @@ export default function AdvancedFields({
   const { theme, isDark } = useTheme();
   const styles = createStyles(theme, isDark);
 
-  console.log(formData);
   return (
     <View style={styles.section}>
       {sectionTitleText ? (

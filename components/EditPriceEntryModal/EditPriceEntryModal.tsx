@@ -5,40 +5,42 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import ModalHeader from '../ModalHeader';
 import ModalFooter from '../AddProductModal/ModalFooter';
-import AdvancedFields from '@/components/AddProductModal/AdvancedFields';
-import RequiredFields from '@/components/AddProductModal/RequiredFields/RequiredFields';
+import PriceFields from '../AddProductModal/PriceFields';
 
 import { useTheme } from '@/contexts/ThemeContext';
 import { ProductModalFormData, Theme } from '@/types';
-import { ModifiedProduct } from '@/types/product';
+import { ModifiedProduct, PriceEntry } from '@/types/product';
 import { useEditProduct, useGetProductById } from '@/hooks';
 import { CURRENCiES } from '@/constants/currencies';
+import { formatDate } from '@/utils/convert-dates';
 
-type EditProductModalProps = {
+type EditPriceEntryModalProps = {
   visible: boolean;
   onClose: () => void;
+  priceEntry: PriceEntry;
 };
 
-export default function EditProductModal({
+export default function EditPriceEntryModal({
   visible,
   onClose,
-}: EditProductModalProps) {
+  priceEntry,
+}: EditPriceEntryModalProps) {
   const { theme, isDark } = useTheme();
   const { productId } = useLocalSearchParams();
   const { data: productInfo } = useGetProductById(productId as string);
   const [formData, setFormData] = useState<ProductModalFormData>({
-    name: productInfo?.name || '',
-    brand: productInfo?.brand || '',
-    category: productInfo?.category || '',
-    description: productInfo?.description || '',
-    imageUrl: productInfo?.imageUrl || '',
-    tags: productInfo?.tags || [],
-    currency: CURRENCiES.EUR,
-    store: '',
-    price: '',
-    date: '',
+    name: '',
+    brand: '',
+    category: '',
+    description: '',
+    imageUrl: '',
+    tags: [],
+    currency: priceEntry.currency || CURRENCiES.EUR,
+    store: priceEntry.store || '',
+    price: String(priceEntry.price) || '',
+    date: formatDate(priceEntry.date),
   });
-  const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
+  const [showCurrencyDropdown, setShowCurrencyDropdown] = useState(false);
 
   const { mutateAsync: editProductAsync, isPending: isEdditingProduct } =
     useEditProduct();
@@ -47,24 +49,29 @@ export default function EditProductModal({
 
   const handleSubmit = async () => {
     // Validation
-
-    if (!formData.name.trim()) {
-      Alert.alert('Error', 'Product name is required.');
+    if (!formData.price.trim() || isNaN(Number(formData.price))) {
+      Alert.alert('Error', 'Valid price is required.');
       return;
     }
 
-    if (!formData.category.trim()) {
-      Alert.alert('Error', 'Category is required.');
-      return;
-    }
+    const modfiedPriceEntry = {
+      price: Number(formData.price),
+      currency: formData.currency,
+      date: formData.date || new Date().toISOString(),
+      store: formData.store,
+    };
+    const updatedPriceEntries = productInfo?.priceHistory.map((entry) => {
+      if (entry.priceEntryId === priceEntry.priceEntryId) {
+        return {
+          ...entry,
+          ...modfiedPriceEntry,
+        };
+      }
+      return entry;
+    });
 
     const modifiedProduct: ModifiedProduct = {
-      name: formData.name.trim(),
-      brand: formData.brand || undefined,
-      category: formData.category,
-      description: formData.description.trim() || undefined,
-      imageUrl: formData.imageUrl.trim() || undefined,
-      tags: formData.tags.length > 0 ? formData.tags : undefined,
+      priceHistory: updatedPriceEntries,
     };
 
     try {
@@ -100,27 +107,21 @@ export default function EditProductModal({
       onRequestClose={onClose}
     >
       <SafeAreaView style={styles.container}>
-        <ModalHeader onClose={onClose} text="Edit Product" />
+        <ModalHeader onClose={onClose} text="Edit Price Entry" />
 
         <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-          <RequiredFields
+          <PriceFields
             formData={formData}
             setFormData={setFormData}
-            showCategoryDropdown={showCategoryDropdown}
-            setShowCategoryDropdown={setShowCategoryDropdown}
-          />
-
-          <AdvancedFields
-            formData={formData}
-            setFormData={setFormData}
-            sectionTitleText="Advanced Fields"
+            showCurrencyDropdown={showCurrencyDropdown}
+            setShowCurrencyDropdown={setShowCurrencyDropdown}
           />
         </ScrollView>
         <ModalFooter
           onClose={onClose}
           handleSubmit={handleSubmit}
           isProcessing={isEdditingProduct}
-          text="Edit"
+          text="Edit Entry"
           textProcessing="Editting..."
         />
       </SafeAreaView>

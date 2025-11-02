@@ -144,7 +144,7 @@ export default function ProductDetails({ productInfo }: ProductDetailsProps) {
         <View style={styles.entryContainer}>
           <Store size={20} strokeWidth={2} color={theme.secondaryFont} />
           <Text style={styles.entryText}>
-            {productInfo.priceHistory[0].store || 'No store specified'}
+            {productInfo.priceHistory[0]?.store || 'No store specified'}
           </Text>
         </View>
         <View style={styles.entryContainer}>
@@ -154,18 +154,7 @@ export default function ProductDetails({ productInfo }: ProductDetailsProps) {
           </Text>
         </View>
       </View>
-      <View style={styles.cardContainer}>
-        <View style={styles.cardTitleContainer}>
-          <Text style={styles.cardTitleText}>All Entries</Text>
-        </View>
-        {productInfo.priceHistory.map((item) => (
-          <PriceEntries
-            key={item.priceEntryId}
-            item={item}
-            latestCurrency={productInfo.latestCurrency}
-          />
-        ))}
-      </View>
+      <PriceEntries productInfo={productInfo} />
     </>
   );
 }

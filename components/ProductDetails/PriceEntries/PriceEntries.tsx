@@ -1,73 +1,93 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Plus } from 'lucide-react-native';
+import PriceEntry from './PriceEntry';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
-import { PriceEntry } from '@/types/product';
-import { CURRENCIES_SYMBOLS_MAP } from '@/constants';
-import { formatDate } from '@/utils/convert-dates';
-import MoreOptionsMenu from '@/components/MoreOptionsMenu';
+import { Product } from '@/types/product';
+import AddPriceEntryModal from '@/components/AddPriceEntryModal';
 
 type PriceEntriesProps = {
-  item: PriceEntry;
-  latestCurrency: keyof typeof CURRENCIES_SYMBOLS_MAP;
+  productInfo: Product;
 };
 
-export default function PriceEntries({
-  item,
-  latestCurrency,
-}: PriceEntriesProps) {
+export default function PriceEntries({ productInfo }: PriceEntriesProps) {
   const { theme, isDark } = useTheme();
+  const [showAddModal, setShowAddModal] = useState(false);
 
   const styles = createStyles(theme, isDark);
 
   return (
-    <View style={styles.entryItemContainer}>
-      <View style={styles.entryInfoContainer}>
-        <Text style={[styles.entryInfoText, { fontSize: 14 }]}>
-          {formatDate(item.date, { short: true })}
-        </Text>
-        <Text style={[styles.entryInfoText, { color: theme.secondaryFont }]}>
-          {item.store || 'No store specified'}
-        </Text>
+    <>
+      <View style={styles.cardContainer}>
+        <View style={styles.cardTitleContainer}>
+          <Text style={styles.cardTitleText}>All Entries</Text>
+          <TouchableOpacity style={styles.addButton}>
+            <Plus
+              size={18}
+              color={theme.primaryButtonBackground}
+              strokeWidth={2}
+              onPress={() => setShowAddModal(true)}
+            />
+          </TouchableOpacity>
+        </View>
+        {productInfo.priceHistory.map((item) => (
+          <PriceEntry
+            key={item.priceEntryId}
+            item={item}
+            latestCurrency={productInfo.latestCurrency}
+            priceHistory={productInfo.priceHistory}
+          />
+        ))}
       </View>
-      <View style={styles.entryRightContainer}>
-        <Text style={styles.entryPriceText}>
-          {CURRENCIES_SYMBOLS_MAP[latestCurrency]}
-          {item.price}
-        </Text>
-        <MoreOptionsMenu />
-      </View>
-    </View>
+      <AddPriceEntryModal
+        visible={showAddModal}
+        onClose={() => setShowAddModal(false)}
+      />
+    </>
   );
 }
 
-const createStyles = (theme: Theme, _isDark: boolean) => {
+const createStyles = (theme: Theme, isDark: boolean) => {
   return StyleSheet.create({
-    entryItemContainer: {
+    cardContainer: {
+      backgroundColor: theme.homeBackground,
+      marginHorizontal: 20,
+      marginBottom: 14,
+      paddingHorizontal: 16,
+      paddingBottom: 20,
+      borderRadius: 12,
+      shadowColor: theme.black,
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: isDark ? 0.3 : 0.1,
+      shadowRadius: 8,
+      elevation: 4,
+    },
+    cardTitleContainer: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      marginBottom: 16,
-      paddingBottom: 12,
-      borderBottomWidth: 1,
-      borderBottomColor: theme.senaryButtonBackground,
+      marginTop: 20,
+      marginBottom: 40,
+      columnGap: 10,
     },
-    entryInfoContainer: {
-      rowGap: 4,
-    },
-    entryInfoText: {
-      fontSize: 12,
-      fontFamily: 'Inter_400Regular',
-      color: theme.primaryFont,
-    },
-    entryPriceText: {
+    cardTitleText: {
       fontSize: 18,
       fontFamily: 'Inter_500Medium',
       color: theme.primaryFont,
     },
-    entryRightContainer: {
-      flexDirection: 'row',
+    addButton: {
+      width: 32,
+      height: 32,
+      borderRadius: 18,
+      backgroundColor: theme.secondaryButtonBackground,
+      justifyContent: 'center',
       alignItems: 'center',
-      columnGap: 12,
+      shadowColor: theme.black,
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: isDark ? 0.3 : 0.1,
+      shadowRadius: 4,
+      elevation: 4,
     },
   });
 };

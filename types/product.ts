@@ -24,6 +24,8 @@ export type Product = {
   // Price tracking
   latestPrice: number;
   latestCurrency: keyof typeof CURRENCIES_SYMBOLS_MAP;
+  latestStore?: string;
+  latestPurchaseDate?: string;
   priceHistory: PriceEntry[];
 
   // Analytics (computed fields)
@@ -44,13 +46,4 @@ export type NewProduct = Omit<
   'id' | 'userId' | 'createdAt' | 'updatedAt'
 >;
 
-export type ModifiedProduct = Omit<
-  Product,
-  | 'id'
-  | 'userId'
-  | 'createdAt'
-  | 'updatedAt'
-  | 'priceHistory'
-  | 'latestPrice'
-  | 'latestCurrency'
->;
+export type ModifiedProduct = Partial<Product>;

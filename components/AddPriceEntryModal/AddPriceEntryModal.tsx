@@ -5,40 +5,38 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import ModalHeader from '../ModalHeader';
 import ModalFooter from '../AddProductModal/ModalFooter';
-import AdvancedFields from '@/components/AddProductModal/AdvancedFields';
-import RequiredFields from '@/components/AddProductModal/RequiredFields/RequiredFields';
+import PriceFields from '../AddProductModal/PriceFields';
 
 import { useTheme } from '@/contexts/ThemeContext';
 import { ProductModalFormData, Theme } from '@/types';
 import { ModifiedProduct } from '@/types/product';
-import { useEditProduct, useGetProductById } from '@/hooks';
+import { useEditProduct } from '@/hooks';
 import { CURRENCiES } from '@/constants/currencies';
 
-type EditProductModalProps = {
+type AddPriceEntryModalProps = {
   visible: boolean;
   onClose: () => void;
 };
 
-export default function EditProductModal({
+export default function AddPriceEntryModal({
   visible,
   onClose,
-}: EditProductModalProps) {
+}: AddPriceEntryModalProps) {
   const { theme, isDark } = useTheme();
   const { productId } = useLocalSearchParams();
-  const { data: productInfo } = useGetProductById(productId as string);
   const [formData, setFormData] = useState<ProductModalFormData>({
-    name: productInfo?.name || '',
-    brand: productInfo?.brand || '',
-    category: productInfo?.category || '',
-    description: productInfo?.description || '',
-    imageUrl: productInfo?.imageUrl || '',
-    tags: productInfo?.tags || [],
+    name: '',
+    brand: '',
+    category: '',
+    description: '',
+    imageUrl: '',
+    tags: [],
     currency: CURRENCiES.EUR,
     store: '',
     price: '',
     date: '',
   });
-  const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
+  const [showCurrencyDropdown, setShowCurrencyDropdown] = useState(false);
 
   const { mutateAsync: editProductAsync, isPending: isEdditingProduct } =
     useEditProduct();
@@ -47,24 +45,16 @@ export default function EditProductModal({
 
   const handleSubmit = async () => {
     // Validation
-
-    if (!formData.name.trim()) {
-      Alert.alert('Error', 'Product name is required.');
-      return;
-    }
-
-    if (!formData.category.trim()) {
-      Alert.alert('Error', 'Category is required.');
+    if (!formData.price.trim() || isNaN(Number(formData.price))) {
+      Alert.alert('Error', 'Valid price is required.');
       return;
     }
 
     const modifiedProduct: ModifiedProduct = {
-      name: formData.name.trim(),
-      brand: formData.brand || undefined,
-      category: formData.category,
-      description: formData.description.trim() || undefined,
-      imageUrl: formData.imageUrl.trim() || undefined,
-      tags: formData.tags.length > 0 ? formData.tags : undefined,
+      latestPrice: Number(formData.price),
+      latestCurrency: formData.currency,
+      latestStore: formData.store,
+      latestPurchaseDate: formData.date,
     };
 
     try {
@@ -100,28 +90,22 @@ export default function EditProductModal({
       onRequestClose={onClose}
     >
       <SafeAreaView style={styles.container}>
-        <ModalHeader onClose={onClose} text="Edit Product" />
+        <ModalHeader onClose={onClose} text="Add New Price" />
 
         <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-          <RequiredFields
+          <PriceFields
             formData={formData}
             setFormData={setFormData}
-            showCategoryDropdown={showCategoryDropdown}
-            setShowCategoryDropdown={setShowCategoryDropdown}
-          />
-
-          <AdvancedFields
-            formData={formData}
-            setFormData={setFormData}
-            sectionTitleText="Advanced Fields"
+            showCurrencyDropdown={showCurrencyDropdown}
+            setShowCurrencyDropdown={setShowCurrencyDropdown}
           />
         </ScrollView>
         <ModalFooter
           onClose={onClose}
           handleSubmit={handleSubmit}
           isProcessing={isEdditingProduct}
-          text="Edit"
-          textProcessing="Editting..."
+          text="Add Price"
+          textProcessing="Adding..."
         />
       </SafeAreaView>
     </Modal>
