@@ -17,6 +17,11 @@ export default function PriceEntries({ productInfo }: PriceEntriesProps) {
 
   const styles = createStyles(theme, isDark);
 
+  // by Date, latest first
+  const sortedPriceEntires = [...productInfo.priceHistory].sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+  );
+
   return (
     <>
       <View style={styles.cardContainer}>
@@ -31,7 +36,7 @@ export default function PriceEntries({ productInfo }: PriceEntriesProps) {
             />
           </TouchableOpacity>
         </View>
-        {productInfo.priceHistory.map((item) => (
+        {sortedPriceEntires.map((item) => (
           <PriceEntry
             key={item.priceEntryId}
             item={item}

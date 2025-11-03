@@ -12,7 +12,6 @@ import { ProductModalFormData, Theme } from '@/types';
 import { ModifiedProduct, PriceEntry } from '@/types/product';
 import { useEditProduct, useGetProductById } from '@/hooks';
 import { CURRENCiES } from '@/constants/currencies';
-import { formatDate } from '@/utils/convert-dates';
 
 type EditPriceEntryModalProps = {
   visible: boolean;
@@ -38,7 +37,7 @@ export default function EditPriceEntryModal({
     currency: priceEntry.currency || CURRENCiES.EUR,
     store: priceEntry.store || '',
     price: String(priceEntry.price) || '',
-    date: formatDate(priceEntry.date),
+    date: priceEntry.date.split('T')[0] || '',
   });
   const [showCurrencyDropdown, setShowCurrencyDropdown] = useState(false);
 
@@ -80,21 +79,6 @@ export default function EditPriceEntryModal({
         modifiedProduct,
       });
 
-      // Reset form
-      if (!isEdditingProduct) {
-        setFormData({
-          name: '',
-          brand: '',
-          category: '',
-          price: '',
-          currency: 'USD',
-          store: '',
-          date: new Date().toISOString().split('T')[0],
-          description: '',
-          imageUrl: '',
-          tags: [],
-        });
-      }
       onClose();
     } catch (_error) {}
   };
