@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useNavigation } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ShoppingCart } from 'lucide-react-native';
@@ -23,8 +23,10 @@ export default function SignInScreen() {
 
   const [isSignUp, setIsSignUp] = useState(false);
 
-  const fadeAnim = useRef(new Animated.Value(0)).current;
-  const slideAnim = useRef(new Animated.Value(50)).current;
+  const fadeAnimRef = useRef(new Animated.Value(0));
+  const slideAnimRef = useRef(new Animated.Value(50));
+  const fadeAnim = useMemo(() => fadeAnimRef.current, []);
+  const slideAnim = useMemo(() => slideAnimRef.current, []);
 
   useLayoutEffect(() => {
     navigation.setOptions({ headerShown: false });
