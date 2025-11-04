@@ -39,24 +39,24 @@ export default function PriceHistoryChart({
           formatXLabel: (value) =>
             `${formatDate((value || '').toString(), { short: true })}`,
           formatYLabel: (value) => `€${value.toFixed(2)}`,
-          labelColor: theme.primaryFont,
+          labelColor: theme.textPrimary,
         }}
         frame={{
-          lineColor: theme.primaryFont,
+          lineColor: theme.textPrimary,
         }}
       >
         {({ points }) => (
           <>
             <Line
               points={points.price}
-              color={theme.primaryButtonBackground}
+              color={theme.buttonPrimary}
               strokeWidth={3}
             />
             <Scatter
               points={points.price}
               radius={5}
               style="fill"
-              color={theme.primaryButtonBackground}
+              color={theme.buttonPrimary}
             />
           </>
         )}

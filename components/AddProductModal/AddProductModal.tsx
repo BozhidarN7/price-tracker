@@ -150,12 +150,12 @@ export default function AddProductModal({
             {showAdvanced ? (
               <ChevronUp
                 size={20}
-                color={theme.primaryButtonBackground}
+                color={theme.buttonPrimary}
                 strokeWidth={2}
               />
             ) : (
               <ChevronDown
-                color={theme.primaryButtonBackground}
+                color={theme.buttonPrimary}
                 size={20}
                 strokeWidth={2}
               />
@@ -199,7 +199,7 @@ const createStyles = (theme: Theme, _isDark: boolean) => {
     advancedToggleText: {
       fontSize: 16,
       fontFamily: 'Inter_600SemiBold',
-      color: theme.primaryButtonBackground,
+      color: theme.buttonPrimary,
       marginRight: 8,
     },
   });

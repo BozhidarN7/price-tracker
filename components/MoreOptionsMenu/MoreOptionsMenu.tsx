@@ -1,3 +1,4 @@
+import { Edit, MoreVertical, Trash } from 'lucide-react-native';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Animated,
@@ -10,7 +11,6 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import { Edit, MoreVertical, Trash } from 'lucide-react-native';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
 
@@ -105,7 +105,7 @@ export default function MoreOptionsMenu({
   return (
     <View>
       <TouchableOpacity ref={buttonRef} onPress={openMenu}>
-        <MoreVertical color={theme.primaryFont} size={22} />
+        <MoreVertical color={theme.textPrimary} size={22} />
       </TouchableOpacity>
 
       <Modal
@@ -139,7 +139,7 @@ export default function MoreOptionsMenu({
                     });
                   }}
                 >
-                  <Edit size={18} color={theme.primaryFont} />
+                  <Edit size={18} color={theme.textPrimary} />
                   <Text style={styles.menuText}>Edit</Text>
                 </TouchableOpacity>
 
@@ -172,7 +172,7 @@ function createStyles(theme: Theme, _isDark: boolean) {
     },
     menuContainer: {
       position: 'absolute',
-      backgroundColor: theme.secondaryButtonBackground,
+      backgroundColor: theme.buttonSecondary,
       borderRadius: 10,
       paddingVertical: 8,
       paddingHorizontal: 4,
@@ -192,7 +192,7 @@ function createStyles(theme: Theme, _isDark: boolean) {
     menuText: {
       marginLeft: 8,
       fontSize: 16,
-      color: theme.primaryFont,
+      color: theme.textPrimary,
     },
   });
 }

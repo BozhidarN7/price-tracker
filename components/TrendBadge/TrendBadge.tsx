@@ -1,10 +1,10 @@
-import { StyleSheet, Text, View } from 'react-native';
 import { Minus, TrendingDown, TrendingUp } from 'lucide-react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { TRENDS } from '@/constants';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
 import { PriceEntry } from '@/types/product';
 import { getPriceChangeInfo } from '@/utils';
-import { TRENDS } from '@/constants';
 
 export type TrendBadgeProps = {
   priceHistory: PriceEntry[];
@@ -25,9 +25,7 @@ export default function TrendBadge({ priceHistory }: TrendBadgeProps) {
             styles.trendBadge,
             {
               backgroundColor:
-                priceInfo.trend === TRENDS.UP
-                  ? theme.upTrendRed
-                  : theme.downTrendGreen,
+                priceInfo.trend === TRENDS.UP ? theme.trendDown : theme.trendUp,
             },
           ]}
         >
@@ -48,8 +46,8 @@ export default function TrendBadge({ priceHistory }: TrendBadgeProps) {
             styles.trendBadge,
             {
               backgroundColor: isDark
-                ? theme.tertiaryButtonBackground
-                : theme.quaternaryButtonBackground,
+                ? theme.buttonTertiary
+                : theme.buttonQuaternary,
             },
           ]}
         >

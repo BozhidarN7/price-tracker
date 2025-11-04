@@ -1,11 +1,11 @@
-import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { Calendar, DollarSign, Store } from 'lucide-react-native';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 
+import Dropdown from '@/components/Dropdown';
+import FormField from '@/components/FormField';
+import { CURRENCIES_SYMBOLS_MAP } from '@/constants';
 import { useTheme } from '@/contexts/ThemeContext';
 import { ProductModalFormData, Theme } from '@/types';
-import FormField from '@/components/FormField';
-import Dropdown from '@/components/Dropdown';
-import { CURRENCIES_SYMBOLS_MAP } from '@/constants';
 
 type PriceFieldsProps = {
   formData: ProductModalFormData;
@@ -34,7 +34,7 @@ export default function PriceFields({
             icon={
               <DollarSign
                 size={18}
-                color={theme.primaryButtonBackground}
+                color={theme.buttonPrimary}
                 strokeWidth={2}
               />
             }
@@ -48,7 +48,7 @@ export default function PriceFields({
               }
               placeholder="0.00"
               placeholderTextColor={
-                isDark ? theme.tertiaryFont : theme.quaternaryFont
+                isDark ? theme.textTertiary : theme.textQuaternary
               }
               keyboardType="decimal-pad"
             />
@@ -60,7 +60,7 @@ export default function PriceFields({
             icon={
               <DollarSign
                 size={18}
-                color={theme.primaryButtonBackground}
+                color={theme.buttonPrimary}
                 strokeWidth={2}
               />
             }
@@ -82,13 +82,7 @@ export default function PriceFields({
 
       <FormField
         label="Store"
-        icon={
-          <Store
-            size={18}
-            color={theme.primaryButtonBackground}
-            strokeWidth={2}
-          />
-        }
+        icon={<Store size={18} color={theme.buttonPrimary} strokeWidth={2} />}
       >
         <TextInput
           style={styles.textInput}
@@ -98,7 +92,7 @@ export default function PriceFields({
           }
           placeholder="e.g., Lidl, Carrefour"
           placeholderTextColor={
-            isDark ? theme.tertiaryFont : theme.quaternaryFont
+            isDark ? theme.textTertiary : theme.textQuaternary
           }
         />
       </FormField>
@@ -106,11 +100,7 @@ export default function PriceFields({
       <FormField
         label="Date of Purchase"
         icon={
-          <Calendar
-            size={18}
-            color={theme.primaryButtonBackground}
-            strokeWidth={2}
-          />
+          <Calendar size={18} color={theme.buttonPrimary} strokeWidth={2} />
         }
       >
         <TextInput
@@ -121,7 +111,7 @@ export default function PriceFields({
           }
           placeholder="YYYY-MM-DD"
           placeholderTextColor={
-            isDark ? theme.tertiaryFont : theme.quaternaryFont
+            isDark ? theme.textTertiary : theme.textQuaternary
           }
         />
       </FormField>
@@ -137,23 +127,19 @@ const createStyles = (theme: Theme, isDark: boolean) => {
     sectionTitle: {
       fontSize: 18,
       fontFamily: 'Inter_600SemiBold',
-      color: theme.primaryFont,
+      color: theme.textPrimary,
       marginBottom: 16,
     },
     textInput: {
-      backgroundColor: isDark
-        ? theme.secondaryButtonBackground
-        : theme.quinaryButtonBackground,
+      backgroundColor: isDark ? theme.buttonSecondary : theme.buttonQuinary,
       borderRadius: 12,
       paddingHorizontal: 16,
       paddingVertical: 12,
       fontSize: 16,
       fontFamily: 'Inter_400Regular',
-      color: theme.primaryFont,
+      color: theme.textPrimary,
       borderWidth: 1,
-      borderColor: isDark
-        ? theme.tertiaryButtonBackground
-        : theme.senaryButtonBackground,
+      borderColor: isDark ? theme.buttonTertiary : theme.buttonSenary,
     },
     priceRow: {
       flexDirection: 'row',

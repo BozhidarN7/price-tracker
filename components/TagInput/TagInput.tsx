@@ -98,7 +98,7 @@ export default function TagInput({
             onSubmitEditing={(e) => addTag(e.nativeEvent.text)}
             placeholder={placeholder}
             placeholderTextColor={
-              isDark ? theme.tertiaryFont : theme.quaternaryFont
+              isDark ? theme.textTertiary : theme.textQuaternary
             }
             style={styles.input}
             returnKeyType="done"
@@ -113,19 +113,15 @@ export default function TagInput({
 const createStyles = (theme: Theme, isDark: boolean) => {
   return StyleSheet.create({
     container: {
-      backgroundColor: isDark
-        ? theme.secondaryButtonBackground
-        : theme.quinaryButtonBackground,
+      backgroundColor: isDark ? theme.buttonSecondary : theme.buttonQuinary,
       borderRadius: 12,
       paddingHorizontal: 16,
       paddingVertical: 12,
       fontSize: 16,
       fontFamily: 'Inter_400Regular',
-      color: theme.primaryFont,
+      color: theme.textPrimary,
       borderWidth: 1,
-      borderColor: isDark
-        ? theme.tertiaryButtonBackground
-        : theme.senaryButtonBackground,
+      borderColor: isDark ? theme.buttonTertiary : theme.buttonSenary,
     },
     tag: {
       flexDirection: 'row',
@@ -134,12 +130,10 @@ const createStyles = (theme: Theme, isDark: boolean) => {
       paddingHorizontal: 10,
       borderRadius: 20,
       marginRight: 6,
-      backgroundColor: isDark
-        ? theme.secondaryButtonBackground
-        : theme.quinaryButtonBackground,
+      backgroundColor: isDark ? theme.buttonSecondary : theme.buttonQuinary,
     },
     tagText: {
-      color: theme.primaryFont,
+      color: theme.textPrimary,
       fontSize: 16,
       fontFamily: 'Inter_400Regular',
     },
@@ -148,18 +142,18 @@ const createStyles = (theme: Theme, isDark: boolean) => {
       borderRadius: 12,
       paddingHorizontal: 4,
       paddingVertical: 2,
-      backgroundColor: theme.secondaryButtonBackground,
+      backgroundColor: theme.buttonSecondary,
     },
     removeText: {
       fontSize: 12,
       fontFamily: 'Inter400Regular',
-      color: theme.secondaryFont,
+      color: theme.textSecondary,
     },
     input: {
       flexGrow: 1,
       fontSize: 16,
       minWidth: 80,
-      color: theme.primaryFont,
+      color: theme.textPrimary,
     },
   });
 };

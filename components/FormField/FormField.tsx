@@ -51,11 +51,11 @@ const createStyles = (theme: Theme) => {
     fieldLabel: {
       fontSize: 14,
       fontFamily: 'Inter_600SemiBold',
-      color: theme.primaryFont,
+      color: theme.textPrimary,
       marginLeft: 8,
     },
     required: {
-      color: theme.upTrendRed,
+      color: theme.trendDown,
     },
   });
 };

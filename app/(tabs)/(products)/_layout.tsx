@@ -11,7 +11,7 @@ export default function HomeLayout() {
         options={{
           title: 'Home',
           headerStyle: { backgroundColor: theme.background },
-          headerTintColor: theme.primaryFont,
+          headerTintColor: theme.textPrimary,
         }}
       />
       <Stack.Screen
@@ -19,7 +19,7 @@ export default function HomeLayout() {
         options={{
           title: 'Product Info',
           headerStyle: { backgroundColor: theme.background },
-          headerTintColor: theme.primaryFont,
+          headerTintColor: theme.textPrimary,
         }}
       />
     </Stack>

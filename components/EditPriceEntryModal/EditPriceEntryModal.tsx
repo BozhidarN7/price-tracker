@@ -1,17 +1,17 @@
+import { useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import { Alert, Modal, ScrollView, StyleSheet } from 'react-native';
-import { useLocalSearchParams } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import ModalHeader from '../ModalHeader';
 import ModalFooter from '../AddProductModal/ModalFooter';
 import PriceFields from '../AddProductModal/PriceFields';
+import ModalHeader from '../ModalHeader';
 
+import { CURRENCiES } from '@/constants/currencies';
 import { useTheme } from '@/contexts/ThemeContext';
+import { useEditProduct, useGetProductById } from '@/hooks';
 import { ProductModalFormData, Theme } from '@/types';
 import { ModifiedProduct, PriceEntry } from '@/types/product';
-import { useEditProduct, useGetProductById } from '@/hooks';
-import { CURRENCiES } from '@/constants/currencies';
 
 type EditPriceEntryModalProps = {
   visible: boolean;

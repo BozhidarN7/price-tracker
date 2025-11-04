@@ -1,5 +1,5 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { AlertCircle, Home, RefreshCw } from 'lucide-react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
 
@@ -23,7 +23,7 @@ export default function ProductDetailsError({
       <View style={styles.card}>
         <View style={styles.iconContainer}>
           <View style={styles.iconBackground}>
-            <AlertCircle size={48} color={theme.errorRed} strokeWidth={2} />
+            <AlertCircle size={48} color={theme.error} strokeWidth={2} />
           </View>
         </View>
 
@@ -45,7 +45,7 @@ export default function ProductDetailsError({
             <TouchableOpacity style={styles.outlineButton} onPress={onGoHome}>
               <Home
                 size={18}
-                color={theme.primaryFont}
+                color={theme.textPrimary}
                 style={styles.buttonIcon}
               />
               <Text style={styles.outlineButtonText}>Go Home</Text>
@@ -65,15 +65,13 @@ const createStyles = (theme: Theme, isDark: boolean) => {
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: isDark
-        ? theme.tertiaryButtonBackground
-        : theme.quinaryButtonBackground,
+      backgroundColor: isDark ? theme.buttonTertiary : theme.buttonQuinary,
       justifyContent: 'center',
       alignItems: 'center',
       padding: 16,
     },
     card: {
-      backgroundColor: theme.secondaryButtonBackground,
+      backgroundColor: theme.buttonSecondary,
       borderRadius: 12,
       padding: 24,
       width: '100%',
@@ -91,7 +89,7 @@ const createStyles = (theme: Theme, isDark: boolean) => {
       marginBottom: 16,
     },
     iconBackground: {
-      backgroundColor: theme.redBackground,
+      backgroundColor: theme.errorBackground,
       borderRadius: 50,
       padding: 16,
     },
@@ -99,10 +97,10 @@ const createStyles = (theme: Theme, isDark: boolean) => {
       fontSize: 24,
       fontFamily: 'Inter_500Medium',
       marginBottom: 24,
-      color: theme.primaryFont,
+      color: theme.textPrimary,
     },
     message: {
-      color: theme.primaryFont,
+      color: theme.textPrimary,
       fontFamily: 'Inter_400Regular',
       fontSize: 16,
       textAlign: 'center',
@@ -116,7 +114,7 @@ const createStyles = (theme: Theme, isDark: boolean) => {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: theme.primaryButtonBackground,
+      backgroundColor: theme.buttonPrimary,
       paddingVertical: 12,
       borderRadius: 8,
     },
@@ -128,15 +126,13 @@ const createStyles = (theme: Theme, isDark: boolean) => {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
-      borderColor: isDark
-        ? theme.tertiaryButtonBackground
-        : theme.senaryButtonBackground,
+      borderColor: isDark ? theme.buttonTertiary : theme.buttonSenary,
       borderWidth: 1,
       paddingVertical: 12,
       borderRadius: 8,
     },
     outlineButtonText: {
-      color: theme.primaryFont,
+      color: theme.textPrimary,
       fontFamily: 'Inter_500Medium',
     },
     buttonIcon: {
@@ -145,7 +141,7 @@ const createStyles = (theme: Theme, isDark: boolean) => {
     footerText: {
       fontSize: 12,
       fontFamily: 'Inter_400Regular',
-      color: theme.secondaryFont,
+      color: theme.textSecondary,
       textAlign: 'center',
       marginTop: 24,
     },

@@ -1,9 +1,9 @@
-import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { FileText, ImageIcon, Tags } from 'lucide-react-native';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 import FormField from '@/components/FormField';
+import TagInput from '@/components/TagInput';
 import { useTheme } from '@/contexts/ThemeContext';
 import { ProductModalFormData, Theme } from '@/types';
-import TagInput from '@/components/TagInput';
 
 type AdvancedFieldsProps = {
   formData: ProductModalFormData;
@@ -27,11 +27,7 @@ export default function AdvancedFields({
       <FormField
         label="Description"
         icon={
-          <FileText
-            size={18}
-            color={theme.primaryButtonBackground}
-            strokeWidth={2}
-          />
+          <FileText size={18} color={theme.buttonPrimary} strokeWidth={2} />
         }
       >
         <TextInput
@@ -42,7 +38,7 @@ export default function AdvancedFields({
           }
           placeholder="Additional product details..."
           placeholderTextColor={
-            isDark ? theme.tertiaryFont : theme.quaternaryFont
+            isDark ? theme.textTertiary : theme.textQuaternary
           }
           multiline
           numberOfLines={3}
@@ -52,11 +48,7 @@ export default function AdvancedFields({
       <FormField
         label="Image URL"
         icon={
-          <ImageIcon
-            size={18}
-            color={theme.primaryButtonBackground}
-            strokeWidth={2}
-          />
+          <ImageIcon size={18} color={theme.buttonPrimary} strokeWidth={2} />
         }
       >
         <TextInput
@@ -67,20 +59,14 @@ export default function AdvancedFields({
           }}
           placeholder="https://example.com/image.jpg"
           placeholderTextColor={
-            isDark ? theme.tertiaryFont : theme.quaternaryFont
+            isDark ? theme.textTertiary : theme.textQuaternary
           }
           autoCapitalize="none"
         />
       </FormField>
       <FormField
         label="Tags"
-        icon={
-          <Tags
-            size={18}
-            color={theme.primaryButtonBackground}
-            strokeWidth={2}
-          />
-        }
+        icon={<Tags size={18} color={theme.buttonPrimary} strokeWidth={2} />}
       >
         <TagInput
           value={formData.tags}
@@ -99,23 +85,19 @@ const createStyles = (theme: Theme, isDark: boolean) => {
     sectionTitle: {
       fontSize: 18,
       fontFamily: 'Inter_600SemiBold',
-      color: theme.primaryFont,
+      color: theme.textPrimary,
       marginBottom: 16,
     },
     textInput: {
-      backgroundColor: isDark
-        ? theme.secondaryButtonBackground
-        : theme.quinaryButtonBackground,
+      backgroundColor: isDark ? theme.buttonSecondary : theme.buttonQuinary,
       borderRadius: 12,
       paddingHorizontal: 16,
       paddingVertical: 12,
       fontSize: 16,
       fontFamily: 'Inter_400Regular',
-      color: theme.primaryFont,
+      color: theme.textPrimary,
       borderWidth: 1,
-      borderColor: isDark
-        ? theme.tertiaryButtonBackground
-        : theme.senaryButtonBackground,
+      borderColor: isDark ? theme.buttonTertiary : theme.buttonSenary,
     },
     textArea: {
       height: 80,

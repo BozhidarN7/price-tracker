@@ -1,22 +1,22 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Calendar, ChartColumn, ImageIcon, Store } from 'lucide-react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import PriceEntries from './PriceEntries';
 import PriceHistoryChart from '@/components/PriceHistoryChart';
-import TrendBadge from '@/components/TrendBadge';
 import { Tag } from '@/components/Tag';
+import TrendBadge from '@/components/TrendBadge';
+import { CURRENCIES_SYMBOLS_MAP } from '@/constants';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
-import { formatDate } from '@/utils/convert-dates';
-import { CURRENCIES_SYMBOLS_MAP } from '@/constants';
 import { Product } from '@/types/product';
+import { formatDate } from '@/utils/convert-dates';
 
 type ProductDetailsProps = {
   productInfo: Product;
 };
 
 export default function ProductDetails({ productInfo }: ProductDetailsProps) {
-  const { theme, isDark } = useTheme();
+  const { theme, isDark, palette } = useTheme();
 
   const styles = createStyles(theme, isDark);
 
@@ -41,7 +41,11 @@ export default function ProductDetails({ productInfo }: ProductDetailsProps) {
         ) : (
           <>
             <LinearGradient
-              colors={isDark ? ['#0f172a', '#1e293b'] : ['#8685ef', '#e3e0f3']}
+              colors={
+                isDark
+                  ? [palette.slate[900], palette.slate[800]]
+                  : [palette.purple[400], palette.purple[100]]
+              }
               start={{ x: 0, y: 0 }}
               end={{ x: 1, y: 1 }}
               style={StyleSheet.absoluteFill}
@@ -50,7 +54,7 @@ export default function ProductDetails({ productInfo }: ProductDetailsProps) {
               <ImageIcon
                 size={48}
                 strokeWidth={2}
-                color={isDark ? theme.tertiaryFont : theme.quaternaryFont}
+                color={isDark ? theme.textTertiary : theme.textQuaternary}
               />
             </View>
           </>
@@ -96,11 +100,7 @@ export default function ProductDetails({ productInfo }: ProductDetailsProps) {
       {/* Price Analytics Card */}
       <View style={styles.cardContainer}>
         <View style={styles.cardTitleContainer}>
-          <ChartColumn
-            strokeWidth={2}
-            size={28}
-            color={theme.primaryButtonBackground}
-          />
+          <ChartColumn strokeWidth={2} size={28} color={theme.buttonPrimary} />
           <Text style={styles.cardTitleText}>Price Analytics</Text>
         </View>
         <View style={styles.priceSectionContainer}>
@@ -113,16 +113,14 @@ export default function ProductDetails({ productInfo }: ProductDetailsProps) {
           </View>
           <View style={styles.priceInfo}>
             <Text style={styles.priceInfoLabelText}>Lowest</Text>
-            <Text
-              style={[styles.priceValueText, { color: theme.downTrendGreen }]}
-            >
+            <Text style={[styles.priceValueText, { color: theme.trendUp }]}>
               {CURRENCIES_SYMBOLS_MAP[productInfo.latestCurrency]}
               {productInfo.lowestPrice}
             </Text>
           </View>
           <View style={styles.priceInfo}>
             <Text style={styles.priceInfoLabelText}>Highest</Text>
-            <Text style={[styles.priceValueText, { color: theme.upTrendRed }]}>
+            <Text style={[styles.priceValueText, { color: theme.trendDown }]}>
               {CURRENCIES_SYMBOLS_MAP[productInfo.latestCurrency]}
               {productInfo.highestPrice}
             </Text>
@@ -142,13 +140,13 @@ export default function ProductDetails({ productInfo }: ProductDetailsProps) {
           <Text style={styles.cardTitleText}>Latest Entry</Text>
         </View>
         <View style={styles.entryContainer}>
-          <Store size={20} strokeWidth={2} color={theme.secondaryFont} />
+          <Store size={20} strokeWidth={2} color={theme.textSecondary} />
           <Text style={styles.entryText}>
             {productInfo.priceHistory[0]?.store || 'No store specified'}
           </Text>
         </View>
         <View style={styles.entryContainer}>
-          <Calendar size={20} strokeWidth={2} color={theme.secondaryFont} />
+          <Calendar size={20} strokeWidth={2} color={theme.textSecondary} />
           <Text style={styles.entryText}>
             {formatDate(productInfo.updatedAt)}
           </Text>
@@ -198,7 +196,7 @@ const createStyles = (theme: Theme, isDark: boolean) => {
       color: theme.white,
     },
     cardContainer: {
-      backgroundColor: theme.homeBackground,
+      backgroundColor: theme.surface,
       marginHorizontal: 20,
       marginBottom: 14,
       paddingHorizontal: 16,
@@ -213,25 +211,25 @@ const createStyles = (theme: Theme, isDark: boolean) => {
     brandText: {
       fontSize: 14,
       fontFamily: 'Inter_400Regular',
-      color: theme.primaryButtonBackground,
+      color: theme.buttonPrimary,
       marginBottom: 6,
     },
     nameText: {
       fontSize: 20,
       fontFamily: 'Inter_600SemiBold',
-      color: theme.primaryFont,
+      color: theme.textPrimary,
       marginBottom: 6,
     },
     descriptionText: {
       fontSize: 16,
       fontFamily: 'Inter_400Regular',
-      color: theme.secondaryFont,
+      color: theme.textSecondary,
       marginTop: 10,
     },
     descriptionTextFallback: {
       fontSize: 14,
       fontFamily: 'Inter_400Regular_Italic',
-      color: theme.tertiaryFont,
+      color: theme.textTertiary,
       marginTop: 10,
     },
     tagsContainer: {
@@ -241,9 +239,7 @@ const createStyles = (theme: Theme, isDark: boolean) => {
       marginTop: 16,
     },
     tagContainerCustomStyles: {
-      backgroundColor: isDark
-        ? theme.tertiaryButtonBackground
-        : theme.senaryButtonBackground,
+      backgroundColor: isDark ? theme.buttonTertiary : theme.buttonSenary,
     },
     tagCustomStyles: {
       fontFamily: 'Inter_600SemiBold',
@@ -258,7 +254,7 @@ const createStyles = (theme: Theme, isDark: boolean) => {
     cardTitleText: {
       fontSize: 18,
       fontFamily: 'Inter_500Medium',
-      color: theme.primaryFont,
+      color: theme.textPrimary,
     },
     priceSectionContainer: {
       flexDirection: 'row',
@@ -271,12 +267,12 @@ const createStyles = (theme: Theme, isDark: boolean) => {
     },
     priceInfoLabelText: {
       fontSize: 14,
-      color: theme.secondaryFont,
+      color: theme.textSecondary,
     },
     priceValueText: {
       fontSize: 18,
       fontFamily: 'Inter_500Medium',
-      color: theme.primaryFont,
+      color: theme.textPrimary,
     },
     entryContainer: {
       flexDirection: 'row',
@@ -287,7 +283,7 @@ const createStyles = (theme: Theme, isDark: boolean) => {
     entryText: {
       fontSize: 16,
       fontFamily: 'Inter_400Regular',
-      color: theme.primaryFont,
+      color: theme.textPrimary,
     },
   });
 };

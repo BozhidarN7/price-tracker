@@ -38,10 +38,8 @@ const createStyles = (theme: Theme, isDark: boolean) => {
       padding: 6,
       borderRadius: 16,
       borderWidth: 1,
-      borderColor: isDark
-        ? theme.tertiaryButtonBackground
-        : theme.senaryButtonBackground,
-      shadowColor: theme.primaryShadow,
+      borderColor: isDark ? theme.buttonTertiary : theme.buttonSenary,
+      shadowColor: theme.shadow,
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: isDark ? 0.3 : 0.1,
       shadowRadius: 8,
@@ -51,7 +49,7 @@ const createStyles = (theme: Theme, isDark: boolean) => {
     tagText: {
       fontSize: 12,
       fontFamily: 'Inter_400Regular',
-      color: theme.primaryFont,
+      color: theme.textPrimary,
     },
   });
 };

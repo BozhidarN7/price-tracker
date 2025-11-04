@@ -1,7 +1,6 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useNavigation } from 'expo-router';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { ShoppingCart } from 'lucide-react-native';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import {
   Animated,
   KeyboardAvoidingView,
@@ -11,9 +10,10 @@ import {
   Text,
   View,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { SignInForm } from '@/components/SignIn/SignInForm';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
-import { SignInForm } from '@/components/SignIn/SignInForm';
 
 export default function SignInScreen() {
   const navigation = useNavigation();
@@ -151,11 +151,11 @@ const createSTyles = (theme: Theme, isDark: boolean) => {
       width: 80,
       height: 80,
       borderRadius: 40,
-      backgroundColor: theme.primaryButtonBackground,
+      backgroundColor: theme.buttonPrimary,
       justifyContent: 'center',
       alignItems: 'center',
       marginBottom: 16,
-      shadowColor: theme.primaryShadow,
+      shadowColor: theme.shadow,
       shadowOffset: { width: 0, height: 8 },
       shadowOpacity: 0.3,
       shadowRadius: 16,
@@ -164,13 +164,13 @@ const createSTyles = (theme: Theme, isDark: boolean) => {
     appName: {
       fontSize: 32,
       fontFamily: 'Inter_700Bold',
-      color: theme.primaryFont,
+      color: theme.textPrimary,
       marginBottom: 8,
     },
     tagline: {
       fontSize: 16,
       fontFamily: 'Inter_400Regular',
-      color: theme.secondaryFont,
+      color: theme.textSecondary,
       marginBottom: 8,
     },
     welcomeContainer: {
@@ -179,14 +179,14 @@ const createSTyles = (theme: Theme, isDark: boolean) => {
     welcomeTitle: {
       fontSize: 28,
       fontFamily: 'Inter_700Bold',
-      color: theme.primaryFont,
+      color: theme.textPrimary,
       textAlign: 'center',
       marginBottom: 8,
     },
     welcomeSubtitle: {
       fontSize: 16,
       fontFamily: 'Inter_400Regular',
-      color: theme.secondaryFont,
+      color: theme.textSecondary,
       textAlign: 'center',
       lineHeight: 24,
     },
@@ -204,9 +204,7 @@ const createSTyles = (theme: Theme, isDark: boolean) => {
       width: 48,
       height: 48,
       borderRadius: 24,
-      backgroundColor: isDark
-        ? theme.secondaryButtonBackground
-        : theme.quinaryButtonBackground,
+      backgroundColor: isDark ? theme.buttonSecondary : theme.buttonQuinary,
       justifyContent: 'center',
       alignItems: 'center',
       marginBottom: 8,
@@ -217,7 +215,7 @@ const createSTyles = (theme: Theme, isDark: boolean) => {
     featureText: {
       fontSize: 12,
       fontFamily: 'Inter_600SemiBold',
-      color: theme.secondaryFont,
+      color: theme.textSecondary,
     },
   });
 };

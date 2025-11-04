@@ -1,11 +1,11 @@
+import { Plus, ScanLine } from 'lucide-react-native';
+import { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useState } from 'react';
-import { Plus, ScanLine } from 'lucide-react-native';
+import AdddProductModal from '@/components/AddProductModal';
+import ProductsList from '@/components/ProductsList';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
-import ProductsList from '@/components/ProductsList';
-import AdddProductModal from '@/components/AddProductModal';
 
 export default function ProductsScreen() {
   const { theme, isDark } = useTheme();
@@ -32,7 +32,7 @@ export default function ProductsScreen() {
         <TouchableOpacity style={styles.addButton}>
           <Plus
             size={20}
-            color={theme.primaryButtonBackground}
+            color={theme.buttonPrimary}
             strokeWidth={2}
             onPress={() => setShowAddModal(true)}
           />
@@ -52,7 +52,7 @@ function createStyles(theme: Theme, isDark: boolean) {
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: theme.homeBackground,
+      backgroundColor: theme.surface,
     },
     header: {
       flexDirection: 'row',
@@ -68,22 +68,22 @@ function createStyles(theme: Theme, isDark: boolean) {
     appName: {
       fontSize: 24,
       fontFamily: 'Inter_700Bold',
-      color: theme.primaryFont,
+      color: theme.textPrimary,
     },
     tagline: {
       fontSize: 14,
       fontFamily: 'Inter_400Regular',
-      color: theme.secondaryFont,
+      color: theme.textSecondary,
       marginTop: 2,
     },
     scanButton: {
-      backgroundColor: theme.primaryButtonBackground,
+      backgroundColor: theme.buttonPrimary,
       width: 48,
       height: 48,
       borderRadius: 24,
       justifyContent: 'center',
       alignItems: 'center',
-      shadowColor: theme.primaryShadow,
+      shadowColor: theme.shadow,
       shadowOffset: { width: 0, height: 4 },
       shadowRadius: 8,
       elevation: 8,
@@ -98,13 +98,13 @@ function createStyles(theme: Theme, isDark: boolean) {
     sectionTitle: {
       fontSize: 20,
       fontFamily: 'Inter_600SemiBold',
-      color: theme.primaryFont,
+      color: theme.textPrimary,
     },
     addButton: {
       width: 36,
       height: 36,
       borderRadius: 18,
-      backgroundColor: theme.secondaryButtonBackground,
+      backgroundColor: theme.buttonSecondary,
       justifyContent: 'center',
       alignItems: 'center',
       shadowColor: theme.black,

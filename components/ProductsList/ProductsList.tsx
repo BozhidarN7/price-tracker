@@ -1,3 +1,4 @@
+import { router } from 'expo-router';
 import {
   FlatList,
   Image,
@@ -7,14 +8,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { router } from 'expo-router';
 import ProductsSkeleton from '../ProductsSkeleton';
+import TrendBadge from '@/components/TrendBadge';
+import { CURRENCIES_SYMBOLS_MAP } from '@/constants';
 import { useTheme } from '@/contexts/ThemeContext';
+import { useGetProducts } from '@/hooks';
 import { Theme } from '@/types';
 import { Product } from '@/types/product';
-import { CURRENCIES_SYMBOLS_MAP } from '@/constants';
-import { useGetProducts } from '@/hooks';
-import TrendBadge from '@/components/TrendBadge';
 
 export default function ProductsList() {
   const { theme, isDark } = useTheme();
@@ -140,7 +140,7 @@ function createStyles(theme: Theme, isDark: boolean) {
       marginTop: 20,
     },
     productCard: {
-      backgroundColor: theme.secondaryButtonBackground,
+      backgroundColor: theme.buttonSecondary,
       borderRadius: 16,
       padding: 16,
       marginBottom: 12,
@@ -164,14 +164,14 @@ function createStyles(theme: Theme, isDark: boolean) {
       width: 56,
       height: 56,
       borderRadius: 12,
-      backgroundColor: theme.tertiaryButtonBackground,
+      backgroundColor: theme.buttonTertiary,
       justifyContent: 'center',
       alignItems: 'center',
     },
     productImageText: {
       fontSize: 20,
       fontFamily: 'Inter_700Bold',
-      color: theme.primaryFont,
+      color: theme.textPrimary,
     },
     productInfo: {
       flex: 1,
@@ -180,19 +180,19 @@ function createStyles(theme: Theme, isDark: boolean) {
     productName: {
       fontSize: 16,
       fontFamily: 'Inter_600SemiBold',
-      color: theme.primaryFont,
+      color: theme.textPrimary,
       marginBottom: 2,
     },
     productBrand: {
       fontSize: 14,
       fontFamily: 'Inter_400Regular',
-      color: theme.secondaryFont,
+      color: theme.textSecondary,
       marginBottom: 4,
     },
     lastUpdated: {
       fontSize: 12,
       fontFamily: 'Inter_400Regular',
-      color: theme.secondaryFont,
+      color: theme.textSecondary,
     },
     priceContainer: {
       alignItems: 'flex-end',
@@ -200,7 +200,7 @@ function createStyles(theme: Theme, isDark: boolean) {
     price: {
       fontSize: 18,
       fontFamily: 'Inter_700Bold',
-      color: theme.primaryFont,
+      color: theme.textPrimary,
       marginBottom: 4,
     },
     errorContainer: {
@@ -217,7 +217,7 @@ function createStyles(theme: Theme, isDark: boolean) {
       marginBottom: 16,
     },
     retryButton: {
-      backgroundColor: theme.primaryButtonBackground,
+      backgroundColor: theme.buttonPrimary,
       paddingHorizontal: 24,
       paddingVertical: 12,
       borderRadius: 20,

@@ -48,16 +48,12 @@ const createStyles = (theme: Theme, isDark: boolean) => {
       paddingHorizontal: 20,
       paddingVertical: 16,
       borderTopWidth: 1,
-      borderTopColor: isDark
-        ? theme.secondaryButtonBackground
-        : theme.tertiaryButtonBackground,
+      borderTopColor: isDark ? theme.buttonSecondary : theme.buttonTertiary,
       gap: 12,
     },
     cancelButton: {
       flex: 1,
-      borderTopColor: isDark
-        ? theme.secondaryButtonBackground
-        : theme.tertiaryButtonBackground,
+      borderTopColor: isDark ? theme.buttonSecondary : theme.buttonTertiary,
 
       borderRadius: 12,
       paddingVertical: 16,
@@ -66,11 +62,11 @@ const createStyles = (theme: Theme, isDark: boolean) => {
     cancelButtonText: {
       fontSize: 16,
       fontFamily: 'Inter_600SemiBold',
-      color: theme.primaryFont,
+      color: theme.textPrimary,
     },
     submitButton: {
       flex: 1,
-      backgroundColor: theme.primaryButtonBackground,
+      backgroundColor: theme.buttonPrimary,
       borderRadius: 12,
       paddingVertical: 16,
       alignItems: 'center',

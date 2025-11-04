@@ -1,16 +1,16 @@
-import { useCallback, useLayoutEffect, useState } from 'react';
 import { router, useLocalSearchParams, useNavigation } from 'expo-router';
+import { useCallback, useLayoutEffect, useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useTheme } from '@/contexts/ThemeContext';
-import { Theme } from '@/types';
-import { useDeleteProduct, useGetProductById } from '@/hooks';
-import { Product } from '@/types/product';
-import { ProductDetails } from '@/components/ProductDetails';
-import ProductDetailsSkeleton from '@/components/ProductDetails/ProductDetailsSkeleton';
-import ProductDetailsError from '@/components/ProductDetails/ProductDetailsError';
-import MoreOptionsMenu from '@/components/MoreOptionsMenu';
 import EditProductModal from '@/components/EditProductModal';
+import MoreOptionsMenu from '@/components/MoreOptionsMenu';
+import { ProductDetails } from '@/components/ProductDetails';
+import ProductDetailsError from '@/components/ProductDetails/ProductDetailsError';
+import ProductDetailsSkeleton from '@/components/ProductDetails/ProductDetailsSkeleton';
+import { useTheme } from '@/contexts/ThemeContext';
+import { useDeleteProduct, useGetProductById } from '@/hooks';
+import { Theme } from '@/types';
+import { Product } from '@/types/product';
 
 export default function ProductInfoScreen() {
   const [showEditModal, setShowEditModal] = useState(false);
@@ -87,9 +87,7 @@ const createStyles = (theme: Theme, isDark: boolean) => {
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: isDark
-        ? theme.secondaryButtonBackground
-        : theme.quinaryButtonBackground,
+      backgroundColor: isDark ? theme.buttonSecondary : theme.buttonQuinary,
     },
   });
 };

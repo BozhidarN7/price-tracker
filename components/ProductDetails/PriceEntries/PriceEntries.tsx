@@ -1,11 +1,11 @@
+import { Plus } from 'lucide-react-native';
 import { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Plus } from 'lucide-react-native';
 import PriceEntry from './PriceEntry';
+import AddPriceEntryModal from '@/components/AddPriceEntryModal';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
 import { Product } from '@/types/product';
-import AddPriceEntryModal from '@/components/AddPriceEntryModal';
 
 type PriceEntriesProps = {
   productInfo: Product;
@@ -30,7 +30,7 @@ export default function PriceEntries({ productInfo }: PriceEntriesProps) {
           <TouchableOpacity style={styles.addButton}>
             <Plus
               size={18}
-              color={theme.primaryButtonBackground}
+              color={theme.buttonPrimary}
               strokeWidth={2}
               onPress={() => setShowAddModal(true)}
             />
@@ -56,7 +56,7 @@ export default function PriceEntries({ productInfo }: PriceEntriesProps) {
 const createStyles = (theme: Theme, isDark: boolean) => {
   return StyleSheet.create({
     cardContainer: {
-      backgroundColor: theme.homeBackground,
+      backgroundColor: theme.surface,
       marginHorizontal: 20,
       marginBottom: 14,
       paddingHorizontal: 16,
@@ -79,13 +79,13 @@ const createStyles = (theme: Theme, isDark: boolean) => {
     cardTitleText: {
       fontSize: 18,
       fontFamily: 'Inter_500Medium',
-      color: theme.primaryFont,
+      color: theme.textPrimary,
     },
     addButton: {
       width: 32,
       height: 32,
       borderRadius: 18,
-      backgroundColor: theme.secondaryButtonBackground,
+      backgroundColor: theme.buttonSecondary,
       justifyContent: 'center',
       alignItems: 'center',
       shadowColor: theme.black,

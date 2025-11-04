@@ -22,7 +22,7 @@ export default function ModalHeader({ onClose, text }: ModalHeaderProps) {
         <Text style={styles.headerTitle}>{text}</Text>
       </View>
       <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-        <X size={24} color={theme.primaryFont} strokeWidth={2} />
+        <X size={24} color={theme.textPrimary} strokeWidth={2} />
       </TouchableOpacity>
     </View>
   );
@@ -37,9 +37,7 @@ const createStyles = (theme: Theme, isDark: boolean) => {
       paddingHorizontal: 20,
       paddingVertical: 16,
       borderBottomWidth: 1,
-      borderBottomColor: isDark
-        ? theme.secondaryButtonBackground
-        : theme.tertiaryButtonBackground,
+      borderBottomColor: isDark ? theme.buttonSecondary : theme.buttonTertiary,
     },
     headerLeft: {
       flexDirection: 'row',
@@ -49,7 +47,7 @@ const createStyles = (theme: Theme, isDark: boolean) => {
       width: 40,
       height: 40,
       borderRadius: 20,
-      backgroundColor: theme.primaryShadow,
+      backgroundColor: theme.shadow,
       justifyContent: 'center',
       alignItems: 'center',
       marginRight: 12,
@@ -57,15 +55,13 @@ const createStyles = (theme: Theme, isDark: boolean) => {
     headerTitle: {
       fontSize: 20,
       fontFamily: 'Inter_700Bold',
-      color: theme.primaryFont,
+      color: theme.textPrimary,
     },
     closeButton: {
       width: 40,
       height: 40,
       borderRadius: 20,
-      backgroundColor: isDark
-        ? theme.secondaryButtonBackground
-        : theme.tertiaryButtonBackground,
+      backgroundColor: isDark ? theme.buttonSecondary : theme.buttonTertiary,
       justifyContent: 'center',
       alignItems: 'center',
     },

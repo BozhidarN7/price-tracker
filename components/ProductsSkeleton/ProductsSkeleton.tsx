@@ -1,7 +1,7 @@
 import { Animated, StyleSheet, View } from 'react-native';
 import { useTheme } from '@/contexts/ThemeContext';
-import { Theme } from '@/types';
 import { useSkeleton } from '@/hooks';
+import { Theme } from '@/types';
 
 type ProductsSkeletonProps = {
   count: number;
@@ -38,13 +38,11 @@ export default function ProductsSkeleton({ count }: ProductsSkeletonProps) {
 }
 
 const createStyles = (theme: Theme, isDark: boolean) => {
-  const skeletonColor = isDark
-    ? theme.tertiaryButtonBackground
-    : theme.senaryButtonBackground;
+  const skeletonColor = isDark ? theme.buttonTertiary : theme.buttonSenary;
 
   return StyleSheet.create({
     skeletonCard: {
-      backgroundColor: theme.secondaryButtonBackground,
+      backgroundColor: theme.buttonSecondary,
       borderRadius: 16,
       padding: 16,
       marginBottom: 12,

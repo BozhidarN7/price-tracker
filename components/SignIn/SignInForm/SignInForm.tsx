@@ -1,3 +1,4 @@
+import { Eye, EyeOff, Lock, Mail } from 'lucide-react-native';
 import { useState } from 'react';
 import {
   Alert,
@@ -7,10 +8,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Eye, EyeOff, Lock, Mail } from 'lucide-react-native';
+import { useAuth } from '@/contexts/AuthContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
-import { useAuth } from '@/contexts/AuthContext';
 
 type SignInFormProps = {
   isSignUp: boolean;
@@ -72,7 +72,7 @@ export default function SignInForm({ isSignUp, setIsSignUp }: SignInFormProps) {
             <View style={styles.inputIcon}>
               <Mail
                 size={20}
-                color={isDark ? theme.secondaryFont : theme.tertiaryFont}
+                color={isDark ? theme.textSecondary : theme.textTertiary}
                 strokeWidth={2}
               />
             </View>
@@ -80,7 +80,7 @@ export default function SignInForm({ isSignUp, setIsSignUp }: SignInFormProps) {
               style={styles.input}
               placeholder="Full Name"
               placeholderTextColor={
-                isDark ? theme.tertiaryFont : theme.quaternaryFont
+                isDark ? theme.textTertiary : theme.textQuaternary
               }
               value={name}
               onChangeText={setName}
@@ -93,7 +93,7 @@ export default function SignInForm({ isSignUp, setIsSignUp }: SignInFormProps) {
           <View style={styles.inputIcon}>
             <Mail
               size={20}
-              color={isDark ? theme.secondaryFont : theme.tertiaryFont}
+              color={isDark ? theme.textSecondary : theme.textTertiary}
               strokeWidth={2}
             />
           </View>
@@ -101,7 +101,7 @@ export default function SignInForm({ isSignUp, setIsSignUp }: SignInFormProps) {
             style={styles.input}
             placeholder="Email"
             placeholderTextColor={
-              isDark ? theme.tertiaryFont : theme.quaternaryFont
+              isDark ? theme.textTertiary : theme.textQuaternary
             }
             value={email}
             onChangeText={setEmail}
@@ -113,13 +113,13 @@ export default function SignInForm({ isSignUp, setIsSignUp }: SignInFormProps) {
 
         <View style={styles.inputContainer}>
           <View style={styles.inputIcon}>
-            <Lock size={20} color={theme.secondaryFont} strokeWidth={2} />
+            <Lock size={20} color={theme.textSecondary} strokeWidth={2} />
           </View>
           <TextInput
             style={styles.input}
             placeholder="Password"
             placeholderTextColor={
-              isDark ? theme.tertiaryFont : theme.quaternaryFont
+              isDark ? theme.textTertiary : theme.textQuaternary
             }
             value={password}
             onChangeText={setPassword}
@@ -131,9 +131,9 @@ export default function SignInForm({ isSignUp, setIsSignUp }: SignInFormProps) {
             onPress={() => setShowPassword(!showPassword)}
           >
             {showPassword ? (
-              <EyeOff size={20} color={theme.secondaryFont} strokeWidth={2} />
+              <EyeOff size={20} color={theme.textSecondary} strokeWidth={2} />
             ) : (
-              <Eye size={20} color={theme.secondaryFont} strokeWidth={2} />
+              <Eye size={20} color={theme.textSecondary} strokeWidth={2} />
             )}
           </TouchableOpacity>
         </View>
@@ -185,15 +185,13 @@ const createStyles = (theme: Theme, isDark: boolean) => {
     inputContainer: {
       flexDirection: 'row',
       alignItems: 'center',
-      backgroundColor: isDark
-        ? theme.secondaryButtonBackground
-        : theme.quinaryButtonBackground,
+      backgroundColor: isDark ? theme.buttonSecondary : theme.buttonQuinary,
       borderRadius: 16,
       marginBottom: 16,
       paddingHorizontal: 16,
       paddingVertical: 4,
       borderWidth: 1,
-      borderColor: isDark ? theme.tertiaryFont : theme.senaryButtonBackground,
+      borderColor: isDark ? theme.textTertiary : theme.buttonSenary,
     },
     inputIcon: {
       marginRight: 12,
@@ -202,7 +200,7 @@ const createStyles = (theme: Theme, isDark: boolean) => {
       flex: 1,
       fontSize: 16,
       fontFamily: 'Inter_400Regular',
-      color: theme.primaryFont,
+      color: theme.textPrimary,
       paddingVertical: 16,
     },
     eyeIcon: {
@@ -215,14 +213,14 @@ const createStyles = (theme: Theme, isDark: boolean) => {
     forgotPasswordText: {
       fontSize: 14,
       fontFamily: 'Inter_600SemiBold',
-      color: theme.primaryButtonBackground,
+      color: theme.buttonPrimary,
     },
     submitButton: {
-      backgroundColor: theme.primaryButtonBackground,
+      backgroundColor: theme.buttonPrimary,
       borderRadius: 16,
       paddingVertical: 16,
       alignItems: 'center',
-      shadowColor: theme.primaryShadow,
+      shadowColor: theme.shadow,
       shadowOffset: { width: 0, height: 4 },
       shadowOpacity: 0.3,
       shadowRadius: 12,
@@ -245,13 +243,13 @@ const createStyles = (theme: Theme, isDark: boolean) => {
     toggleText: {
       fontSize: 16,
       fontFamily: 'Inter_400Regular',
-      color: theme.secondaryFont,
+      color: theme.textSecondary,
       marginRight: 8,
     },
     toggleButton: {
       fontSize: 16,
       fontFamily: 'Inter_700Bold',
-      color: theme.primaryButtonBackground,
+      color: theme.buttonPrimary,
     },
   });
 };

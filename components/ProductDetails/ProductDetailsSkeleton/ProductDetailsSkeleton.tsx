@@ -1,7 +1,7 @@
 import { Animated, ScrollView, StyleSheet, View } from 'react-native';
 import { useTheme } from '@/contexts/ThemeContext';
-import { Theme } from '@/types';
 import { useSkeleton } from '@/hooks';
+import { Theme } from '@/types';
 
 export default function ProductDetailsSkeleton() {
   const { theme, isDark } = useTheme();
@@ -165,17 +165,13 @@ export default function ProductDetailsSkeleton() {
 }
 
 const createStyles = (theme: Theme, isDark: boolean) => {
-  const skeletonColor = isDark
-    ? theme.tertiaryButtonBackground
-    : theme.senaryButtonBackground;
+  const skeletonColor = isDark ? theme.buttonTertiary : theme.buttonSenary;
 
   return StyleSheet.create({
     container: {
       flex: 1,
       paddingBottom: 32,
-      backgroundColor: isDark
-        ? theme.secondaryButtonBackground
-        : theme.quinaryButtonBackground,
+      backgroundColor: isDark ? theme.buttonSecondary : theme.buttonQuinary,
     },
     imageHeader: {
       width: '100%',
@@ -183,7 +179,7 @@ const createStyles = (theme: Theme, isDark: boolean) => {
     },
     skeletonFull: {
       flex: 1,
-      backgroundColor: theme.tertiaryButtonBackground,
+      backgroundColor: theme.buttonTertiary,
     },
     priceOverlay: {
       position: 'absolute',

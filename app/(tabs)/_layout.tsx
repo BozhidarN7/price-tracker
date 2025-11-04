@@ -12,10 +12,10 @@ export default function TabsLayout() {
         options={{
           title: 'Home',
           tabBarStyle: {
-            backgroundColor: theme.homeBackground,
+            backgroundColor: theme.surface,
             borderTopColor: isDark
-              ? theme.secondaryButtonBackground
-              : theme.quaternaryButtonBackground,
+              ? theme.buttonSecondary
+              : theme.buttonQuaternary,
             borderTopWidth: 1,
           },
           headerShown: false,

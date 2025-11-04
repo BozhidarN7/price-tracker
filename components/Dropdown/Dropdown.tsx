@@ -1,3 +1,4 @@
+import { ChevronDown, ChevronUp } from 'lucide-react-native';
 import {
   ScrollView,
   StyleSheet,
@@ -5,12 +6,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { ChevronDown, ChevronUp } from 'lucide-react-native';
 
 import { useTheme } from '@/contexts/ThemeContext';
 
-import { Theme } from '@/types';
 import { CURRENCIES_SYMBOLS_MAP } from '@/constants';
+import { Theme } from '@/types';
 
 type DropdownProps = {
   value: string;
@@ -40,9 +40,9 @@ export default function Dropdown({
           {value || placeholder}
         </Text>
         {isOpen ? (
-          <ChevronUp size={20} color={theme.secondaryFont} strokeWidth={2} />
+          <ChevronUp size={20} color={theme.textSecondary} strokeWidth={2} />
         ) : (
-          <ChevronDown size={20} color={theme.secondaryFont} strokeWidth={2} />
+          <ChevronDown size={20} color={theme.textSecondary} strokeWidth={2} />
         )}
       </TouchableOpacity>
       {isOpen && (
@@ -71,9 +71,7 @@ const createStyles = (theme: Theme, isDark: boolean) => {
       position: 'relative',
     },
     dropdownButton: {
-      backgroundColor: isDark
-        ? theme.secondaryButtonBackground
-        : theme.quinaryButtonBackground,
+      backgroundColor: isDark ? theme.buttonSecondary : theme.buttonQuinary,
       borderRadius: 12,
       paddingHorizontal: 16,
       paddingVertical: 14,
@@ -81,24 +79,22 @@ const createStyles = (theme: Theme, isDark: boolean) => {
       justifyContent: 'space-between',
       alignItems: 'center',
       borderWidth: 1,
-      borderColor: isDark
-        ? theme.tertiaryButtonBackground
-        : theme.senaryButtonBackground,
+      borderColor: isDark ? theme.buttonTertiary : theme.buttonSenary,
     },
     dropdownText: {
       fontSize: 16,
       fontFamily: 'Inter_400Regular',
-      color: theme.primaryFont,
+      color: theme.textPrimary,
     },
     placeholderText: {
-      color: isDark ? theme.tertiaryFont : theme.quaternaryFont,
+      color: isDark ? theme.textTertiary : theme.textQuaternary,
     },
     dropdownOptions: {
       position: 'absolute',
       top: '100%',
       left: 0,
       right: 0,
-      backgroundColor: theme.secondaryButtonBackground,
+      backgroundColor: theme.buttonSecondary,
       borderRadius: 12,
       marginTop: 4,
       shadowColor: theme.black,
@@ -113,12 +109,12 @@ const createStyles = (theme: Theme, isDark: boolean) => {
       paddingHorizontal: 16,
       paddingVertical: 12,
       borderBottomWidth: 1,
-      borderBottomColor: theme.tertiaryButtonBackground,
+      borderBottomColor: theme.buttonTertiary,
     },
     dropdownOptionText: {
       fontSize: 16,
       fontFamily: 'Inter_400Regular',
-      color: theme.primaryFont,
+      color: theme.textPrimary,
     },
   });
 };
