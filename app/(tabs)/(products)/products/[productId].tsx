@@ -87,7 +87,7 @@ const createStyles = (theme: Theme, isDark: boolean) => {
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: isDark ? theme.buttonSecondary : theme.buttonQuinary,
+      backgroundColor: isDark ? theme.background : theme.buttonQuinary,
     },
   });
 };
