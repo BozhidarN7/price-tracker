@@ -59,9 +59,14 @@ export const PALETTE = {
     400: '#dc2626',
     500: '#b91c1c',
   },
+
   purple: {
     100: '#e3e0f3',
     400: '#8685ef',
+  },
+
+  amber: {
+    50: '#fffbeb',
   },
 
   trend: {
