@@ -28,6 +28,16 @@ export default function TabsLayout() {
         name="scan"
         options={{
           title: 'Scan',
+          tabBarStyle: {
+            backgroundColor: theme.surface,
+            borderTopColor: isDark
+              ? theme.buttonSecondary
+              : theme.buttonQuaternary,
+          },
+          headerStyle: {
+            backgroundColor: theme.surface,
+          },
+          headerTintColor: isDark ? theme.white : theme.black,
           tabBarIcon: ({ color }) => (
             <Scan size={28} color={color} strokeWidth={2} />
           ),
