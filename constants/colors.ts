@@ -92,8 +92,10 @@ export const LIGHT_THEME = {
   // Base
   white: PALETTE.white,
   black: PALETTE.black,
-  background: PALETTE.white,
+
+  // background
   surface: PALETTE.gray[50],
+  backgroundPrimary: PALETTE.gray[100],
 
   // Text
   textPrimary: PALETTE.gray[900],
@@ -127,7 +129,9 @@ export const DARK_THEME = {
   // Base
   white: PALETTE.white,
   black: PALETTE.black,
-  background: PALETTE.black,
+
+  // background
+  backgroundPrimary: PALETTE.black,
   surface: PALETTE.gray[800],
 
   // Text

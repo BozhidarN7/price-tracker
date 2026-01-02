@@ -62,7 +62,7 @@ const createStyles = (theme: Theme, _isDark: boolean) => {
   return StyleSheet.create({
     previewContainer: {
       flex: 1,
-      backgroundColor: theme.background,
+      backgroundColor: theme.backgroundPrimary,
       justifyContent: 'center',
     },
     previewImage: {

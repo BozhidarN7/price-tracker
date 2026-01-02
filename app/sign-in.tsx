@@ -125,7 +125,7 @@ const createSTyles = (theme: Theme, isDark: boolean) => {
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: theme.background,
+      backgroundColor: theme.backgroundPrimary,
     },
     keyboardView: {
       flex: 1,

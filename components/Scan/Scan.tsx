@@ -70,7 +70,10 @@ export default function ScanScreen() {
   ];
 
   return (
-    <SafeAreaView style={styles.safeAreViewContainer}>
+    <SafeAreaView
+      style={styles.safeAreViewContainer}
+      edges={['left', 'right', 'bottom']}
+    >
       <ScrollView style={styles.scrollContainer}>
         <View style={styles.contentContainer}>
           <View style={styles.purposeSection}>
@@ -123,7 +126,7 @@ const createStyles = (theme: Theme, isDark: boolean) => {
   return StyleSheet.create({
     safeAreViewContainer: {
       flex: 1,
-      backgroundColor: isDark ? theme.background : theme.buttonTertiary,
+      backgroundColor: theme.backgroundPrimary,
     },
     scrollContainer: {
       flex: 1,

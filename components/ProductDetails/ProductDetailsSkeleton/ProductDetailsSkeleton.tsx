@@ -196,7 +196,7 @@ const createStyles = (theme: Theme, isDark: boolean) => {
       paddingHorizontal: 16,
     },
     card: {
-      backgroundColor: theme.background,
+      backgroundColor: theme.backgroundPrimary,
       borderRadius: 12,
       padding: 20,
       shadowColor: theme.black,

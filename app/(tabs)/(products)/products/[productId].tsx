@@ -83,11 +83,11 @@ export default function ProductInfoScreen() {
   );
 }
 
-const createStyles = (theme: Theme, isDark: boolean) => {
+const createStyles = (theme: Theme, _isDark: boolean) => {
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: isDark ? theme.background : theme.buttonQuinary,
+      backgroundColor: theme.backgroundPrimary,
     },
   });
 };

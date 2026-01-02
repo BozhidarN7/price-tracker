@@ -10,7 +10,7 @@ export default function HomeLayout() {
         name="index"
         options={{
           title: 'Home',
-          headerStyle: { backgroundColor: theme.background },
+          headerStyle: { backgroundColor: theme.backgroundPrimary },
           headerTintColor: theme.textPrimary,
         }}
       />
@@ -18,7 +18,7 @@ export default function HomeLayout() {
         name="products/[productId]"
         options={{
           title: 'Product Info',
-          headerStyle: { backgroundColor: theme.background },
+          headerStyle: { backgroundColor: theme.backgroundPrimary },
           headerTintColor: theme.textPrimary,
         }}
       />

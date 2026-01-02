@@ -182,7 +182,7 @@ const createStyles = (theme: Theme, _isDark: boolean) => {
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: theme.background,
+      backgroundColor: theme.backgroundPrimary,
     },
     content: {
       flex: 1,
