@@ -6,11 +6,13 @@ import { Theme } from '@/types';
 type CameraModalProps = {
   cameraVisisble: boolean;
   cameraRef: React.RefObject<CameraView | null>;
+  setCameraVisible: React.Dispatch<React.SetStateAction<boolean>>;
   takePicture: () => Promise<void>;
 };
 export default function CameraModal({
-  cameraVisisble,
   cameraRef,
+  cameraVisisble,
+  setCameraVisible,
   takePicture,
 }: CameraModalProps) {
   const { theme, isDark } = useTheme();
@@ -18,7 +20,11 @@ export default function CameraModal({
   const styles = createStyles(theme, isDark);
 
   return (
-    <Modal visible={cameraVisisble} animationType="slide">
+    <Modal
+      visible={cameraVisisble}
+      animationType="slide"
+      onRequestClose={() => setCameraVisible(false)}
+    >
       <CameraView style={styles.camera} ref={cameraRef}></CameraView>
       <View style={styles.cameraControls}>
         <TouchableOpacity style={styles.captureButton} onPress={takePicture} />
@@ -27,7 +33,7 @@ export default function CameraModal({
   );
 }
 
-const createStyles = (theme: Theme, isDark: boolean) => {
+const createStyles = (theme: Theme, _isDark: boolean) => {
   return StyleSheet.create({
     camera: {
       flex: 1,

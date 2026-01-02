@@ -58,7 +58,7 @@ export default function PreviewImage({
   );
 }
 
-const createStyles = (theme: Theme, isDark: boolean) => {
+const createStyles = (theme: Theme, _isDark: boolean) => {
   return StyleSheet.create({
     previewContainer: {
       flex: 1,
