@@ -9,6 +9,7 @@ import { useCamera, usePickImage } from './hooks';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
 import { PALETTE } from '@/constants/colors';
+import AIExtractedProductsModal from './AIExtractedProductsModal';
 
 const tips = [
   'Ensure good lighting',
@@ -116,6 +117,8 @@ export default function ScanScreen() {
             cameraRef={cameraRef}
             takePicture={takePicture}
           />
+
+          <AIExtractedProductsModal />
         </View>
       </ScrollView>
     </SafeAreaView>
