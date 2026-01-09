@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleProp, StyleSheet, Text, TextStyle, View } from 'react-native';
 
 import { useTheme } from '@/contexts/ThemeContext';
 
@@ -6,12 +6,14 @@ import { Theme } from '@/types';
 
 type FormFieldProps = {
   label: string;
-  icon: React.ReactNode;
+  labelStyle?: StyleProp<TextStyle>;
+  icon?: React.ReactNode;
   required?: boolean;
 };
 
 export default function FormField({
   label,
+  labelStyle,
   icon,
   required,
   children,
@@ -24,8 +26,8 @@ export default function FormField({
     <View style={styles.fieldContainer}>
       <View style={styles.fieldHeader}>
         <View style={styles.fieldLabelContainer}>
-          {icon}
-          <Text style={styles.fieldLabel}>
+          {icon && icon}
+          <Text style={[styles.fieldLabel, labelStyle && labelStyle]}>
             {label}
             {required && <Text style={styles.required}> *</Text>}
           </Text>

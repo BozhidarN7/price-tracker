@@ -4,7 +4,7 @@ export const PALETTE = {
     100: '#f0f0f0',
     200: '#e0e0e0',
     300: '#d1d1d1',
-    400: '#999999', // quaternary font tone
+    400: '#999999',
     500: '#888888',
     600: '#666666',
     700: '#333333',
@@ -18,7 +18,7 @@ export const PALETTE = {
     200: '#80ccff',
     300: '#4db8ff',
     400: '#1aa3ff',
-    500: '#007aff', // main iOS blue
+    500: '#007aff',
     600: '#0066cc',
     700: '#0052a3',
     800: '#003d7a',
@@ -31,7 +31,7 @@ export const PALETTE = {
     200: '#80f4ff',
     300: '#4df0ff',
     400: '#1aeaff',
-    500: '#00d4ff', // buttonPrimary
+    500: '#00d4ff',
     600: '#00b3e0',
     700: '#0094c2',
     800: '#0076a3',
@@ -49,6 +49,7 @@ export const PALETTE = {
     700: '#1f7a33',
     800: '#145a24',
     900: '#0a3b16',
+    950: '#052e16',
   },
 
   red: {
@@ -58,6 +59,16 @@ export const PALETTE = {
     300: '#ef4444',
     400: '#dc2626',
     500: '#b91c1c',
+    700: '#7f1d1d',
+    900: '#450a0a',
+  },
+
+  amber: {
+    50: '#fffbeb',
+    100: '#fef3c7',
+    200: '#fde68a',
+    400: '#f59e0b',
+    700: '#92400e',
   },
 
   purple: {
@@ -65,23 +76,20 @@ export const PALETTE = {
     400: '#8685ef',
   },
 
-  amber: {
-    50: '#fffbeb',
+  slate: {
+    800: '#1e293b',
+    900: '#0f172a',
   },
 
   trend: {
-    up: '#00ff88', // bright neon green (your trendUp)
-    down: '#FF3B30', // iOS red (your trendDown)
-    altDown: '#ff4757', // optional alternate red tone
+    up: '#00ff88',
+    down: '#FF3B30',
+    altDown: '#ff4757',
   },
 
   neutral: {
     quaternaryButton: '#8E8E93',
     quinaryButton: '#f8f8f8',
-  },
-  slate: {
-    800: '#1e293b',
-    900: '#0f172a',
   },
 
   white: '#ffffff',

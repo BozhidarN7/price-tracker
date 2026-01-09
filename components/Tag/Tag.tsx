@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
@@ -6,12 +7,14 @@ type TagProps = {
   customStylesContainer?: any;
   customStylesText?: any;
   text: string;
+  icon?: ReactNode;
 };
 
 export default function Tag({
   customStylesContainer,
   customStylesText,
   text,
+  icon,
 }: TagProps) {
   const { theme, isDark } = useTheme();
 
@@ -23,6 +26,7 @@ export default function Tag({
         customStylesContainer && customStylesContainer,
       ]}
     >
+      {icon && icon}
       <Text style={[styles.tagText, customStylesText && customStylesText]}>
         {text}
       </Text>
@@ -33,7 +37,10 @@ export default function Tag({
 const createStyles = (theme: Theme, isDark: boolean) => {
   return StyleSheet.create({
     tagContainer: {
+      flexDirection: 'row',
+      columnGap: 10,
       justifyContent: 'center',
+      alignItems: 'center',
       alignSelf: 'flex-start',
       padding: 6,
       borderRadius: 16,
