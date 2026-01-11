@@ -212,7 +212,6 @@ export default function AIExtractedProductsList({
       data={products}
       contentContainerStyle={styles.listContainer}
       renderItem={renderItem}
-      keyExtractor={(item) => item.name}
       showsVerticalScrollIndicator={false}
     />
   );
