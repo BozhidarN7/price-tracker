@@ -22,7 +22,11 @@ export default function AIExtractedProductsModalHeader({
   return (
     <View style={styles.headerSection}>
       <View style={styles.receiptIconContainer}>
-        <Receipt size={28} strokeWidth={2} color={theme.buttonPrimary} />
+        <Receipt
+          size={28}
+          strokeWidth={2}
+          color={isDark ? PALETTE.blue[300] : theme.buttonPrimary}
+        />
       </View>
       <View style={styles.headerTextContainer}>
         <Text style={styles.headerTitle}>{store}</Text>
@@ -45,10 +49,16 @@ export default function AIExtractedProductsModalHeader({
         <X size={22} color={theme.textPrimary} strokeWidth={2} />
       </TouchableOpacity>
       <View style={styles.headerDescriptionContainer}>
-        <CheckCircle size={18} strokeWidth={2} color={PALETTE.blue[600]} />
-        <Text style={styles.headerDescriptionText}>
-          Review and edit the extracted data. Tap any field to modify it.
-        </Text>
+        <CheckCircle
+          size={18}
+          strokeWidth={2}
+          color={isDark ? PALETTE.blue[300] : PALETTE.blue[600]}
+        />
+        <View style={{ flexShrink: 1 }}>
+          <Text style={styles.headerDescriptionText}>
+            Review and edit the extracted data. Tap any field to modify it.
+          </Text>
+        </View>
       </View>
     </View>
   );
@@ -74,7 +84,7 @@ const createStyles = (theme: Theme, isDark: boolean) => {
       height: 48,
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: PALETTE.blue[50],
+      backgroundColor: isDark ? PALETTE.blue[800] : PALETTE.blue[50],
       borderRadius: 12,
     },
     headerTextContainer: {
@@ -83,6 +93,7 @@ const createStyles = (theme: Theme, isDark: boolean) => {
     headerTitle: {
       fontSize: 20,
       fontFamily: 'Inter_400Regular',
+      color: theme.textPrimary,
     },
     subHeaderTextContainer: {
       flexDirection: 'row',
@@ -112,14 +123,14 @@ const createStyles = (theme: Theme, isDark: boolean) => {
       flexDirection: 'row',
       flexGrow: 1,
       columnGap: 10,
-      backgroundColor: PALETTE.blue[50],
+      backgroundColor: isDark ? PALETTE.blue[900] : PALETTE.blue[50],
       padding: 10,
       borderRadius: 12,
     },
     headerDescriptionText: {
       fontSize: 12,
       fontFamily: 'Inter_400Regular',
-      color: theme.textSecondary,
+      color: theme.textPrimary,
     },
   });
 };

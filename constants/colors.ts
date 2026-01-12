@@ -69,6 +69,8 @@ export const PALETTE = {
     200: '#fde68a',
     400: '#f59e0b',
     700: '#92400e',
+    800: '#6b2b0a',
+    900: '#5c2308',
   },
 
   purple: {
@@ -104,6 +106,12 @@ export const LIGHT_THEME = {
   // background
   surface: PALETTE.gray[50],
   backgroundPrimary: PALETTE.gray[100],
+  backgroundGradients: {
+    surfaceSoft: {
+      colors: [PALETTE.gray[100], PALETTE.gray[50], PALETTE.gray[100]],
+      locations: [0, 0.5, 1],
+    },
+  },
 
   // Text
   textPrimary: PALETTE.gray[900],
@@ -131,7 +139,7 @@ export const LIGHT_THEME = {
   // Trends
   trendUp: PALETTE.green[500],
   trendDown: PALETTE.trend.down,
-};
+} as const;
 
 export const DARK_THEME = {
   // Base
@@ -141,6 +149,12 @@ export const DARK_THEME = {
   // background
   backgroundPrimary: PALETTE.black,
   surface: PALETTE.gray[800],
+  backgroundGradients: {
+    surfaceSoft: {
+      colors: [PALETTE.red[500], PALETTE.white, PALETTE.blue[500]],
+      locations: [0, 0.5, 1],
+    },
+  },
 
   // Text
   textPrimary: PALETTE.gray[50],
@@ -168,9 +182,11 @@ export const DARK_THEME = {
   // Trends
   trendUp: PALETTE.trend.up,
   trendDown: PALETTE.trend.altDown,
-};
+} as const;
 
 export const THEME = {
   DARK: 'dark',
   LIGHT: 'light',
 };
+
+export type BackgroundVariant = keyof typeof LIGHT_THEME.backgroundGradients;

@@ -155,7 +155,7 @@ export default function AIExtractedProductsModal() {
   const numberOfSelectedItems = products.filter((prod) => prod.selected).length;
 
   return (
-    <Modal visible={true} animationType="slide" style={styles.modalContainer}>
+    <Modal visible={true} animationType="slide" presentationStyle="pageSheet">
       <SafeAreaView style={styles.safeAreaViewContainer}>
         <AIExtractedProductsModalHeader
           store={mockData.store}
@@ -179,18 +179,15 @@ export default function AIExtractedProductsModal() {
   );
 }
 
-const createStyles = (theme: Theme, isDark: boolean) => {
+const createStyles = (_theme: Theme, _isDark: boolean) => {
   return StyleSheet.create({
-    modalContainer: {
-      flex: 1,
-    },
     safeAreaViewContainer: {
       flex: 1,
     },
     modalContent: {
       flex: 1,
       padding: 16,
-      backgroundColor: theme.backgroundPrimary,
+      backgroundColor: _theme.backgroundPrimary,
       rowGap: 16,
     },
   });

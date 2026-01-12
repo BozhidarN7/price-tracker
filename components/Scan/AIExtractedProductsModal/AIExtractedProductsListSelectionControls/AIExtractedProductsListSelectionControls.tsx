@@ -40,7 +40,13 @@ export default function AIExtractedProductsListSelectionControls({
         <Checkbox
           value={allSelected}
           onValueChange={(newValue: boolean) => selectAllItems(newValue)}
-          color={allSelected ? (isDark ? theme.white : theme.black) : undefined}
+          color={
+            allSelected
+              ? isDark
+                ? theme.buttonTertiary
+                : theme.black
+              : undefined
+          }
           style={styles.checkbox}
         />
         <Text style={styles.controlText}>Select all (6)</Text>
@@ -93,6 +99,7 @@ const createStyles = (theme: Theme, _isDark: boolean) => {
     controlText: {
       fontSize: 13,
       fontFamily: 'Inter_400Regular',
+      color: theme.textPrimary,
     },
     deSelectedText: {
       color: theme.textSecondary,

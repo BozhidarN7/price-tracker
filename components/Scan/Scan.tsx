@@ -6,10 +6,10 @@ import PreviewImage from './PreviewImage';
 import CameraModal from './CameraModal';
 import ScanFeatureButton from './ScanFeatureButton';
 import { useCamera, usePickImage } from './hooks';
+import AIExtractedProductsModal from './AIExtractedProductsModal';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
 import { PALETTE } from '@/constants/colors';
-import AIExtractedProductsModal from './AIExtractedProductsModal';
 
 const tips = [
   'Ensure good lighting',
@@ -34,7 +34,6 @@ export default function ScanScreen() {
   const { pickImage } = usePickImage(setPhotoUri);
 
   const styles = createStyles(theme, isDark);
-  console.log('tracker:photoUri', photoUri);
 
   const screenFeatures = [
     {
@@ -153,9 +152,9 @@ const createStyles = (theme: Theme, isDark: boolean) => {
       shadowOpacity: isDark ? 0.3 : 0.1,
       shadowRadius: 8,
       elevation: 4,
-      flexWrap: 'wrap',
     },
     purposeTextContainer: {
+      flexShrink: 1,
       gap: 4,
     },
     purposeMainText: {
