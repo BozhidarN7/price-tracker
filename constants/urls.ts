@@ -10,3 +10,6 @@ export const REFRESH_TOKEN_URL = `${BASE_PRICE_TRACKER_API_URL}/refresh-token`;
 export const PRODUCTS_URL = `${BASE_PRICE_TRACKER_API_URL}/products`;
 export const getProductByIdUrl = (productId: string) =>
   `${BASE_PRICE_TRACKER_API_URL}/products/${productId}`;
+
+// RECEIPTS URLS
+export const ANALYZE_RECEIPT_URL = `${BASE_PRICE_TRACKER_API_URL}/analyze-receipt`;
