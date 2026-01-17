@@ -2,6 +2,10 @@ import { useState } from 'react';
 import { Modal, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { CONFIDENCE_LEVELS } from '../constants';
+import {
+  AIAnalyzedReceipt,
+  AIExtractedProductExtended,
+} from '../types/ai-extracted-product';
 import AIExtractedProductsModalHeader from './AIExtractedProductsModalHeader';
 import AIExtractedProductsList from './AIExtractedProductsList';
 import AIExtractedProductsListSelectionControls from './AIExtractedProductsListSelectionControls';
@@ -9,7 +13,7 @@ import AIExtractedProductsStickyActionBar from './AIExtractedProductsStickyActio
 import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
 
-const mockData = {
+const _mockData = {
   store: 'Лидл България',
   currency: 'BGN',
   purchaseDate: '02.09.2025',
@@ -129,20 +133,18 @@ const mockData = {
   ],
 };
 
-export type MockDataType = typeof mockData;
-export type MockDataProductsType = (typeof mockData.products)[0];
+type AIExtractedProductsModalProps = {
+  aiAnalyzedReceipt: AIAnalyzedReceipt;
+  isAnalyzeSuccess?: boolean;
+};
 
-export default function AIExtractedProductsModal() {
+export default function AIExtractedProductsModal({
+  aiAnalyzedReceipt,
+  isAnalyzeSuccess,
+}: AIExtractedProductsModalProps) {
   const { theme, isDark } = useTheme();
-  const [products, setProducts] = useState<
-    (MockDataProductsType & {
-      selected: boolean;
-      originalName: string;
-      originalBrand: string | null;
-      originalPrice: number;
-    })[]
-  >(
-    mockData.products.map((product) => ({
+  const [products, setProducts] = useState<AIExtractedProductExtended[]>(
+    aiAnalyzedReceipt.products.map((product) => ({
       ...product,
       selected: true,
       originalName: product.name,
@@ -154,13 +156,18 @@ export default function AIExtractedProductsModal() {
   const styles = createStyles(theme, isDark);
   const numberOfSelectedItems = products.filter((prod) => prod.selected).length;
 
+  console.log(products);
   return (
-    <Modal visible={true} animationType="slide" presentationStyle="pageSheet">
+    <Modal
+      visible={isAnalyzeSuccess && products.length > 0}
+      animationType="slide"
+      presentationStyle="pageSheet"
+    >
       <SafeAreaView style={styles.safeAreaViewContainer}>
         <AIExtractedProductsModalHeader
-          store={mockData.store}
-          purchaseDate={mockData.purchaseDate}
-          currency={mockData.currency}
+          store={aiAnalyzedReceipt.store}
+          purchaseDate={aiAnalyzedReceipt.purchaseDate}
+          currency={aiAnalyzedReceipt.currency}
         />
 
         <View style={styles.modalContent}>

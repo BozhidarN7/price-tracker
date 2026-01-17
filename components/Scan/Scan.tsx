@@ -5,8 +5,12 @@ import { AlertCircle, Camera, Sparkles, Upload } from 'lucide-react-native';
 import PreviewImage from './PreviewImage';
 import CameraModal from './CameraModal';
 import ScanFeatureButton from './ScanFeatureButton';
-import { useCamera, usePickImage } from './hooks';
+import { useAnalyzeReceipt, useCamera, usePickImage } from './hooks';
 import AIExtractedProductsModal from './AIExtractedProductsModal';
+import {
+  AIAnalyzedReceipt,
+  AIExtractedProduct,
+} from './types/ai-extracted-product';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
 import { PALETTE } from '@/constants/colors';
@@ -32,6 +36,19 @@ export default function ScanScreen() {
     takePicture,
   } = useCamera(setPhotoUri);
   const { pickImage } = usePickImage(setPhotoUri);
+  const {
+    data,
+    mutateAsync: analyzeReceiptAsync,
+    isSuccess: isAnalyzeSuccess,
+  } = useAnalyzeReceipt();
+  const aiAnalyzedReceipt =
+    data?.result ||
+    ({
+      store: '',
+      purchaseDate: '',
+      currency: 'EUR',
+      products: [] as AIExtractedProduct[],
+    } as AIAnalyzedReceipt);
 
   const styles = createStyles(theme, isDark);
 
@@ -105,9 +122,10 @@ export default function ScanScreen() {
 
           <PreviewImage
             photoUri={photoUri}
-            previewVisible={previewVisible}
+            previewVisible={previewVisible && !isAnalyzeSuccess}
             discardPhoto={discardPhoto}
             openCamera={openCamera}
+            handleAnalyzeImage={analyzeReceiptAsync}
           />
 
           <CameraModal
@@ -117,7 +135,12 @@ export default function ScanScreen() {
             takePicture={takePicture}
           />
 
-          <AIExtractedProductsModal />
+          {isAnalyzeSuccess && (
+            <AIExtractedProductsModal
+              aiAnalyzedReceipt={aiAnalyzedReceipt}
+              isAnalyzeSuccess={isAnalyzeSuccess}
+            />
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>

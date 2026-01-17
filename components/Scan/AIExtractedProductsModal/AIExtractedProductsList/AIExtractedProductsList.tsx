@@ -1,25 +1,13 @@
 import { FlatList, StyleSheet } from 'react-native';
-import type { MockDataProductsType } from '../AIExtractedProductsModal';
 import AIExtractedProductCard from '../AIExtractedProductCard';
+import { AIExtractedProductExtended } from '../../types/ai-extracted-product';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
 
 type AIExtractedProductsListProps = {
-  products: (MockDataProductsType & {
-    selected: boolean;
-    originalName: string;
-    originalBrand: string | null;
-    originalPrice: number;
-  })[];
+  products: AIExtractedProductExtended[];
   setProducts: React.Dispatch<
-    React.SetStateAction<
-      (MockDataProductsType & {
-        selected: boolean;
-        originalName: string;
-        originalBrand: string | null;
-        originalPrice: number;
-      })[]
-    >
+    React.SetStateAction<AIExtractedProductExtended[]>
   >;
 };
 
@@ -31,10 +19,7 @@ export default function AIExtractedProductsList({
 
   const styles = createStyles(theme, isDark);
 
-  const isEdited = (
-    product: MockDataProductsType & { selected: boolean },
-    index: number,
-  ) => {
+  const isEdited = (product: AIExtractedProductExtended, index: number) => {
     return (
       product.name !== products[index].originalName ||
       product.brand !== products[index].originalBrand ||
@@ -46,7 +31,7 @@ export default function AIExtractedProductsList({
     item,
     index,
   }: {
-    item: MockDataProductsType & { selected: boolean };
+    item: AIExtractedProductExtended;
     index: number;
   }) => {
     const edited = isEdited(item, index);

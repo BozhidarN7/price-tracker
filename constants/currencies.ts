@@ -12,4 +12,5 @@ export const CURRENCiES = {
   GBP: 'GBP',
 } as const;
 
+export type CURRENCIES = keyof typeof CURRENCiES;
 export default CURRENCIES_SYMBOLS_MAP;

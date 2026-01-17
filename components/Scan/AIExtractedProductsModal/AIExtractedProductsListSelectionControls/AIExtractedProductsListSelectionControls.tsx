@@ -2,20 +2,13 @@ import { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Check, X } from 'lucide-react-native';
 import { Checkbox } from 'expo-checkbox';
-import type { MockDataProductsType } from '../AIExtractedProductsModal';
+import { AIExtractedProductExtended } from '../../types/ai-extracted-product';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
 
 type AIExtractedProductsListSelectionControlsProps = {
   setProducts: React.Dispatch<
-    React.SetStateAction<
-      (MockDataProductsType & {
-        selected: boolean;
-        originalName: string;
-        originalBrand: string | null;
-        originalPrice: number;
-      })[]
-    >
+    React.SetStateAction<AIExtractedProductExtended[]>
   >;
 };
 

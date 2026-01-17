@@ -6,8 +6,8 @@ import {
   Edit3,
 } from 'lucide-react-native';
 import { Checkbox } from 'expo-checkbox';
-import type { MockDataProductsType } from '../AIExtractedProductsModal';
 import { CONFIDENCE_LEVELS } from '../../constants';
+import { AIExtractedProductExtended } from '../../types/ai-extracted-product';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
 import FormField from '@/components/FormField';
@@ -15,17 +15,10 @@ import { PALETTE } from '@/constants/colors';
 import { Tag } from '@/components/Tag';
 
 type AIExtractedProductCardProps = {
-  item: MockDataProductsType & { selected: boolean };
+  item: AIExtractedProductExtended;
   index: number;
   setProducts: React.Dispatch<
-    React.SetStateAction<
-      (MockDataProductsType & {
-        selected: boolean;
-        originalName: string;
-        originalBrand: string | null;
-        originalPrice: number;
-      })[]
-    >
+    React.SetStateAction<AIExtractedProductExtended[]>
   >;
   isEdited: boolean;
 };

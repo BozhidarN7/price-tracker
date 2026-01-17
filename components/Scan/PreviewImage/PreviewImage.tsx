@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { UseMutateFunction } from '@tanstack/react-query';
+import type { ExtractProductsFromReceiptResponse } from '../api/ai-extracted-products-api';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
 
@@ -14,6 +16,12 @@ type PreviewImageProps = {
   previewVisible: boolean;
   discardPhoto: () => void;
   openCamera: () => void;
+  handleAnalyzeImage: UseMutateFunction<
+    ExtractProductsFromReceiptResponse,
+    unknown,
+    string,
+    unknown
+  >;
 };
 
 export default function PreviewImage({
@@ -21,6 +29,7 @@ export default function PreviewImage({
   previewVisible,
   discardPhoto,
   openCamera,
+  handleAnalyzeImage,
 }: PreviewImageProps) {
   const { theme, isDark } = useTheme();
 
@@ -50,7 +59,10 @@ export default function PreviewImage({
             <Text style={styles.closeText}>Discard</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.analyzeButton} onPress={() => {}}>
+        <TouchableOpacity
+          style={styles.analyzeButton}
+          onPress={async () => handleAnalyzeImage(photoUri || '')}
+        >
           <Text style={styles.primaryButtonText}>Analyze</Text>
         </TouchableOpacity>
       </View>

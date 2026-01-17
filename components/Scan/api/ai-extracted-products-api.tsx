@@ -1,7 +1,17 @@
+import type { AIAnalyzedReceipt } from '../types/ai-extracted-product';
 import { ANALYZE_RECEIPT_URL } from '@/constants/urls';
 import { getIdToken } from '@/utils/manage-tokens';
 
-export const extractProductsFromReceipt = async (photoUri: string) => {
+export type ExtractProductsFromReceiptResponse = {
+  filename: string;
+  mimeType: string;
+  size: number;
+  result: AIAnalyzedReceipt;
+};
+
+export const extractProductsFromReceipt = async (
+  photoUri: string,
+): Promise<ExtractProductsFromReceiptResponse> => {
   const idToken = await getIdToken();
 
   if (!idToken) {
