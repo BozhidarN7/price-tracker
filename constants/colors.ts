@@ -164,7 +164,7 @@ export const DARK_THEME = {
   surface: PALETTE.gray[800],
   backgroundGradients: {
     surfaceSoft: {
-      colors: [PALETTE.red[500], PALETTE.white, PALETTE.blue[500]],
+      colors: [PALETTE.gray[950], `${PALETTE.slate[900]}`, PALETTE.gray[950]],
       locations: [0, 0.5, 1],
     },
     surfaceSoftColorful: {

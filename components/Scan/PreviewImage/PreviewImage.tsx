@@ -61,7 +61,11 @@ export default function PreviewImage({
         </View>
         <TouchableOpacity
           style={styles.analyzeButton}
-          onPress={async () => handleAnalyzeImage(photoUri || '')}
+          onPress={async () => {
+            try {
+              await handleAnalyzeImage(photoUri || '');
+            } catch (_err) {}
+          }}
         >
           <Text style={styles.primaryButtonText}>Analyze</Text>
         </TouchableOpacity>

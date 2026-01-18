@@ -11,12 +11,10 @@ import { Sparkle } from 'lucide-react-native';
 import { useEffect } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ANALYSIS_STEPS } from '../constants/analyze-steps';
+import { CENTER, SIZE } from '../../constants/sizes';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
 import { PALETTE } from '@/constants/colors';
-
-const SIZE = 128;
-const CENTER = SIZE / 2;
 
 export default function AnimationCircle() {
   const { theme, isDark } = useTheme();
@@ -134,7 +132,7 @@ function FloatingParticle({ index }: { index: number }) {
   );
 }
 
-const createStyles = (theme: Theme, isDark: boolean) => {
+const createStyles = (_theme: Theme, _isDark: boolean) => {
   return StyleSheet.create({
     wrapper: {
       width: SIZE,

@@ -8,6 +8,7 @@ import ScanFeatureButton from './ScanFeatureButton';
 import { useAnalyzeReceipt, useCamera, usePickImage } from './hooks';
 import Analyzing from './Analyzing';
 import AIExtractedProductsModal from './AIExtractedProductsModal';
+import AnalyzeErrorState from './AnalyzeErrorState';
 import {
   AIAnalyzedReceipt,
   AIExtractedProduct,
@@ -15,6 +16,7 @@ import {
 import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
 import { PALETTE } from '@/constants/colors';
+import { router } from 'expo-router';
 
 const tips = [
   'Ensure good lighting',
@@ -39,7 +41,9 @@ export default function ScanScreen() {
   const { pickImage } = usePickImage(setPhotoUri);
   const {
     data,
+    error: analyzeError,
     mutateAsync: analyzeReceiptAsync,
+    reset: resetAnalyzeReceipt,
     isPending: isAnalyzing,
     isSuccess: isAnalyzeSuccess,
   } = useAnalyzeReceipt();
@@ -88,8 +92,31 @@ export default function ScanScreen() {
     },
   ];
 
+  const onGoHome = () => {
+    router.navigate('/');
+  };
+  const onRetry = async () => {
+    try {
+      await analyzeReceiptAsync(photoUri ?? '');
+    } catch (_err) {}
+  };
+  const onGoToScan = () => {
+    resetAnalyzeReceipt();
+  };
+
   if (isAnalyzing) {
     return <Analyzing />;
+  }
+
+  if (analyzeError) {
+    return (
+      <AnalyzeErrorState
+        errorType={'analysis_failed'}
+        onGoHome={onGoHome}
+        onGoToScan={onGoToScan}
+        onRetry={onRetry}
+      />
+    );
   }
 
   return (
