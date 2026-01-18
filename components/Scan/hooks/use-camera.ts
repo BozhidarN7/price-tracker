@@ -4,11 +4,12 @@ import { Alert } from 'react-native';
 
 export default function useCamera(
   setPhotoUri: React.Dispatch<React.SetStateAction<string | null>>,
+  setPreviewVisible: React.Dispatch<React.SetStateAction<boolean>>,
+  setModule: React.Dispatch<React.SetStateAction<'camera' | 'upload' | null>>,
 ) {
   const cameraRef = useRef<CameraView | null>(null);
   const [permission, requestPermission] = useCameraPermissions();
   const [cameraVisisble, setCameraVisible] = useState(false);
-  const [previewVisible, setPreviewVisible] = useState(false);
 
   const openCamera = async () => {
     if (!permission || permission.status === 'undetermined') {
@@ -46,20 +47,14 @@ export default function useCamera(
     setPhotoUri(photo.uri);
     setCameraVisible(false);
     setPreviewVisible(true);
-  };
-
-  const discardPhoto = () => {
-    setPhotoUri(null);
-    setPreviewVisible(false);
+    setModule('camera');
   };
 
   return {
     cameraRef,
     cameraVisisble,
-    previewVisible,
     setCameraVisible,
     takePicture,
-    discardPhoto,
     openCamera,
   };
 }

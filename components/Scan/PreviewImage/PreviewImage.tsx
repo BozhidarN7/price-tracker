@@ -13,9 +13,10 @@ import { Theme } from '@/types';
 
 type PreviewImageProps = {
   photoUri: string | null;
+  module: 'camera' | 'upload' | null;
   previewVisible: boolean;
   discardPhoto: () => void;
-  openCamera: () => void;
+  openModule: () => void;
   handleAnalyzeImage: UseMutateFunction<
     ExtractProductsFromReceiptResponse,
     unknown,
@@ -26,9 +27,10 @@ type PreviewImageProps = {
 
 export default function PreviewImage({
   photoUri,
+  module,
   previewVisible,
   discardPhoto,
-  openCamera,
+  openModule,
   handleAnalyzeImage,
 }: PreviewImageProps) {
   const { theme, isDark } = useTheme();
@@ -51,8 +53,10 @@ export default function PreviewImage({
         )}
 
         <View style={styles.previewActions}>
-          <TouchableOpacity style={styles.secondaryButton} onPress={openCamera}>
-            <Text style={styles.secondaryButtonText}>Retake</Text>
+          <TouchableOpacity style={styles.secondaryButton} onPress={openModule}>
+            <Text style={styles.secondaryButtonText}>
+              {module === 'camera' ? 'Retake' : 'Upload again'}
+            </Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.closeButton} onPress={discardPhoto}>

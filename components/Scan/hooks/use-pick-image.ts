@@ -3,6 +3,8 @@ import { Alert } from 'react-native';
 
 export default function usePickImage(
   setPhotoUri: React.Dispatch<React.SetStateAction<string | null>>,
+  setPreviewVisible: React.Dispatch<React.SetStateAction<boolean>>,
+  setModule: React.Dispatch<React.SetStateAction<'camera' | 'upload' | null>>,
 ) {
   const pickImage = async () => {
     const permissionResult =
@@ -19,12 +21,13 @@ export default function usePickImage(
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ['images'],
       allowsEditing: true,
-      aspect: [16, 9],
-      quality: 1,
+      quality: 0.7,
     });
 
     if (!result.canceled) {
       setPhotoUri(result.assets[0].uri);
+      setPreviewVisible(true);
+      setModule('upload');
     }
   };
 

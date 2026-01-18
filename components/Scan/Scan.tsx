@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { router } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { AlertCircle, Camera, Sparkles, Upload } from 'lucide-react-native';
@@ -16,7 +17,6 @@ import {
 import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
 import { PALETTE } from '@/constants/colors';
-import { router } from 'expo-router';
 
 const tips = [
   'Ensure good lighting',
@@ -29,16 +29,17 @@ export default function ScanScreen() {
   const { theme, isDark } = useTheme();
 
   const [photoUri, setPhotoUri] = useState<string | null>(null);
+  const [previewVisible, setPreviewVisible] = useState(false);
+  const [module, setModule] = useState<'camera' | 'upload' | null>(null);
+
   const {
     cameraRef,
     cameraVisisble,
-    previewVisible,
     setCameraVisible,
     openCamera,
-    discardPhoto,
     takePicture,
-  } = useCamera(setPhotoUri);
-  const { pickImage } = usePickImage(setPhotoUri);
+  } = useCamera(setPhotoUri, setPreviewVisible, setModule);
+  const { pickImage } = usePickImage(setPhotoUri, setPreviewVisible, setModule);
   const {
     data,
     error: analyzeError,
@@ -91,6 +92,12 @@ export default function ScanScreen() {
       onPress: pickImage,
     },
   ];
+
+  const discardPhoto = () => {
+    setPhotoUri(null);
+    setPreviewVisible(false);
+    setModule(null);
+  };
 
   const onGoHome = () => {
     router.navigate('/');
@@ -157,8 +164,9 @@ export default function ScanScreen() {
             photoUri={photoUri}
             previewVisible={previewVisible && !isAnalyzeSuccess}
             discardPhoto={discardPhoto}
-            openCamera={openCamera}
+            openModule={module === 'camera' ? openCamera : pickImage}
             handleAnalyzeImage={analyzeReceiptAsync}
+            module={module}
           />
 
           <CameraModal
