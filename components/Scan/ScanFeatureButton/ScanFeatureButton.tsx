@@ -108,7 +108,7 @@ const createStyles = (theme: Theme, isDark: boolean) => {
       backgroundColor: PALETTE.blue[600],
     },
     buttonIconContainerUpload: {
-      backgroundColor: PALETTE.purple[400],
+      backgroundColor: PALETTE.blue[500],
     },
     buttonTextContainer: {
       alignItems: 'center',

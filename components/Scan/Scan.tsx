@@ -6,6 +6,7 @@ import PreviewImage from './PreviewImage';
 import CameraModal from './CameraModal';
 import ScanFeatureButton from './ScanFeatureButton';
 import { useAnalyzeReceipt, useCamera, usePickImage } from './hooks';
+import Analyzing from './Analyzing';
 import AIExtractedProductsModal from './AIExtractedProductsModal';
 import {
   AIAnalyzedReceipt,
@@ -39,6 +40,7 @@ export default function ScanScreen() {
   const {
     data,
     mutateAsync: analyzeReceiptAsync,
+    isPending: isAnalyzing,
     isSuccess: isAnalyzeSuccess,
   } = useAnalyzeReceipt();
   const aiAnalyzedReceipt =
@@ -85,6 +87,10 @@ export default function ScanScreen() {
       onPress: pickImage,
     },
   ];
+
+  if (isAnalyzing) {
+    return <Analyzing />;
+  }
 
   return (
     <SafeAreaView

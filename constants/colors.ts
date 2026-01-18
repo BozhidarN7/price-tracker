@@ -10,6 +10,7 @@ export const PALETTE = {
     700: '#333333',
     800: '#1a1a1a',
     900: '#000000',
+    950: '#030712',
   },
 
   blue: {
@@ -74,8 +75,16 @@ export const PALETTE = {
   },
 
   purple: {
+    50: '#faf5ff',
     100: '#e3e0f3',
-    400: '#8685ef',
+    400: '#c27aff',
+    500: '#ad46ff',
+    600: '#9810fa',
+    950: '#3c0366',
+  },
+  indigo: {
+    50: '#eef2ff',
+    400: '#7c86ff',
   },
 
   slate: {
@@ -109,6 +118,10 @@ export const LIGHT_THEME = {
   backgroundGradients: {
     surfaceSoft: {
       colors: [PALETTE.gray[100], PALETTE.gray[50], PALETTE.gray[100]],
+      locations: [0, 0.5, 1],
+    },
+    surfaceSoftColorful: {
+      colors: [PALETTE.purple[50], PALETTE.blue[50], PALETTE.indigo[50]],
       locations: [0, 0.5, 1],
     },
   },
@@ -152,6 +165,10 @@ export const DARK_THEME = {
   backgroundGradients: {
     surfaceSoft: {
       colors: [PALETTE.red[500], PALETTE.white, PALETTE.blue[500]],
+      locations: [0, 0.5, 1],
+    },
+    surfaceSoftColorful: {
+      colors: [PALETTE.gray[950], `${PALETTE.slate[900]}`, PALETTE.gray[950]],
       locations: [0, 0.5, 1],
     },
   },
