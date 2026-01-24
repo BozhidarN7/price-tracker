@@ -1,17 +1,19 @@
 import { useState } from 'react';
 import { Modal, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { CONFIDENCE_LEVELS } from '../constants';
+import { UseMutateAsyncFunction } from '@tanstack/react-query';
 import {
   AIAnalyzedReceipt,
   AIExtractedProductExtended,
 } from '../types/ai-extracted-product';
+import { CONFIDENCE_LEVELS } from '../constants';
 import AIExtractedProductsModalHeader from './AIExtractedProductsModalHeader';
 import AIExtractedProductsList from './AIExtractedProductsList';
 import AIExtractedProductsListSelectionControls from './AIExtractedProductsListSelectionControls';
 import AIExtractedProductsStickyActionBar from './AIExtractedProductsStickyActionBar';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
+import { NewProduct, Product } from '@/types/product';
 
 const _mockData = {
   store: 'Лидл България',
@@ -136,11 +138,22 @@ const _mockData = {
 type AIExtractedProductsModalProps = {
   aiAnalyzedReceipt: AIAnalyzedReceipt;
   isAnalyzeSuccess?: boolean;
+  addProductAsync: UseMutateAsyncFunction<
+    Product,
+    unknown,
+    NewProduct[],
+    unknown
+  >;
+  resetAddProduct: () => void;
+  resetAnalyzeReceipt: () => void;
 };
 
 export default function AIExtractedProductsModal({
   aiAnalyzedReceipt,
   isAnalyzeSuccess,
+  addProductAsync,
+  resetAddProduct,
+  resetAnalyzeReceipt,
 }: AIExtractedProductsModalProps) {
   const { theme, isDark } = useTheme();
   const [products, setProducts] = useState<AIExtractedProductExtended[]>(
@@ -152,22 +165,32 @@ export default function AIExtractedProductsModal({
       originalPrice: product.price,
     })),
   );
+  const [showModal, setShowModal] = useState(
+    isAnalyzeSuccess && products.length > 0,
+  );
+
+  const onClose = () => {
+    setShowModal(false);
+    resetAddProduct();
+    resetAnalyzeReceipt();
+  };
 
   const styles = createStyles(theme, isDark);
   const numberOfSelectedItems = products.filter((prod) => prod.selected).length;
 
-  console.log(products);
   return (
     <Modal
-      visible={isAnalyzeSuccess && products.length > 0}
+      visible={showModal}
       animationType="slide"
       presentationStyle="pageSheet"
+      onRequestClose={onClose}
     >
       <SafeAreaView style={styles.safeAreaViewContainer}>
         <AIExtractedProductsModalHeader
           store={aiAnalyzedReceipt.store}
           purchaseDate={aiAnalyzedReceipt.purchaseDate}
           currency={aiAnalyzedReceipt.currency}
+          onClose={onClose}
         />
 
         <View style={styles.modalContent}>
@@ -180,6 +203,12 @@ export default function AIExtractedProductsModal({
 
         <AIExtractedProductsStickyActionBar
           numberOfItemsSelected={numberOfSelectedItems}
+          addProductAsync={addProductAsync}
+          products={products}
+          store={aiAnalyzedReceipt.store}
+          purchaseDate={aiAnalyzedReceipt.purchaseDate}
+          currency={aiAnalyzedReceipt.currency}
+          onClose={onClose}
         />
       </SafeAreaView>
     </Modal>

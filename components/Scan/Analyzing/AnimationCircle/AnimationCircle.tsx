@@ -16,7 +16,11 @@ import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
 import { PALETTE } from '@/constants/colors';
 
-export default function AnimationCircle() {
+type AnimationCircleProps = {
+  type: 'receipt' | 'saving';
+};
+
+export default function AnimationCircle({ type }: AnimationCircleProps) {
   const { theme, isDark } = useTheme();
 
   const styles = createStyles(theme, isDark);
@@ -57,7 +61,7 @@ export default function AnimationCircle() {
     transform: [{ scale: scaleCenter.value }],
   }));
 
-  const CurrentIcon = ANALYSIS_STEPS.receipt[4].icon;
+  const CurrentIcon = ANALYSIS_STEPS[type].at(-1)!.icon;
 
   return (
     <View style={styles.wrapper}>

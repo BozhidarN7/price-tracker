@@ -13,3 +13,6 @@ export const getProductByIdUrl = (productId: string) =>
 
 // RECEIPTS URLS
 export const ANALYZE_RECEIPT_URL = `${BASE_PRICE_TRACKER_API_URL}/analyze-receipt`;
+
+// INTERNAL URLS
+export const PRODUCTS_SCREEN_URL = '/';

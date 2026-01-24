@@ -22,7 +22,9 @@ export const getProducts = async (): Promise<Product[]> => {
   return res.json();
 };
 
-export const addProduct = async (newProduct: NewProduct): Promise<Product> => {
+export const addProducts = async (
+  newProducts: NewProduct[],
+): Promise<Product> => {
   const idToken = await getIdToken();
 
   if (!idToken) {
@@ -35,7 +37,7 @@ export const addProduct = async (newProduct: NewProduct): Promise<Product> => {
       'Content-Type': 'application/json',
       Authorization: idToken,
     },
-    body: JSON.stringify(newProduct),
+    body: JSON.stringify(newProducts),
   });
 
   if (!res.ok) {

@@ -49,7 +49,6 @@ export const ERROR_CONFIGS: Record<ErrorType, ErrorConfig> = {
     icon: ServerCrash,
     tips: [
       'Check your internet connection',
-      'Make sure you have enough storage space',
       'Try again in a few moments',
       'Contact support if this persists',
     ],

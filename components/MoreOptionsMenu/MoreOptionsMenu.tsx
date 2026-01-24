@@ -104,7 +104,16 @@ export default function MoreOptionsMenu({
 
   return (
     <View>
-      <TouchableOpacity ref={buttonRef} onPress={openMenu}>
+      <TouchableOpacity
+        style={{
+          width: 36,
+          height: 36,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+        ref={buttonRef}
+        onPress={openMenu}
+      >
         <MoreVertical color={theme.textPrimary} size={22} />
       </TouchableOpacity>
 

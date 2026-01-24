@@ -6,7 +6,11 @@ import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
 import Background from '@/components/Background';
 
-export default function Analyzing() {
+type AnalyzingProps = {
+  type: 'receipt' | 'saving';
+};
+
+export default function Analyzing({ type }: AnalyzingProps) {
   const { theme, isDark } = useTheme();
 
   const styles = createStyles(theme, isDark);
@@ -15,7 +19,7 @@ export default function Analyzing() {
     <Background variant="surfaceSoftColorful">
       <SafeAreaView style={styles.safeAreaViewWrapper}>
         <View style={styles.container}>
-          <AnimationCircle />
+          <AnimationCircle type={type} />
           <AnimationSubtleText />
         </View>
       </SafeAreaView>

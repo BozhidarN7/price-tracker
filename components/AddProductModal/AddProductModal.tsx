@@ -92,7 +92,7 @@ export default function AddProductModal({
     };
 
     try {
-      await addProductAsync(newProduct);
+      await addProductAsync([newProduct]);
 
       // Reset form
       if (!isAddingProduct) {

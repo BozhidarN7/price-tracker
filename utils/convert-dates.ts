@@ -18,7 +18,6 @@ export function toDate(input: string) {
   if (!input) {
     return null;
   }
-  console.log('input', input);
 
   // Handle ISO string with time zone (e.g., "2025-11-02T13:04:06.986Z")
   if (input.includes('T')) {

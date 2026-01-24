@@ -8,12 +8,14 @@ type AIExtractedProductsModalHeaderProps = {
   store: string;
   purchaseDate: string;
   currency: string;
+  onClose: () => void;
 };
 
 export default function AIExtractedProductsModalHeader({
   store,
   purchaseDate,
   currency,
+  onClose,
 }: AIExtractedProductsModalHeaderProps) {
   const { theme, isDark } = useTheme();
 
@@ -45,7 +47,7 @@ export default function AIExtractedProductsModalHeader({
           </View>
         </View>
       </View>
-      <TouchableOpacity style={styles.closeButton} onPress={() => {}}>
+      <TouchableOpacity style={styles.closeButton} onPress={onClose}>
         <X size={22} color={theme.textPrimary} strokeWidth={2} />
       </TouchableOpacity>
       <View style={styles.headerDescriptionContainer}>

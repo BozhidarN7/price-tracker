@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { router } from 'expo-router';
+import { useCallback, useState } from 'react';
+import { router, useFocusEffect } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { AlertCircle, Camera, Sparkles, Upload } from 'lucide-react-native';
@@ -17,6 +17,7 @@ import {
 import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
 import { PALETTE } from '@/constants/colors';
+import useAddProduct from '@/hooks/use-add-product';
 
 const tips = [
   'Ensure good lighting',
@@ -32,6 +33,12 @@ export default function ScanScreen() {
   const [previewVisible, setPreviewVisible] = useState(false);
   const [module, setModule] = useState<'camera' | 'upload' | null>(null);
 
+  const {
+    mutateAsync: addProductAsync,
+    error: addProductError,
+    isPending: isAddingProducts,
+    reset: resetAddProduct,
+  } = useAddProduct();
   const {
     cameraRef,
     cameraVisisble,
@@ -104,21 +111,34 @@ export default function ScanScreen() {
   };
   const onRetry = async () => {
     try {
+      resetAddProduct();
       await analyzeReceiptAsync(photoUri ?? '');
     } catch (_err) {}
   };
   const onGoToScan = () => {
     resetAnalyzeReceipt();
+    resetAddProduct();
   };
 
-  if (isAnalyzing) {
-    return <Analyzing />;
+  useFocusEffect(
+    useCallback(() => {
+      return () => {
+        resetAnalyzeReceipt();
+        resetAddProduct();
+        setPreviewVisible(false);
+        setPhotoUri(null);
+      };
+    }, [resetAnalyzeReceipt, resetAddProduct]),
+  );
+
+  if (isAnalyzing || isAddingProducts) {
+    return <Analyzing type={isAnalyzing ? 'receipt' : 'saving'} />;
   }
 
-  if (analyzeError) {
+  if (analyzeError || addProductError) {
     return (
       <AnalyzeErrorState
-        errorType={'analysis_failed'}
+        errorType={analyzeError ? 'analysis_failed' : 'save_failed'}
         onGoHome={onGoHome}
         onGoToScan={onGoToScan}
         onRetry={onRetry}
@@ -180,6 +200,9 @@ export default function ScanScreen() {
             <AIExtractedProductsModal
               aiAnalyzedReceipt={aiAnalyzedReceipt}
               isAnalyzeSuccess={isAnalyzeSuccess}
+              addProductAsync={addProductAsync}
+              resetAddProduct={resetAddProduct}
+              resetAnalyzeReceipt={resetAnalyzeReceipt}
             />
           )}
         </View>
