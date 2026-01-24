@@ -1,11 +1,37 @@
 export default [
+  'Groceries',
   'Beverages',
   'Dairy',
   'Snacks',
-  'Groceries',
-  'Electronics',
+
+  'Dining & Takeaway',
+
   'Household',
+  'Cleaning Supplies',
+
   'Personal Care',
-  'Food',
+  'Health & Pharmacy',
+
+  'Electronics',
+  'Appliances',
+
+  'Clothing & Accessories',
+
+  'Transport',
+  'Fuel',
+
+  'Entertainment',
+  'Subscriptions',
+
+  'Pets',
+
+  'Baby & Kids',
+
+  'Home & Garden',
+
+  'Office & Stationery',
+
+  'Gifts',
+
   'Other',
 ];

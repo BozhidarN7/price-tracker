@@ -5,6 +5,7 @@ export type AIExtractedProduct = {
   id: string;
   name: string;
   brand: string | null;
+  category: string;
   price: number;
   confidence: CONFIDENCE_LEVELS;
 };
@@ -13,6 +14,7 @@ export type AIExtractedProductExtended = AIExtractedProduct & {
   selected: boolean;
   originalName: string;
   originalBrand: string | null;
+  originalCategory: string;
   originalPrice: number;
 };
 

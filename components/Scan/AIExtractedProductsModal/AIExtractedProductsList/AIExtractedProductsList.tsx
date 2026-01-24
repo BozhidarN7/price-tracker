@@ -23,6 +23,7 @@ export default function AIExtractedProductsList({
     return (
       product.name !== products[index].originalName ||
       product.brand !== products[index].originalBrand ||
+      product.category !== products[index].originalCategory ||
       product.price !== products[index].originalPrice
     );
   };

@@ -1,10 +1,13 @@
 import { ChevronDown, ChevronUp } from 'lucide-react-native';
 import {
+  Pressable,
   ScrollView,
+  StyleProp,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
+  ViewStyle,
 } from 'react-native';
 
 import { useTheme } from '@/contexts/ThemeContext';
@@ -15,19 +18,25 @@ import { Theme } from '@/types';
 type DropdownProps = {
   value: string;
   options: string[];
+  disabled?: boolean;
   onSelect: (value: keyof typeof CURRENCIES_SYMBOLS_MAP) => void;
   placeholder: string;
   isOpen: boolean;
   onToggle: () => void;
+  dropDownButtonStyles?: StyleProp<ViewStyle>;
+  dropDownOptionsStyles?: StyleProp<ViewStyle>;
 };
 
 export default function Dropdown({
   value,
   options,
+  disabled = false,
   onSelect,
   placeholder,
   isOpen,
   onToggle,
+  dropDownButtonStyles,
+  dropDownOptionsStyles,
 }: DropdownProps) {
   const { theme, isDark } = useTheme();
 
@@ -35,7 +44,11 @@ export default function Dropdown({
 
   return (
     <View style={styles.dropdownContainer}>
-      <TouchableOpacity style={styles.dropdownButton} onPress={onToggle}>
+      <Pressable
+        style={[styles.dropdownButton, dropDownButtonStyles]}
+        onPress={onToggle}
+        disabled={disabled}
+      >
         <Text style={[styles.dropdownText, !value && styles.placeholderText]}>
           {value || placeholder}
         </Text>
@@ -44,9 +57,12 @@ export default function Dropdown({
         ) : (
           <ChevronDown size={20} color={theme.textSecondary} strokeWidth={2} />
         )}
-      </TouchableOpacity>
+      </Pressable>
       {isOpen && (
-        <ScrollView style={styles.dropdownOptions} nestedScrollEnabled={true}>
+        <ScrollView
+          style={[styles.dropdownOptions, dropDownOptionsStyles]}
+          nestedScrollEnabled={true}
+        >
           {options.map((option) => (
             <TouchableOpacity
               key={option}

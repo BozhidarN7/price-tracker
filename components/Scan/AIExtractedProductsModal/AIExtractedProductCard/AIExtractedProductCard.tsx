@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import {
   AlertCircle,
@@ -13,6 +14,8 @@ import { Theme } from '@/types';
 import FormField from '@/components/FormField';
 import { PALETTE } from '@/constants/colors';
 import { Tag } from '@/components/Tag';
+import Dropdown from '@/components/Dropdown';
+import categories from '@/constants/categories';
 
 type AIExtractedProductCardProps = {
   item: AIExtractedProductExtended;
@@ -29,6 +32,7 @@ export default function AIExtractedProductCard({
   isEdited,
 }: AIExtractedProductCardProps) {
   const { theme, isDark } = useTheme();
+  const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
 
   const styles = createStyles(theme, isDark);
 
@@ -129,6 +133,33 @@ export default function AIExtractedProductCard({
             editable={item.selected}
           />
         </FormField>
+        <FormField label="Category" labelStyle={styles.labelStyle} required>
+          <Dropdown
+            value={item.category}
+            options={categories}
+            onSelect={(value) =>
+              setProducts((prev) =>
+                prev.map((prod, currentIndex) =>
+                  currentIndex === index ? { ...prod, category: value } : prod,
+                ),
+              )
+            }
+            placeholder="Select category"
+            isOpen={showCategoryDropdown}
+            onToggle={() => setShowCategoryDropdown(!showCategoryDropdown)}
+            disabled={!item.selected}
+            dropDownButtonStyles={{
+              backgroundColor: isDark
+                ? theme.buttonTertiary
+                : theme.buttonQuinary,
+            }}
+            dropDownOptionsStyles={{
+              backgroundColor: isDark
+                ? theme.buttonTertiary
+                : theme.buttonQuinary,
+            }}
+          />
+        </FormField>
         <FormField label="Price" labelStyle={styles.labelStyle} required>
           <TextInput
             style={styles.textInput}
@@ -192,6 +223,7 @@ const createStyles = (theme: Theme, isDark: boolean) => {
       shadowOpacity: isDark ? 0.3 : 0.1,
       shadowRadius: 8,
       elevation: 4,
+      overflow: 'hidden',
     },
     fieldsContainer: {
       flex: 1,
