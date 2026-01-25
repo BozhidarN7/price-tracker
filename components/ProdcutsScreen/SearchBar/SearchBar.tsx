@@ -92,6 +92,7 @@ const createStyles = (theme: Theme, isDark: boolean) => {
       paddingRight: 28,
       paddingVertical: 8,
       fontSize: 14,
+      color: theme.textPrimary,
     },
     clearButton: {
       position: 'absolute',

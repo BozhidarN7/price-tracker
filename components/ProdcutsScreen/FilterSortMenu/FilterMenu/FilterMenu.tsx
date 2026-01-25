@@ -13,13 +13,15 @@ export default function FilterMenu() {
       <TouchableOpacity
         style={[
           styles.categoryContainer,
-          item === 'All' && { backgroundColor: theme.black },
+          item === 'All' && {
+            backgroundColor: isDark ? theme.white : theme.black,
+          },
         ]}
       >
         <Text
           style={[
             styles.categoryText,
-            item === 'All' && { color: theme.white },
+            item === 'All' && { color: isDark ? theme.black : theme.white },
           ]}
         >
           {item}

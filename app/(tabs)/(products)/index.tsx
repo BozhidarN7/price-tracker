@@ -45,7 +45,7 @@ function createStyles(theme: Theme, isDark: boolean) {
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: theme.surface,
+      backgroundColor: isDark ? theme.backgroundPrimary : theme.surface,
     },
 
     sectionHeader: {

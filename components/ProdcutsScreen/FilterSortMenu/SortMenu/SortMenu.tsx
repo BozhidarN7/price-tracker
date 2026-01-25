@@ -101,7 +101,7 @@ export default function SortMenu() {
 const createStyles = (theme: Theme, isDark: boolean) => {
   return StyleSheet.create({
     wrapper: {
-      backgroundColor: theme.white,
+      backgroundColor: isDark ? theme.black : theme.white,
     },
     container: {
       flexDirection: 'row',
@@ -116,9 +116,9 @@ const createStyles = (theme: Theme, isDark: boolean) => {
       paddingHorizontal: 12,
       paddingVertical: 8,
       borderWidth: 1,
-      borderColor: '#d1d5db',
+      borderColor: theme.border,
       borderRadius: 12,
-      backgroundColor: '#fff',
+      backgroundColor: isDark ? theme.buttonSecondary : theme.white,
     },
     dropdownText: {
       fontFamily: 'Inter_400Regular',
@@ -130,9 +130,9 @@ const createStyles = (theme: Theme, isDark: boolean) => {
       justifyContent: 'center',
       padding: 8,
       borderWidth: 1,
-      borderColor: '#d1d5db',
+      borderColor: theme.border,
       borderRadius: 8,
-      backgroundColor: '#fff',
+      backgroundColor: isDark ? theme.buttonSecondary : theme.white,
     },
 
     // Modal styles
@@ -143,7 +143,7 @@ const createStyles = (theme: Theme, isDark: boolean) => {
       paddingHorizontal: 20,
     },
     modalContent: {
-      backgroundColor: '#fff',
+      backgroundColor: isDark ? theme.black : theme.white,
       borderRadius: 8,
       overflow: 'hidden',
     },
@@ -154,18 +154,19 @@ const createStyles = (theme: Theme, isDark: boolean) => {
       paddingVertical: 12,
     },
     optionRowSelected: {
-      backgroundColor: '#f3f4f6',
+      backgroundColor: isDark ? theme.buttonSecondary : theme.buttonTertiary,
     },
     optionText: {
       flex: 1,
+      fontFamily: 'Inter_400Regular',
       fontSize: 14,
-      color: '#111827',
+      color: theme.textPrimary,
     },
     selectedDot: {
       width: 6,
       height: 6,
       borderRadius: 9999,
-      backgroundColor: '#111827',
+      backgroundColor: isDark ? theme.white : theme.black,
     },
   });
 };

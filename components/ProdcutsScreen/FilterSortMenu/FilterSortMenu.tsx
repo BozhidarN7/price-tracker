@@ -22,7 +22,7 @@ export default function FilterSortMenu() {
   );
 }
 
-const createStyles = (theme: Theme, isDark: boolean) => {
+const createStyles = (theme: Theme, _isDark: boolean) => {
   return StyleSheet.create({
     container: {
       paddingHorizontal: 20,
