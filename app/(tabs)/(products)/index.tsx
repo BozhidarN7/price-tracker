@@ -7,7 +7,7 @@ import ProductsList from '@/components/ProductsList';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
 import { ProductsScreenHeader } from '@/components/ProdcutsScreen';
-import FilterSortBar from '@/components/ProdcutsScreen/FilterSortBar';
+import FilterSortMenu from '@/components/ProdcutsScreen/FilterSortMenu';
 
 export default function ProductsScreen() {
   const { theme, isDark } = useTheme();
@@ -18,7 +18,7 @@ export default function ProductsScreen() {
   return (
     <SafeAreaView style={styles.container} edges={['bottom', 'left', 'right']}>
       <ProductsScreenHeader />
-      <FilterSortBar />
+      <FilterSortMenu />
 
       <View style={styles.sectionHeader}>
         <Text style={styles.sectionTitle}>Your Products</Text>

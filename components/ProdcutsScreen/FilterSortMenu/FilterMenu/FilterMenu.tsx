@@ -3,7 +3,7 @@ import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
 import categories from '@/constants/categories';
 
-export default function FilterRow() {
+export default function FilterMenu() {
   const { theme, isDark } = useTheme();
 
   const styles = createStyles(theme, isDark);
