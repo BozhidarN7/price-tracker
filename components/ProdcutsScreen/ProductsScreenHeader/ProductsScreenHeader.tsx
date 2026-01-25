@@ -47,7 +47,7 @@ const createStyles = (theme: Theme, _isDark: boolean) => {
     wrapper: {
       paddingHorizontal: 20,
       paddingBottom: 16,
-      borderBottomWidth: 2,
+      borderBottomWidth: 1,
       borderColor: theme.border,
       marginBottom: 24,
     },

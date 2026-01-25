@@ -72,7 +72,7 @@ const createStyles = (theme: Theme, isDark: boolean) => {
       flexDirection: 'row',
       alignItems: 'center',
       columnGap: 8,
-      marginBottom: 16,
+      marginVertical: 12,
     },
     searchContainer: {
       flex: 1,

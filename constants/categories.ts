@@ -1,4 +1,6 @@
 export default [
+  'All',
+
   'Groceries',
   'Beverages',
   'Dairy',
