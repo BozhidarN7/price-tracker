@@ -9,6 +9,7 @@ import {
   View,
 } from 'react-native';
 import ProductsSkeleton from '../ProductsSkeleton';
+import { useProductsFilter } from '../ProdcutsScreen/contexts/products-filter-context';
 import TrendBadge from '@/components/TrendBadge';
 import { CURRENCIES_SYMBOLS_MAP } from '@/constants';
 import { useTheme } from '@/contexts/ThemeContext';
@@ -18,6 +19,8 @@ import { Product } from '@/types/product';
 
 export default function ProductsList() {
   const { theme, isDark } = useTheme();
+  const { selectedCategory } = useProductsFilter();
+
   const {
     data: productsData,
     isLoading: areProductsLoading,
@@ -108,9 +111,17 @@ export default function ProductsList() {
     );
   }
 
+  const filteredProducts = productsData?.filter((product) => {
+    if (selectedCategory === 'All') {
+      return true;
+    }
+
+    return product.category.toLowerCase() === selectedCategory.toLowerCase();
+  });
+
   return (
     <FlatList
-      data={productsData}
+      data={filteredProducts}
       renderItem={renderItem}
       keyExtractor={(item) => item.id}
       contentContainerStyle={styles.productsList}

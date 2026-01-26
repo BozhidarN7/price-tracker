@@ -8,6 +8,7 @@ import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
 import { ProductsScreenHeader } from '@/components/ProdcutsScreen';
 import FilterSortMenu from '@/components/ProdcutsScreen/FilterSortMenu';
+import { ProductsFilterProvider } from '@/components/ProdcutsScreen/contexts';
 
 export default function ProductsScreen() {
   const { theme, isDark } = useTheme();
@@ -16,28 +17,33 @@ export default function ProductsScreen() {
   const styles = createStyles(theme, isDark);
 
   return (
-    <SafeAreaView style={styles.container} edges={['bottom', 'left', 'right']}>
-      <ProductsScreenHeader />
-      <FilterSortMenu />
+    <ProductsFilterProvider>
+      <SafeAreaView
+        style={styles.container}
+        edges={['bottom', 'left', 'right']}
+      >
+        <ProductsScreenHeader />
+        <FilterSortMenu />
 
-      <View style={styles.sectionHeader}>
-        <Text style={styles.sectionTitle}>Your Products</Text>
-        <TouchableOpacity style={styles.addButton}>
-          <Plus
-            size={20}
-            color={theme.buttonPrimary}
-            strokeWidth={2}
-            onPress={() => setShowAddModal(true)}
-          />
-        </TouchableOpacity>
-      </View>
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Your Products</Text>
+          <TouchableOpacity style={styles.addButton}>
+            <Plus
+              size={20}
+              color={theme.buttonPrimary}
+              strokeWidth={2}
+              onPress={() => setShowAddModal(true)}
+            />
+          </TouchableOpacity>
+        </View>
 
-      <ProductsList />
-      <AdddProductModal
-        visible={showAddModal}
-        onClose={() => setShowAddModal(false)}
-      />
-    </SafeAreaView>
+        <ProductsList />
+        <AdddProductModal
+          visible={showAddModal}
+          onClose={() => setShowAddModal(false)}
+        />
+      </SafeAreaView>
+    </ProductsFilterProvider>
   );
 }
 

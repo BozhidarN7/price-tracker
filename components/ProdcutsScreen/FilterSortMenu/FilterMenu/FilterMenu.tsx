@@ -1,27 +1,32 @@
 import { FlatList, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { useProductsFilter } from '../../contexts/products-filter-context';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
-import categories from '@/constants/categories';
+import categories, { Category } from '@/constants/categories';
 
 export default function FilterMenu() {
   const { theme, isDark } = useTheme();
+  const { selectedCategory, setSelectedCategory } = useProductsFilter();
 
   const styles = createStyles(theme, isDark);
 
-  const renderCategory = ({ item }: { item: string }) => {
+  const renderCategory = ({ item }: { item: Category }) => {
     return (
       <TouchableOpacity
         style={[
           styles.categoryContainer,
-          item === 'All' && {
+          item.toLowerCase() === selectedCategory.toLowerCase() && {
             backgroundColor: isDark ? theme.white : theme.black,
           },
         ]}
+        onPress={() => setSelectedCategory(item)}
       >
         <Text
           style={[
             styles.categoryText,
-            item === 'All' && { color: isDark ? theme.black : theme.white },
+            item.toLowerCase() === selectedCategory.toLowerCase() && {
+              color: isDark ? theme.black : theme.white,
+            },
           ]}
         >
           {item}
