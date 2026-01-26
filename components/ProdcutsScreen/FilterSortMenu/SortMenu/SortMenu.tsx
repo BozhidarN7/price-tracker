@@ -8,30 +8,61 @@ import {
   View,
 } from 'react-native';
 import { ArrowDown, ArrowUp, ChevronDown } from 'lucide-react-native';
+import { SORT_OPTIONS as SORT_OPTIONS_ENUM } from '../../constants';
+import { useProductsFilter } from '../../contexts/products-filter-context';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
 
 type SortOption = {
-  value: string;
+  value: SORT_OPTIONS_ENUM;
   label: string;
 };
 
 const SORT_OPTIONS: SortOption[] = [
-  { value: 'recently_updated', label: 'Recently Updated' },
-  { value: 'latest_price', label: 'Latest Price' },
-  { value: 'biggest_increase', label: 'Biggest Price Increase' },
-  { value: 'biggest_decrease', label: 'Biggest Price Decrease' },
-  { value: 'name', label: 'Name (A–Z)' },
+  { value: SORT_OPTIONS_ENUM.DEFAULT, label: 'Default' },
+  { value: SORT_OPTIONS_ENUM.RECENTLY_UPDATED, label: 'Recently Updated' },
+  { value: SORT_OPTIONS_ENUM.LATEST_PRICE, label: 'Latest Price' },
+  {
+    value: SORT_OPTIONS_ENUM.BIGGEST_INCREASE,
+    label: 'Biggest Price Increase',
+  },
+  {
+    value: SORT_OPTIONS_ENUM.BIGGEST_DECREASE,
+    label: 'Biggest Price Decrease',
+  },
+  { value: SORT_OPTIONS_ENUM.NAME, label: 'Name (A–Z)' },
 ];
 
 export default function SortMenu() {
   const { theme, isDark } = useTheme();
-
   const styles = createStyles(theme, isDark);
+
+  const { sortBy, isAscending, setSortBy, setIsAscending } =
+    useProductsFilter();
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [sortBy, setSortBy] = useState<string | null>(null);
 
   const currentSort = SORT_OPTIONS.find((o) => o.value === sortBy);
+
+  const handleSelectSortOption = (value: SORT_OPTIONS_ENUM) => {
+    setDropdownOpen(false);
+
+    if (value === SORT_OPTIONS_ENUM.RECENTLY_UPDATED) {
+      setIsAscending(false);
+    }
+    if (value === SORT_OPTIONS_ENUM.BIGGEST_DECREASE) {
+      setIsAscending(false);
+    }
+    if (value === SORT_OPTIONS_ENUM.BIGGEST_INCREASE) {
+      setIsAscending(true);
+    }
+    if (value === SORT_OPTIONS_ENUM.DEFAULT) {
+      setIsAscending(true);
+      setSortBy('');
+      return;
+    }
+
+    setSortBy(value);
+  };
 
   return (
     <View style={styles.wrapper}>
@@ -48,8 +79,11 @@ export default function SortMenu() {
         </TouchableOpacity>
 
         {/* Direction Toggle */}
-        <TouchableOpacity style={styles.directionButton}>
-          {true ? (
+        <TouchableOpacity
+          style={styles.directionButton}
+          onPress={() => setIsAscending((prev) => !prev)}
+        >
+          {isAscending ? (
             <ArrowUp size={14} strokeWidth={2} color={theme.textPrimary} />
           ) : (
             <ArrowDown size={14} strokeWidth={2} color={theme.textPrimary} />
@@ -80,10 +114,7 @@ export default function SortMenu() {
                       styles.optionRow,
                       selected && styles.optionRowSelected,
                     ]}
-                    onPress={() => {
-                      setSortBy(item.value);
-                      setDropdownOpen(false);
-                    }}
+                    onPress={() => handleSelectSortOption(item.value)}
                   >
                     <Text style={styles.optionText}>{item.label}</Text>
                     {selected && <View style={styles.selectedDot} />}

@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
+import { useProductsFilter } from '../contexts/products-filter-context';
 import FilterMenu from './FilterMenu';
 import SortMenu from './SortMenu';
 import { useTheme } from '@/contexts/ThemeContext';
@@ -6,8 +7,9 @@ import { Theme } from '@/types';
 
 export default function FilterSortMenu() {
   const { theme, isDark } = useTheme();
-
   const styles = createStyles(theme, isDark);
+
+  const { numberOfMatchedProducts } = useProductsFilter();
 
   return (
     <View style={styles.container}>
@@ -15,7 +17,7 @@ export default function FilterSortMenu() {
       <SortMenu />
       <View>
         <Text style={styles.filterSummaryText}>
-          Sorted by Recently Updated - 0 products
+          Sorted by Recently Updated - {numberOfMatchedProducts} products
         </Text>
       </View>
     </View>
