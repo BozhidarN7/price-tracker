@@ -3,11 +3,13 @@ import {
   createContext,
   useCallback,
   useContext,
+  useDeferredValue,
   useState,
 } from 'react';
 import { SORT_OPTIONS } from '../constants';
 import { Category } from '@/constants/categories';
 import { Product } from '@/types/product';
+import { normalize } from '@/utils';
 
 type ProductsFilterState = {
   selectedCategory: Category;
@@ -18,7 +20,10 @@ type ProductsFilterState = {
   setIsAscending: React.Dispatch<React.SetStateAction<boolean>>;
   numberOfMatchedProducts: number;
   setNumberOfMatchedProducts: React.Dispatch<React.SetStateAction<number>>;
+  searchQuery: string;
+  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
   sortProducts: (products: Product[]) => Product[];
+  searchProducts: (products: Product[]) => Product[];
 };
 
 const initialFilterState: ProductsFilterState = {
@@ -29,7 +34,10 @@ const initialFilterState: ProductsFilterState = {
   isAscending: true,
   setIsAscending: () => {},
   sortProducts: (products: Product[]) => products,
+  searchProducts: (products: Product[]) => products,
   numberOfMatchedProducts: 0,
+  searchQuery: '',
+  setSearchQuery: () => {},
   setNumberOfMatchedProducts: () => {},
 };
 
@@ -43,6 +51,8 @@ export default function ProductsFilterProvider({
   const [selectedCategory, setSelectedCategory] = useState<Category>('All');
   const [sortBy, setSortBy] = useState<string>('');
   const [isAscending, setIsAscending] = useState<boolean>(true);
+  const [searchQuery, setSearchQuery] = useState('');
+  const deferredSearchQuery = useDeferredValue(searchQuery);
   const [numberOfMatchedProducts, setNumberOfMatchedProducts] = useState(0);
 
   const sortProducts = useCallback(
@@ -90,10 +100,24 @@ export default function ProductsFilterProvider({
           return isAscending ? increaseA - increaseB : increaseB - increaseA;
         });
       }
-      setNumberOfMatchedProducts(products.length);
+
       return products;
     },
     [sortBy, isAscending],
+  );
+
+  const searchProducts = useCallback(
+    (products: Product[]) => {
+      return products.filter((product) => {
+        const query = normalize(deferredSearchQuery);
+
+        const name = normalize(product.name);
+        const brand = normalize(product.brand || '');
+
+        return name.includes(query) || brand.includes(query);
+      });
+    },
+    [deferredSearchQuery],
   );
 
   const value = {
@@ -109,7 +133,11 @@ export default function ProductsFilterProvider({
     numberOfMatchedProducts,
     setNumberOfMatchedProducts,
 
+    searchQuery,
+    setSearchQuery,
+
     sortProducts,
+    searchProducts,
   };
   return (
     <ProductsFilterContext value={value}>{children}</ProductsFilterContext>

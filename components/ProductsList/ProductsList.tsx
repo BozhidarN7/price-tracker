@@ -19,7 +19,8 @@ import { Product } from '@/types/product';
 
 export default function ProductsList() {
   const { theme, isDark } = useTheme();
-  const { selectedCategory, sortProducts } = useProductsFilter();
+  const { selectedCategory, searchProducts, sortProducts } =
+    useProductsFilter();
 
   const {
     data: productsData,
@@ -119,10 +120,11 @@ export default function ProductsList() {
     return product.category.toLowerCase() === selectedCategory.toLowerCase();
   });
   const sortedProducts = sortProducts(filteredProducts ?? []);
+  const searchedProducts = searchProducts(sortedProducts);
 
   return (
     <FlatList
-      data={sortedProducts}
+      data={searchedProducts}
       renderItem={renderItem}
       keyExtractor={(item) => item.id}
       contentContainerStyle={styles.productsList}

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
 import Animated, {
   interpolate,
@@ -8,12 +7,13 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { Search, X } from 'lucide-react-native';
+import { useProductsFilter } from '../contexts/products-filter-context';
 import { useTheme } from '@/contexts/ThemeContext';
 import { Theme } from '@/types';
 import { PALETTE } from '@/constants/colors';
 export default function SearchBar() {
   const { theme, isDark } = useTheme();
-  const [searchQuery, setSearchQuery] = useState('');
+  const { searchQuery, setSearchQuery } = useProductsFilter();
   const focus = useSharedValue(0);
 
   const animatedStyle = useAnimatedStyle(() => {
