@@ -19,7 +19,7 @@ import { Product } from '@/types/product';
 
 export default function ProductsList() {
   const { theme, isDark } = useTheme();
-  const { selectedCategory, searchProducts, sortProducts } =
+  const { selectedCategories, searchProducts, sortProducts } =
     useProductsFilter();
 
   const {
@@ -113,11 +113,11 @@ export default function ProductsList() {
   }
 
   const filteredProducts = productsData?.filter((product) => {
-    if (selectedCategory === 'All') {
+    if (selectedCategories.includes('All')) {
       return true;
     }
 
-    return product.category.toLowerCase() === selectedCategory.toLowerCase();
+    return selectedCategories.includes(product.category);
   });
   const sortedProducts = sortProducts(filteredProducts ?? []);
   const searchedProducts = searchProducts(sortedProducts);

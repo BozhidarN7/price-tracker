@@ -37,7 +37,7 @@ const mockProducts: Product[] = [
     userId: 'user1',
     name: 'Nutella Hazelnut Spread',
     brand: 'Ferrero',
-    category: 'Food',
+    category: 'Groceries',
     imageUrl:
       'https://images.pexels.com/photos/4110256/pexels-photo-4110256.jpeg?auto=compress&cs=tinysrgb&w=400',
     latestPrice: 4.99,

@@ -68,10 +68,16 @@ export default function PriceFields({
           >
             <Dropdown
               value={formData.currency}
-              options={Object.keys(CURRENCIES_SYMBOLS_MAP)}
+              options={
+                [
+                  ...Object.keys(CURRENCIES_SYMBOLS_MAP),
+                ] as (keyof typeof CURRENCIES_SYMBOLS_MAP)[]
+              }
               onSelect={(value) =>
                 setFormData((prev) => ({ ...prev, currency: value }))
               }
+              getLabel={(currency) => currency.toString()}
+              getKey={(currency) => currency.toString()}
               placeholder="EUR"
               isOpen={showCurrencyDropdown}
               onToggle={() => setShowCurrencyDropdown(!showCurrencyDropdown)}

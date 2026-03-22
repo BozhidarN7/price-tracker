@@ -73,6 +73,8 @@ export default function RequiredFields({
           onSelect={(value) =>
             setFormData((prev) => ({ ...prev, category: value }))
           }
+          getLabel={(category) => category.toString()}
+          getKey={(category) => category.toString()}
           placeholder="Select category"
           isOpen={showCategoryDropdown}
           onToggle={() => setShowCategoryDropdown(!showCategoryDropdown)}

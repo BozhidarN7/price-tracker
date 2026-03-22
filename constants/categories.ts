@@ -63,4 +63,5 @@ export type Category =
   | 'Home & Garden'
   | 'Office & Stationery'
   | 'Gifts'
-  | 'Other';
+  | 'Other'
+  | '';

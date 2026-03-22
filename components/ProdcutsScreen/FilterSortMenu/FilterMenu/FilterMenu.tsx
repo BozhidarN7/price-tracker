@@ -6,7 +6,7 @@ import categories, { Category } from '@/constants/categories';
 
 export default function FilterMenu() {
   const { theme, isDark } = useTheme();
-  const { selectedCategory, setSelectedCategory } = useProductsFilter();
+  const { selectedCategories, setSelectedCategories } = useProductsFilter();
 
   const styles = createStyles(theme, isDark);
 
@@ -15,16 +15,23 @@ export default function FilterMenu() {
       <TouchableOpacity
         style={[
           styles.categoryContainer,
-          item.toLowerCase() === selectedCategory.toLowerCase() && {
+          selectedCategories.includes(item) && {
             backgroundColor: isDark ? theme.white : theme.black,
           },
         ]}
-        onPress={() => setSelectedCategory(item)}
+        onPress={() =>
+          setSelectedCategories((prev) => {
+            if (prev.includes(item)) {
+              return prev.toSpliced(prev.indexOf(item));
+            }
+            return [...prev, item];
+          })
+        }
       >
         <Text
           style={[
             styles.categoryText,
-            item.toLowerCase() === selectedCategory.toLowerCase() && {
+            selectedCategories.includes(item) && {
               color: isDark ? theme.black : theme.white,
             },
           ]}

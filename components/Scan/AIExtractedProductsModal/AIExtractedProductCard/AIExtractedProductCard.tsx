@@ -144,6 +144,8 @@ export default function AIExtractedProductCard({
                 ),
               )
             }
+            getLabel={(category) => category.toString()}
+            getKey={(category) => category.toString()}
             placeholder="Select category"
             isOpen={showCategoryDropdown}
             onToggle={() => setShowCategoryDropdown(!showCategoryDropdown)}

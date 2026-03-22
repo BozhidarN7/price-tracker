@@ -1,4 +1,5 @@
 import { CURRENCIES_SYMBOLS_MAP, TRENDS } from '@/constants';
+import type { Category } from '@/constants/categories';
 
 export type PriceEntry = {
   priceEntryId: string;
@@ -17,7 +18,7 @@ export type Product = {
   userId: string;
   name: string;
   brand?: string;
-  category: string;
+  category: Category;
   description?: string;
   imageUrl?: string;
 

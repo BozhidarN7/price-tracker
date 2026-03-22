@@ -12,8 +12,8 @@ import { Product } from '@/types/product';
 import { normalize } from '@/utils';
 
 type ProductsFilterState = {
-  selectedCategory: Category;
-  setSelectedCategory: React.Dispatch<React.SetStateAction<Category>>;
+  selectedCategories: Category[];
+  setSelectedCategories: React.Dispatch<React.SetStateAction<Category[]>>;
   sortBy: string;
   setSortBy: React.Dispatch<React.SetStateAction<string>>;
   isAscending: boolean;
@@ -27,8 +27,8 @@ type ProductsFilterState = {
 };
 
 const initialFilterState: ProductsFilterState = {
-  selectedCategory: 'All',
-  setSelectedCategory: () => {},
+  selectedCategories: ['All'],
+  setSelectedCategories: () => {},
   sortBy: '',
   setSortBy: () => {},
   isAscending: true,
@@ -48,7 +48,9 @@ export const useProductsFilter = () => useContext(ProductsFilterContext);
 export default function ProductsFilterProvider({
   children,
 }: PropsWithChildren) {
-  const [selectedCategory, setSelectedCategory] = useState<Category>('All');
+  const [selectedCategories, setSelectedCategories] = useState<Category[]>([
+    'All',
+  ]);
   const [sortBy, setSortBy] = useState<string>('');
   const [isAscending, setIsAscending] = useState<boolean>(true);
   const [searchQuery, setSearchQuery] = useState('');
@@ -121,8 +123,8 @@ export default function ProductsFilterProvider({
   );
 
   const value = {
-    selectedCategory,
-    setSelectedCategory,
+    selectedCategories,
+    setSelectedCategories,
 
     sortBy,
     setSortBy,
