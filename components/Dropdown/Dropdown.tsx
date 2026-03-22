@@ -12,14 +12,15 @@ import {
 
 import { useTheme } from '@/contexts/ThemeContext';
 
-import { CURRENCIES_SYMBOLS_MAP } from '@/constants';
 import { Theme } from '@/types';
 
-type DropdownProps = {
-  value: string;
-  options: string[];
+type DropdownProps<T> = {
+  value: T;
+  options: T[];
   disabled?: boolean;
-  onSelect: (value: keyof typeof CURRENCIES_SYMBOLS_MAP) => void;
+  onSelect: (value: T) => void;
+  getLabel: (value: T) => string;
+  getKey: (value: T) => string;
   placeholder: string;
   isOpen: boolean;
   onToggle: () => void;
@@ -27,17 +28,19 @@ type DropdownProps = {
   dropDownOptionsStyles?: StyleProp<ViewStyle>;
 };
 
-export default function Dropdown({
+export default function Dropdown<T>({
   value,
   options,
   disabled = false,
   onSelect,
+  getLabel,
+  getKey,
   placeholder,
   isOpen,
   onToggle,
   dropDownButtonStyles,
   dropDownOptionsStyles,
-}: DropdownProps) {
+}: DropdownProps<T>) {
   const { theme, isDark } = useTheme();
 
   const styles = createStyles(theme, isDark);
@@ -50,7 +53,7 @@ export default function Dropdown({
         disabled={disabled}
       >
         <Text style={[styles.dropdownText, !value && styles.placeholderText]}>
-          {value || placeholder}
+          {getLabel(value) || placeholder}
         </Text>
         {isOpen ? (
           <ChevronUp size={20} color={theme.textSecondary} strokeWidth={2} />
@@ -65,14 +68,14 @@ export default function Dropdown({
         >
           {options.map((option) => (
             <TouchableOpacity
-              key={option}
+              key={getKey(option)}
               style={styles.dropdownOption}
               onPress={() => {
-                onSelect(option as keyof typeof CURRENCIES_SYMBOLS_MAP);
+                onSelect(option);
                 onToggle();
               }}
             >
-              <Text style={styles.dropdownOptionText}>{option}</Text>
+              <Text style={styles.dropdownOptionText}>{getLabel(option)}</Text>
             </TouchableOpacity>
           ))}
         </ScrollView>
