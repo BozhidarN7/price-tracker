@@ -7,7 +7,6 @@
     "icon": "./assets/images/icon.png",
     "scheme": "pricetracker",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
     "ios": {
       "bundleIdentifier": "com.bozhidarn.pricetracker",
       "infoPlist": {
@@ -19,7 +18,6 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true,
       "package": "com.bozhidarn.pricetracker"
     },
     "web": {
@@ -40,7 +38,8 @@
       ],
       "expo-font",
       "expo-secure-store",
-      "expo-web-browser"
+      "expo-web-browser",
+      "expo-image"
     ],
     "experiments": {
       "typedRoutes": true,
